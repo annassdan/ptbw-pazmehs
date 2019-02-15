@@ -1,0 +1,674 @@
+[
+  {
+    "namaHalaman": "Upload Data",
+    "urlHalaman": "/datamentah/unggahdata",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "c5d67c5b-89ca-4b34-9ee4-94eda521f964",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Normal",
+        "tipeAksesIdUnik": "ROLE_CLIENT",
+        "uuid": "73386029-bd41-4e72-a22d-9d69d199c208",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 1",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_1",
+        "uuid": "f2d7c231-8982-4352-8a83-7960da3a7de1",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 2",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_2",
+        "uuid": "a34555a7-58af-4c15-a1fb-a054a6f48cfe",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator NGO",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_3",
+        "uuid": "2a15936c-67ea-4211-8073-957c76283168",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": false,
+      "view": true,
+      "create": true,
+      "update": false,
+      "delete": false,
+      "download": false,
+      "uuid": "e9d8cc43-021e-4e61-9edb-9188b9fc4857",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "d44a79d4-81d8-4206-994a-e3edb5915746",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.309",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:49:48.071",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Data Pendaratan",
+    "urlHalaman": "/utama/pendaratan",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "a26b9336-c44e-4f6d-913d-6e6d561ad165",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Normal",
+        "tipeAksesIdUnik": "ROLE_CLIENT",
+        "uuid": "52398f7c-4ef9-4a2c-8d68-f9734596122e",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 1",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_1",
+        "uuid": "4e4669e3-db17-461a-89e0-e53f137d5f62",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 2",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_2",
+        "uuid": "e60a8091-cf40-49b0-adce-138f213cbd96",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator NGO",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_3",
+        "uuid": "641bfc78-fc4e-4649-92f7-d8b9273650df",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": true,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": true,
+      "uuid": "bd7ea310-2c9a-4d4a-92c9-8204fd179fdf",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "eb77cc16-4b90-4332-b98f-196a699dc673",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.319",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:49:54.425",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Data Operasional",
+    "urlHalaman": "/utama/operasional",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "8638591f-f2e1-4b52-a4a4-b284e42248ba",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Normal",
+        "tipeAksesIdUnik": "ROLE_CLIENT",
+        "uuid": "737647ca-8b4e-4d1b-8daf-b7317cfc89d1",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 1",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_1",
+        "uuid": "a08acb5e-f87c-4d23-8ff7-9b62291f336d",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 2",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_2",
+        "uuid": "362561e5-1bf4-4600-a084-e54ccc041888",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator NGO",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_3",
+        "uuid": "6522398b-87db-4419-9386-510bd0b6a027",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": true,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": true,
+      "uuid": "3d7248af-c981-4450-9f1a-268a7b20d69b",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "c820f524-5bc3-42a9-8ff6-877169ad4be0",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.322",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:50:02.001",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Data Biologi Ukuran",
+    "urlHalaman": "/utama/biologiukuran",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "89c04002-2348-4276-813e-97c0b6540a69",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Normal",
+        "tipeAksesIdUnik": "ROLE_CLIENT",
+        "uuid": "0c877835-c986-4faf-ae79-aa160bc7727b",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 1",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_1",
+        "uuid": "063055aa-0f29-4d03-b318-afe01d06be61",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 2",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_2",
+        "uuid": "76e3a32b-e3bd-4031-81ca-6fe25da5af81",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator NGO",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_3",
+        "uuid": "c03dd18d-1688-4baa-8879-c982746423ac",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": true,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": true,
+      "uuid": "52404cae-5720-4d82-9f75-ba339d8eb0be",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "744786af-9bda-494f-9fe0-df6c685b4478",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.325",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:50:08.817",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Data Biologi Reproduksi",
+    "urlHalaman": "/utama/biologireproduksi",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "2cfbfabb-8274-4245-8e19-33d7b230073d",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Normal",
+        "tipeAksesIdUnik": "ROLE_CLIENT",
+        "uuid": "38fe3145-1239-420c-94f1-58c7198ef37a",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 1",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_1",
+        "uuid": "26f5da5f-7a72-4e8e-863f-c88a1257ce2f",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 2",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_2",
+        "uuid": "6abbf43f-b1bd-43ce-af48-e39438f290f4",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator NGO",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_3",
+        "uuid": "3119e80f-ab68-450b-9190-7e3fa779dc68",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": true,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": true,
+      "uuid": "13a4f07d-d150-4d2e-9388-924786b770fe",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "20e233c8-0d8d-4fa5-a1f3-e8d8c3446533",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.328",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:50:15.293",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Master Data Enumerator",
+    "urlHalaman": "/master/enumerator",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "3e13ba27-ac0c-40c3-a9a1-b061228359c3",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": false,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": false,
+      "uuid": "8d83c5c7-0751-4998-9b29-78bf6ae0a8ca",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "eab6e01e-c0c8-4e6c-ac8e-b96cb05ebfa5",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.332",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:31:58.332",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Master Data Daerah Penangkapan",
+    "urlHalaman": "/master/daerahpenangkapan",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "ebdd804d-0bfc-4aae-9a78-7fe52ac0b63a",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": false,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": false,
+      "uuid": "db6b1cde-1fc8-4e74-bf09-eee58d37f5fd",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "e70679dc-dc0c-4a90-8f0d-096f06324b55",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.335",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:31:58.335",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Master Data Pegawai",
+    "urlHalaman": "/master/pegawai",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "0266038c-0c97-4c96-9799-ddf3e9e9bce9",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": false,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": false,
+      "uuid": "4a64dfc4-42ad-4d86-80d3-33e8abba3971",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "6fdb0478-d493-4d6f-a89b-52048f6c6006",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.337",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:31:58.337",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Master Data Sumber Daya",
+    "urlHalaman": "/master/sumberdaya",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "8a8145e1-bd8d-4907-a913-14ac07a4d990",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": false,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": false,
+      "uuid": "474b001a-c55c-4cf3-a265-6da565bba09a",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "058e7aed-5dff-4d13-9917-8ecdc1875859",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.340",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:31:58.340",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Master Data Alat Tangkap",
+    "urlHalaman": "/master/alattangkap",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "740982ee-ff0c-4c77-984c-9806cf2dc357",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": false,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": false,
+      "uuid": "54fb5e66-f8ee-4aff-aaf3-c954007d43f7",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "6bc40878-bb5a-46d8-8a1f-4498fc932f0f",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.342",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:31:58.342",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Master Data Spesies",
+    "urlHalaman": "/master/spesies",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "088a4831-7b1c-49ea-b23c-7eb2fc1d9918",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": false,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": false,
+      "uuid": "cc66e1a0-232f-4e1e-851b-a6a047fa3696",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "0b25e8f1-23dc-4068-a735-b8a8a9d475fd",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.345",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:31:58.345",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Pengaturan Kelompok Pengguna",
+    "urlHalaman": "/administrator/sysusergroup",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "593428eb-061d-4593-a8fb-bdd56982671c",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": false,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": false,
+      "uuid": "d94d130a-3f85-48ff-919a-1437b3ecc48d",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "d1866645-866a-4ba4-b9dd-6f0fa69c9e65",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.348",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:31:58.348",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Pengaturan Data Pengalamatan Halamn",
+    "urlHalaman": "/administrator/petahalaman",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "8d433909-452e-46d6-9e90-7677dba9da70",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": false,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": false,
+      "uuid": "3c769c70-368b-4bfa-923f-6fe87c92f255",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "c8c6eab0-3eaa-4d15-8e98-90d6edaf4b4c",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.351",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:31:58.351",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Input Data Dasar",
+    "urlHalaman": "/datamentah/inputdatamentah",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "1665a971-c501-49d5-af86-242b371e9d4b",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Normal",
+        "tipeAksesIdUnik": "ROLE_CLIENT",
+        "uuid": "ac72b459-1b96-4949-a387-680523226395",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 1",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_1",
+        "uuid": "63faabe3-604e-4cf7-919a-4234a9ba4e93",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator 2",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_2",
+        "uuid": "f1301a06-deb3-4fe1-aaa1-05f5f3f933fd",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      },
+      {
+        "tipeAksesKeHalaman": "Validator NGO",
+        "tipeAksesIdUnik": "ROLE_VALIDATOR_3",
+        "uuid": "5370e1f9-fd32-4f4e-9a63-3e170af45815",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": false,
+      "view": true,
+      "create": true,
+      "update": false,
+      "delete": false,
+      "download": false,
+      "uuid": "85bc7c4e-b29e-4834-87f5-4e17081f6bf5",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "73d653d7-4842-4da3-b272-40d525f4cac6",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.353",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:50:27.269",
+    "dibuatAtauTerakhirDiubahOleh": null
+  },
+  {
+    "namaHalaman": "Pengaturan Data Pengguna",
+    "urlHalaman": "/administrator/sysuser",
+    "deskripsiHalaman": "",
+    "dataHakAkses": [
+      {
+        "tipeAksesKeHalaman": "Administrator",
+        "tipeAksesIdUnik": "ROLE_ADMINISTRATOR",
+        "uuid": "386fafdc-9fdb-4fb8-9445-b87d0aba76d3",
+        "dibuatPadaTanggal": null,
+        "terakhirDiubahPadaTanggal": null,
+        "dibuatAtauTerakhirDiubahOleh": null
+      }
+    ],
+    "dataKetersediaanPembatasan": {
+      "cancel": false,
+      "approve": false,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": true,
+      "download": false,
+      "uuid": "92e1243b-d6aa-4a63-b67e-5d35b8c00058",
+      "dibuatPadaTanggal": null,
+      "terakhirDiubahPadaTanggal": null,
+      "dibuatAtauTerakhirDiubahOleh": null
+    },
+    "uuid": "291b64b4-5685-420b-aab9-ea933371d8ca",
+    "dibuatPadaTanggal": "29/11/2018 20:31:58.356",
+    "terakhirDiubahPadaTanggal": "29/11/2018 20:31:58.356",
+    "dibuatAtauTerakhirDiubahOleh": null
+  }
+]

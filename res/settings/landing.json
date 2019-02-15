@@ -1,0 +1,314 @@
+[
+  {
+    "title" : "Lokasi Pendaratan",
+    "jsonFieldName" : "namaLokasiPendaratan",
+    "valueType" : "STRING",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 8,
+      "column" : 15
+    }
+  },
+  {
+    "title" : "WPP",
+    "jsonFieldName" : "wpp",
+    "valueType" : "STRING",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 8,
+      "column" : 41
+    }
+  },
+  {
+    "title" : "Waktu Pendaratan",
+    "jsonFieldName" : "tanggalPendaratan",
+    "valueType" : "DATE",
+    "directValueGroup" : true,
+    "groupValueConnector" : "/",
+    "directGroupValuesAt" : [
+      {
+        "row" : 8,
+        "column" : 63
+      },
+      {
+        "row" : 8,
+        "column" : 70
+      },
+      {
+        "row" : 8,
+        "column" : 77
+      }
+    ]
+  },
+  {
+    "title" : "Sumber Daya",
+    "jsonFieldName" : "uuidSumberDaya",
+    "valueType" : "STRING",
+    "isUuidField" : true,
+    "useAsUuid" : false,
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 8,
+      "column" : 96
+    }
+  },
+  {
+    "title" : "Pencatat",
+    "jsonFieldName" : "uuidEnumerator",
+    "valueType" : "STRING",
+    "isUuidField" : true,
+    "useAsUuid" : false,
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 4,
+      "column" : 94
+    }
+  },
+  {
+    "title" : "Organisasi",
+    "jsonFieldName" : "organisasi",
+    "valueType" : "STRING",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 0,
+      "column" : 94
+    }
+  },
+  {
+    "title" : "Rincian Kapal Pendaratan",
+    "jsonFieldName" : "dataRincianPendaratan",
+    "valueType" : "OBJECT",
+    "objectDetails" : [
+      {
+        "title" : "Nama Kapal",
+        "jsonFieldName" : "namaKapal",
+        "valueType" : "STRING",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 3
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Penangkap",
+        "jsonFieldName" : "penangkap",
+        "valueType" : "BOOLEAN",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 17,
+          "column" : 24
+        },
+        "acceptedDirectValues" : ["v"],
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Penampung",
+        "jsonFieldName" : "penampung",
+        "valueType" : "BOOLEAN",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 17,
+          "column" : 28
+        },
+        "acceptedDirectValues" : ["v"],
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Jumlah Kapal Penangkap",
+        "jsonFieldName" : "jumlahKapalPenangkap",
+        "valueType" : "INTEGER",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 31
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Jenis Alat Tangkap",
+        "jsonFieldName" : "uuidAlatTangkap",
+        "valueType" : "STRING",
+        "isUuidField" : true,
+        "useAsUuid" : false,
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 37
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Jumlah Setting",
+        "jsonFieldName" : "jumlahSetting",
+        "valueType" : "INTEGER",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 85
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Jenis Mata Pancing",
+        "jsonFieldName" : "jumlahMataPancing",
+        "valueType" : "INTEGER",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 93
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Rumpon",
+        "jsonFieldName" : "rumpon",
+        "valueType" : "BOOLEAN",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 17,
+          "column" : 54
+        },
+        "acceptedDirectValues" : ["v"],
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Cahaya",
+        "jsonFieldName" : "cahaya",
+        "valueType" : "BOOLEAN",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 17,
+          "column" : 58
+        },
+        "acceptedDirectValues" : ["v"],
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Daerah Penangkapan",
+        "jsonFieldName" : "daerahPenangkapan",
+        "valueType" : "STRING",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 61
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Jumlah Hari Per Trip",
+        "jsonFieldName" : "jumlahHariPerTrip",
+        "valueType" : "INTEGER",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 69
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Jumlah Hari Menangkap",
+        "jsonFieldName" : "jumlahHariMenangkap",
+        "valueType" : "INTEGER",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 77
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Total Tangkapan Volume (Kg)",
+        "jsonFieldName" : "totalTangkapanVolume",
+        "valueType" : "INTEGER",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 102
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Total Tangkapan Individu (Ekor)",
+        "jsonFieldName" : "totalTangkapanIndividu",
+        "valueType" : "INTEGER",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 110
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Data Detail Tangkapan pada Pendaratan",
+        "jsonFieldName" : "dataRincianTangkapanPendaratan",
+        "valueType" : "OBJECT",
+        "objectDetails" : [
+          {
+            "title" : "Spesies",
+            "jsonFieldName" : "uuidSpesies",
+            "valueType" : "STRING",
+            "isUuidField" : true,
+            "useAsUuid" : false,
+            "hasDirectValue" : true,
+            "directValueAt" : {
+              "row" : 13,
+              "column" : 124
+            },
+            "forColumnLoop" : true
+          },
+          {
+            "title" : "Volume",
+            "jsonFieldName" : "tangkapanVolume",
+            "valueType" : "DOUBLE",
+            "hasDirectValue" : true,
+            "directValueAt" : {
+              "row" : 16,
+              "column" : 124
+            },
+            "forRowLoop" : true,
+            "forColumnLoop" : true
+          },
+          {
+            "title" : "Individu",
+            "jsonFieldName" : "tangkapanIndividu",
+            "valueType" : "INTEGER",
+            "hasDirectValue" : true,
+            "directValueAt" : {
+              "row" : 16,
+              "column" : 129
+            },
+            "forRowLoop" : true,
+            "forColumnLoop" : true
+          }
+        ],
+        "objectDetailsLoop" : {
+          "columnThrough" : true,
+          "columnLoop" : 19,
+          "columnInc" : 10,
+          "fieldSpaces" : [
+            {
+              "columnLoopSpaceIn" : 12,
+              "columnLoopSpace" : 10
+            }
+          ]
+        }
+      }
+    ],
+    "objectDetailsLoop" : {
+      "rowThrough" : true,
+      "rowLoop" : 50,
+      "rowInc" : 4,
+      "fieldSpaces" : [
+        {
+          "rowLoopSpaceIn" : 16,
+          "rowLoopSpace" : 7
+        },
+        {
+          "rowLoopSpaceIn" : 34,
+          "rowLoopSpace" : 7
+        }
+      ]
+    }
+  }
+]

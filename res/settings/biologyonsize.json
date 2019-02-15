@@ -1,0 +1,278 @@
+[
+  {
+    "title" : "Pencatat",
+    "jsonFieldName" : "uuidEnumerator",
+    "valueType" : "STRING",
+    "isUuidField" : true,
+    "useAsUuid" : false,
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 4,
+      "column" : 94
+    }
+  },
+  {
+    "title" : "Organisasi",
+    "jsonFieldName" : "organisasi",
+    "valueType" : "STRING",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 0,
+      "column" : 94
+    }
+  },
+  {
+    "title" : "Sumber Daya",
+    "jsonFieldName" : "uuidSumberDaya",
+    "valueType" : "STRING",
+    "isUuidField" : true,
+    "useAsUuid" : false,
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 30,
+      "column" : 1
+    }
+  },
+  {
+    "title" : "WPP",
+    "jsonFieldName" : "wpp",
+    "valueType" : "STRING",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 30,
+      "column" : 18
+    }
+  },
+  {
+    "title" : "Lokasi Sampling",
+    "jsonFieldName" : "namaLokasiSampling",
+    "valueType" : "STRING",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 13,
+      "column" : 13
+    }
+  },
+  {
+    "title" : "Tanggal Sampling",
+    "jsonFieldName" : "tanggalSampling",
+    "valueType" : "DATE",
+    "directValueGroup" : true,
+    "groupValueConnector" : "/",
+    "directGroupValuesAt" : [
+      {
+        "row" : 17,
+        "column" : 13
+      },
+      {
+        "row" : 17,
+        "column" : 20
+      },
+      {
+        "row" : 17,
+        "column" : 27
+      }
+    ]
+  },
+  {
+    "title" : "Nama Kapal",
+    "jsonFieldName" : "namaKapal",
+    "valueType" : "STRING",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 21,
+      "column" : 13
+    }
+  },
+  {
+    "title" : "Penangkap",
+    "jsonFieldName" : "penangkap",
+    "valueType" : "BOOLEAN",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 25,
+      "column" : 13
+    },
+    "acceptedDirectValues" : ["v"]
+  },
+  {
+    "title" : "Penampung",
+    "jsonFieldName" : "penampung",
+    "valueType" : "BOOLEAN",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 25,
+      "column" : 23
+    },
+    "acceptedDirectValues" : ["v"]
+  },
+  {
+    "title" : "Daerah Penangkapan",
+    "jsonFieldName" : "daerahPenangkapan",
+    "valueType" : "STRING",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 35,
+      "column" : 1
+    }
+  },
+  {
+    "title" : "Jenis Alat Tangkap",
+    "jsonFieldName" : "uuidAlatTangkap",
+    "valueType" : "STRING",
+    "isUuidField" : true,
+    "useAsUuid" : false,
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 35,
+      "column" : 18
+    }
+  },
+  {
+    "title" : "Total Hasil Tangkapan (Kg)",
+    "jsonFieldName" : "totalTangkapanVolume",
+    "valueType" : "DOUBLE",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 42,
+      "column" : 1
+    }
+  },
+  {
+    "title" : "Total Hasil Tangkapan (Ekor)",
+    "jsonFieldName" : "totalTangkapanIndividu",
+    "valueType" : "INTEGER",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 42,
+      "column" : 9
+    }
+  },
+  {
+    "title" : "Jumlah Sampel per Volume (Kg)",
+    "jsonFieldName" : "totalSampelVolume",
+    "valueType" : "DOUBLE",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 42,
+      "column" : 18
+    }
+  },
+  {
+    "title" : "Jumlah Sampel per Individu (Kg)",
+    "jsonFieldName" : "totalSampelIndividu",
+    "valueType" : "INTEGER",
+    "hasDirectValue" : true,
+    "directValueAt" : {
+      "row" : 42,
+      "column" : 26
+    }
+  },
+  {
+    "title" : "Data Rincian Jumlah Samplel yang digunakan",
+    "jsonFieldName" : "dataSampleDetail",
+    "valueType" : "OBJECT",
+    "objectDetails" : [
+      {
+        "title" : "Spesies",
+        "jsonFieldName" : "uuidSpesies",
+        "valueType" : "STRING",
+        "isUuidField" : true,
+        "useAsUuid" : false,
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 52,
+          "column" : 5
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Jumlah Volume (Kg)",
+        "jsonFieldName" : "sampleVolume",
+        "valueType" : "DOUBLE",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 52,
+          "column" : 18
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Jumlah Individu (Ekor)",
+        "jsonFieldName" : "sampleIndividu",
+        "valueType" : "DOUBLE",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 52,
+          "column" : 25
+        },
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Tipe Panjang ",
+        "jsonFieldName" : "tipePanjang",
+        "valueType" : "STRING",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 52,
+          "column" : 32
+        },
+        "forRowLoop" : true
+      }
+    ],
+    "objectDetailsLoop" : {
+      "rowThrough" : true,
+      "rowLoop" : 10,
+      "columnLoop" : 0,
+      "rowInc" : 2,
+      "columnInc" : 0
+    }
+  },
+  {
+    "title" : "Data Rincian Biologi Ukuran",
+    "jsonFieldName" : "dataUkuranDetail",
+    "valueType" : "OBJECT",
+    "objectDetails" : [
+      {
+        "title" : "Spesies",
+        "jsonFieldName" : "uuidSpesies",
+        "valueType" : "STRING",
+        "isUuidField" : true,
+        "useAsUuid" : false,
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 49
+        },
+        "forColumnLoop" : true,
+        "forRowLoop" : true
+      },
+      {
+        "title" : "Panjang",
+        "jsonFieldName" : "panjang",
+        "valueType" : "DOUBLE",
+        "hasDirectValue" : true,
+        "directValueAt" : {
+          "row" : 16,
+          "column" : 57
+        },
+        "forColumnLoop" : true,
+        "forRowLoop" : true
+      }
+    ],
+    "objectDetailsLoop" : {
+      "columnThrough" : true,
+      "rowThrough" : true,
+      "rowLoop" : 25,
+      "columnLoop" : 8,
+      "rowInc" : 3,
+      "columnInc" : 17,
+      "fieldSpaces" : [
+        {
+          "columnLoopSpaceIn" : 5,
+          "columnLoopSpace" : 8
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "namaSumberDaya": "Pelagis Besar",
+    "deskripsiSumberDaya": "",
+    "uuid": "a1134df4-3b4d-4017-8917-b22588bcba95"
+  },
+  {
+    "namaSumberDaya": "Pelagis Kecil",
+    "deskripsiSumberDaya": "",
+    "uuid": "4c2348e0-ea00-45a5-9e2d-39d100f985a5"
+  },
+  {
+    "namaSumberDaya": "Demersal",
+    "deskripsiSumberDaya": "",
+    "uuid": "a584d059-b2db-4bea-9ba4-5d173b84ba45"
+  },
+  {
+    "namaSumberDaya": "Cucut dan Pari",
+    "deskripsiSumberDaya": "",
+    "uuid": "1dbf41dc-fdf0-47b3-b75d-500d0fc9a716"
+  },
+  {
+    "namaSumberDaya": "Cumi",
+    "deskripsiSumberDaya": "",
+    "uuid": "1f416abd-c333-4bbb-97f6-175f98818a41"
+  },
+  {
+    "namaSumberDaya": "Kekerangan",
+    "deskripsiSumberDaya": "",
+    "uuid": "f8475739-3653-4e7f-909d-28c84ec7a61c"
+  },
+  {
+    "namaSumberDaya": "Krustase",
+    "deskripsiSumberDaya": "",
+    "uuid": "494d39d8-bddc-44fa-911e-07e302ddfadd"
+  },
+  {
+    "namaSumberDaya": "Lainnya",
+    "deskripsiSumberDaya": "",
+    "uuid": "fdedd84e-3721-420a-9a3d-be7f1b0a2aaa"
+  }
+]
