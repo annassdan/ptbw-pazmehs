@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.models.main.BiologyOnSizeDetail;
+import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.data.DocumentStatus;
 import tnc.at.brpl.utils.entity.EntityModel;
 
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +22,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @SuppressWarnings("unused")
-public class BiologyOnSize3rdPartyDTO extends EntityModel<BiologyOnSize3rdPartyDTO, String> {
+public class BiologyOnSize3rdPartyDTO implements Brpl {
+
+    @Id
+    @GenericGenerator(name = "brpl_id", strategy = "tnc.at.brpl.configurations.BrplIdGenerator")
+    @GeneratedValue(generator = "brpl_id")
+    @ApiModelProperty("ID")
+    private String id;
 
     // header
 

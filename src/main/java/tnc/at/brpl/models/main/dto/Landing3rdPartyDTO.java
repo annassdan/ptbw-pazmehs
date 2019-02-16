@@ -4,10 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import tnc.at.brpl.configurations.CustomDateSerializer;
+import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.data.DocumentStatus;
 import tnc.at.brpl.utils.entity.EntityModel;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.ArrayList;
@@ -20,7 +24,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @SuppressWarnings("unused")
-public class Landing3rdPartyDTO extends EntityModel<Landing3rdPartyDTO, String> {
+public class Landing3rdPartyDTO implements Brpl {
+
+    @Id
+    @GenericGenerator(name = "brpl_id", strategy = "tnc.at.brpl.configurations.BrplIdGenerator")
+    @GeneratedValue(generator = "brpl_id")
+    @ApiModelProperty("ID")
+    private String id;
 
     @ApiModelProperty("Tanggal Pendaratan")
     @Temporal(TemporalType.DATE)
