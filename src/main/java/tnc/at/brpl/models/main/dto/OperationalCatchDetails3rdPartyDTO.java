@@ -32,10 +32,10 @@ public class OperationalCatchDetails3rdPartyDTO implements Brpl {
     private String kodeFao;
 
     @ApiModelProperty("Total Berat (Kg)")
-    private int totalBeratKg;
+    private double totalBeratKg;
 
     @ApiModelProperty("Total Jumlah (Ekor)")
-    private int totalBeratEkor;
+    private double totalBeratEkor;
 
     @ApiModelProperty("Dalam Kondisi Segar")
     private boolean segar;

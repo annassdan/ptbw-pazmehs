@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -23,6 +24,7 @@ import java.util.Date;
  *                      Copyright (c) 2017.
  * @author annasldan   ~| annasmn34333@gmail.com | TNC Indonesia |~
  */
+//@Builder(builderMethodName = "superBuilder")
 @MappedSuperclass
 public abstract class EntityModel<ClassEntity extends EntityListener, ID extends Serializable>
         implements Serializable, EntityListener<ID> {

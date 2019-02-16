@@ -95,7 +95,7 @@ public class Operational3rdPartyDTO implements Brpl {
     private int dayaCahaya;
 
     @ApiModelProperty("Berat Kapal (GT)")
-    private int bobotKapal;
+    private double bobotKapal;
 
     @ApiModelProperty("Apakah Mempunyai Kapal Bantu?")
     private boolean kapalBantu;

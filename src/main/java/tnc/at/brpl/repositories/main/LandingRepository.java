@@ -25,6 +25,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface LandingRepository extends RepositoryListener<Landing, String> {
 
+    Page<Landing> findAllByOrganisasiOrderByDibuatPadaTanggalAsc(Pageable pageable, String organisasi);
+
 
 //    @Query("SELECT data FROM Landing data WHERE " +
 //            "data.uuid = :uuid AND " +
