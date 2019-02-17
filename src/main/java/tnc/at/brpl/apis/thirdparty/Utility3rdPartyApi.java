@@ -37,6 +37,7 @@ public class Utility3rdPartyApi {
     }
 
 
+
     @GetMapping(value = "/fishinggear/spec", params = {"sumberdaya", "alattangkap"})
     public ResponseEntity<?> spec(@RequestParam("sumberdaya") String sumberdaya, @RequestParam("alattangkap") String alattangkap) {
         return ResponseEntity.ok(utility3rdPartyService.listSpesifikasi(sumberdaya, alattangkap));
