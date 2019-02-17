@@ -6,6 +6,7 @@ import tnc.at.brpl.models.administrator.SysUser;
 import tnc.at.brpl.models.main.*;
 import tnc.at.brpl.models.main.dto.*;
 import tnc.at.brpl.services.thirdparty.Utility3rdPartyService;
+import tnc.at.brpl.services.thirdparty.util.AlatTangkap;
 import tnc.at.brpl.services.thirdparty.util.SumberDaya;
 import tnc.at.brpl.utils.data.DocumentStatus;
 
@@ -80,16 +81,49 @@ public class Translator3rdParty {
     }
 
 
-    private void checkSpecificationOfAlatTangkap(String sd, String al, OperationalOnFishingToolSpecification specification) {
+    private void checkSpecificationOfAlatTangkap(String sd, String al, OperationalOnFishingToolSpecification3rdPartyDTO specification) {
         Optional<SumberDaya> daya = utility3rdPartyService.sumberDaya().stream()
                 .filter(sumberDaya -> sumberDaya.getSumberDaya().toUpperCase().equals(sd.toUpperCase()))
                 .findFirst();
-//
-//        if (!daya.isPresent())
-//            return false;
-//
-//        return  daya.get().getDaftarAlatTangkap().stream()
-//                .anyMatch(alatTangkap -> alatTangkap.getAlatTangkap().toUpperCase().equals(al.toUpperCase()));
+
+        if (!daya.isPresent())
+            throw new ResourceInternalServerErrorException("Ada data Operasional, dimana jenis sumberdaya tidak dapat diproses untuk mem-validasi spesifikasi dari alat tangkap");
+
+        Optional<AlatTangkap> tangkap = daya.get().getDaftarAlatTangkap().stream()
+                .filter(alatTangkap -> alatTangkap.getAlatTangkap().toUpperCase().equals(al.toUpperCase()))
+                .findFirst();
+
+        if (!tangkap.isPresent())
+            throw new ResourceInternalServerErrorException("Ada data Operasional, dimana jenis Alat Tangkap yang dimaksud tidak dapat diproses untuk mem-validasi spesifikasi dari alat tangkap");
+
+        if (!tangkap.get().getDaftarSpesifikasi().stream().anyMatch(spesifikasi -> spesifikasi.getSpesifikasi().toUpperCase().equals(specification.getSpesifikasi().toUpperCase())))
+            throw new ResourceInternalServerErrorException("Ada data Operasional, " +
+                    "dimana spesifikasi '" + specification.getSpesifikasi() + "' untuk alat tangkap '" + al + "', tidak sesuai!!");
+
+        /* cek satuan dari data spesifikasi */
+        tangkap.get().getDaftarSpesifikasi().stream()
+                .filter(spesifikasi -> spesifikasi.getSpesifikasi().toUpperCase().equals(specification.getSpesifikasi().toUpperCase()))
+                .findFirst()
+                .ifPresent(spesifikasi -> {
+                    if (!spesifikasi.getSatuan().equals(specification.getSatuanSpesifikasi()))
+                        throw new ResourceInternalServerErrorException("Ada data Operasional, " +
+                                "dimana spesifikasi '" + specification.getSpesifikasi() + "' untuk alat tangkap '" + al + "', tidak mempunyai satuan yang sesuai dengan ketentuan BRPL." +
+                                " Seharusnya spesifikasi ini " + ((spesifikasi.getSatuan().length() == 0) ? "tidak mempunyai satuan (kosong)" : "mempunyai satuan '" + spesifikasi.getSatuan() + "'") +
+                                ", tetapi pada data anda " + ((specification.getSatuanSpesifikasi().length() == 0) ? "tidak menggunakan satuan (kosong)" : "ditemukan menggunakan satuan '" +specification.getSatuanSpesifikasi()+ "'")
+                        );
+
+
+                    if (spesifikasi.getSatuan().length() > 0) {
+                        try {
+                            if (specification.getNilaiSpesifikasi().length() > 0)
+                                Integer.parseInt(specification.getNilaiSpesifikasi());
+                        } catch (Exception e) {
+                            throw new ResourceInternalServerErrorException("Ada data Operasional, " +
+                                    "dimana spesifikasi '" + specification.getSpesifikasi() + "' untuk alat tangkap '" + al + "', seharusnya nilai spesifikasi tersebut berupa 'ANGKA'. Karena memiliki satuan '"+ spesifikasi.getSatuan() +"'");
+                        }
+                    }
+
+                });
     }
 
     private void checkDocumentStatus(DocumentStatus status) {
@@ -306,12 +340,15 @@ public class Translator3rdParty {
     }
 
 
-    public List<OperationalOnFishingToolSpecification> transformOperationalSpecification(List<OperationalOnFishingToolSpecification3rdPartyDTO> specification3rdPartyDTOs, String alatTangkap) {
+    public List<OperationalOnFishingToolSpecification> transformOperationalSpecification(List<OperationalOnFishingToolSpecification3rdPartyDTO> specification3rdPartyDTOs, String alatTangkap, String sumberdaya) {
 
         if (user == null || auditDate == null)
             return null;
 
         return specification3rdPartyDTOs.stream().map(dto -> {
+
+            checkSpecificationOfAlatTangkap(sumberdaya, alatTangkap, dto);
+
             OperationalOnFishingToolSpecification specification = OperationalOnFishingToolSpecification.builder()
                     .uuidAlatTangkap(alatTangkap)
                     .spesifikasi(dto.getSpesifikasi())
@@ -427,7 +464,7 @@ public class Translator3rdParty {
                     .sumberInformasi(dto.getSumberInformasi())
                     .jumlahTangkapanUntukDimakanDilautVolume(dto.getJumlahTangkapanUntukDimakanDilautVolume())
                     .jumlahTangkapanUntukDimakanDilautIndividu(dto.getJumlahTangkapanUntukDimakanDilautIndividu())
-                    .dataSpesifikasiAlatTangkap(transformOperationalSpecification(dto.getDataSpesifikasiAlatTangkap(), dto.getNamaAlatTangkap()))
+                    .dataSpesifikasiAlatTangkap(transformOperationalSpecification(dto.getDataSpesifikasiAlatTangkap(), dto.getNamaAlatTangkap(), dto.getNamaSumberDaya()))
                     .dataOperasionalDetailTangkapan(transformOperationalCatch(dto.getDataOperasionalDetailTangkapan()))
                     .jumlahTangkapanVolume(dto.getJumlahTangkapanVolume())
                     .jumlahTangkapanIndividu(dto.getJumlahTangkapanIndividu())

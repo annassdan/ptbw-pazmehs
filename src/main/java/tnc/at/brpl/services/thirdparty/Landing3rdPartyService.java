@@ -59,8 +59,8 @@ public class Landing3rdPartyService {
         user = sysUserRepository.findByPengguna(username);
 
         Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
-        landingRepository.save(rdParty.transformLanding(landing3rdPartyDTO, sysUser));
-        return landing3rdPartyDTO;
+        Landing landing = landingRepository.save(rdParty.transformLanding(landing3rdPartyDTO, sysUser));
+        return rdParty.deTransformLanding(landing);
     }
 
 
