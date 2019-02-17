@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.stereotype.Service;
+import tnc.at.brpl.exceptions.ResourceInternalServerErrorException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @SuppressWarnings("unused")
@@ -294,6 +296,44 @@ public class Utility3rdPartyService {
 
     public List<SumberDaya> sumberDaya() {
         return sumberDayaList;
+    }
+
+
+    public List<ALatTangkap> alatTangkap(String sumberdaya) {
+
+        Optional<List<ALatTangkap>> opt = sumberDayaList.stream()
+                .filter(d -> d.getSumberDaya().trim().toUpperCase().equals(sumberdaya.trim().toUpperCase()))
+                .findFirst()
+                .map(sumberDaya -> sumberDaya.getDaftarAlatTangkap());
+
+        if (!opt.isPresent())
+            throw new ResourceInternalServerErrorException("Maaf, daftar alat tangkap untuk sumberdaya '" + sumberdaya + "' tidak ditemukan!!");
+
+        return opt.get();
+    }
+
+
+
+    public List<Spesifikasi> listSpesifikasi(String sumberdaya, String alatTangkap) {
+
+        Optional<List<ALatTangkap>> opt = sumberDayaList.stream()
+                .filter(d -> d.getSumberDaya().trim().toUpperCase().equals(sumberdaya.trim().toUpperCase()))
+                .findFirst()
+                .map(sumberDaya -> sumberDaya.getDaftarAlatTangkap());
+
+        if (!opt.isPresent())
+            throw new ResourceInternalServerErrorException("Maaf, daftar alat tangkap untuk sumberdaya '" + sumberdaya + "' tidak ditemukan!!");
+
+        Optional<List<Spesifikasi>>  opt1 = opt.get().stream()
+                .filter(d -> d.getAlatTangkap().trim().toUpperCase().equals(alatTangkap.trim().toUpperCase()))
+                .findFirst()
+                .map(e -> e.getDaftarSpesifikasi());
+
+        if (!opt1.isPresent())
+            throw new ResourceInternalServerErrorException("Maaf, spesifikasi untuk alat tangkap '" + alatTangkap + "' tidak ditemukan!!");
+
+
+        return opt1.get();
     }
 
 
