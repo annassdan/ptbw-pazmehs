@@ -1,4 +1,4 @@
-package tnc.at.brpl.apis.main.thirdparty;
+package tnc.at.brpl.apis.thirdparty;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

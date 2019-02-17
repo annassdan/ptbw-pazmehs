@@ -292,6 +292,11 @@ public class Utility3rdPartyService {
     }
 
 
+    public List<SumberDaya> sumberDaya() {
+        return sumberDayaList;
+    }
+
+
 
 }
 
