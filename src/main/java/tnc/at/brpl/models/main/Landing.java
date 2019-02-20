@@ -85,7 +85,7 @@ public class Landing extends EntityModel<Landing, String> {
      */
     @Fetch(value = FetchMode.SELECT)
     @ApiModelProperty("Data Operasional - (Dengan referensi Kode Pendaratan)")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_pendaratan" + XMARK)
     private List<Operational> dataOperasional = new ArrayList<>();
 
@@ -94,7 +94,7 @@ public class Landing extends EntityModel<Landing, String> {
      */
     @Fetch(value = FetchMode.SELECT)
     @ApiModelProperty("Data Sampling Biology Ukuran - (Dengan referensi kode Pendaratan)")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_pendaratan" + XMARK)
     private List<BiologyOnSize> dataUkuran = new ArrayList<>();
 
@@ -103,7 +103,7 @@ public class Landing extends EntityModel<Landing, String> {
      */
     @Fetch(value = FetchMode.SELECT)
     @ApiModelProperty("Data Sampling Biology Reproduksi - (Dengan referensi kode Pendaratan)")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_pendaratan" + XMARK)
     private List<BiologyOnReproduction> dataReproduksi = new ArrayList<>();
 

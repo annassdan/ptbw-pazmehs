@@ -83,14 +83,14 @@ public class SysUser extends EntityModel<SysUser, String> implements Brpl {
 
     @Fetch(value = FetchMode.SELECT)
     @ApiModelProperty("Hak Akses yang dimiliki oleh pengguna")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_sysuser" + XMARK)
     private List<Roles> dataHakAkses = new ArrayList<>();
 
 
 
     @ApiModelProperty("Pengaturan Hak Akses yang dimiliki oleh pengguna ke akses Halaman")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_sysuser" + XMARK)
     private List<Accesses> dataAksesKeHalaman = new ArrayList<>();
 

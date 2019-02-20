@@ -33,27 +33,15 @@
       "dataSpesifikasiAlatTangkap": [
         {
           "id": "",
-          "nilaiSpesifikasi": "3",
+          "nilaiSpesifikasi": "2",
           "satuanSpesifikasi": "",
           "spesifikasi": "Nomor Mata Pancing"
-        },
-        {
-          "id": "",
-          "nilaiSpesifikasi": "4",
-          "satuanSpesifikasi": "",
-          "spesifikasi": "Nomor Tali Pancing"
-        },
-        {
-          "id": "",
-          "nilaiSpesifikasi": "3",
-          "satuanSpesifikasi": "Buah",
-          "spesifikasi": "Jumlah Pancing"
         }
       ],
       "dayaCahaya": 20,
       "freezer": false,
       "gps": false,
-      "id": "",
+      "id": "358dd6e6-7e8d-4a39-bc55-693cb7bd367as",
       "jamSampling": "14:00",
       "jenisGps": "",
       "jenisRumpon": "",
@@ -88,8 +76,8 @@
       "namaKapten": "Dirgantara Udayana",
       "namaLokasiPendaratan": "PPN Bangka Belitung",
       "namaPemilikKapal": "Dinda Kirana",
-      "namaPencatat": "Annas Dan",
-      "namaSumberDaya": "Pelagis Kecil",
+      "namaPencatat": "Misela",
+      "namaSumberDaya": "Pelagis Besar",
       "panjangKapal": 30,
       "pelabuhanAsal": "Bangka Belitung",
       "statusDokumen": "WAITING",
@@ -144,13 +132,13 @@
           "tkg": "5"
         }
       ],
-      "id": "",
+      "id": "358dd6e6-7e8d-4a39-bc55-693cb7bd36715",
       "namaAlatTangkap": "Pancing Ulur",
       "namaKapal": "A",
       "namaLokasiSampling": "PPN Bangka Belitung",
-      "namaPencatat": "Annas Dan",
+      "namaPencatat": "Misela",
       "namaSpesies": "Kembung",
-      "namaSumberDaya": "Pelagis Kecil",
+      "namaSumberDaya": "Pelagis Besar",
       "penampung": false,
       "penangkap": true,
       "statusDokumen": "WAITING",
@@ -227,11 +215,11 @@
           "panjang": 20.5
         }
       ],
-      "id": "",
+      "id": "358dd6e6-7e8d-4a39-bc55-693cb7bd36721",
       "namaAlatTangkap": "Pancing Ulur",
       "namaKapal": "A",
       "namaLokasiSampling": "PPN Bangka Belitung",
-      "namaPencatat": "Annas Dan",
+      "namaPencatat": "Misela",
       "namaSumberDaya": "Pelagis Kecil",
       "penampung": false,
       "penangkap": true,
@@ -244,9 +232,9 @@
       "wpp": "711"
     }
   ],
-  "id": "",
+  "id": "358dd6e6-7e8d-4a39-bc55-693cb7bd367",
   "namaLokasiPendaratan": "PPN Bangka Belitung",
-  "namaPencatat": "Annas Dan",
+  "namaPencatat": "Misela",
   "namaSumberDaya": "Pelagis Kecil",
   "statusDokumen": "WAITING",
   "tanggalPendaratan": "12/12/2019",

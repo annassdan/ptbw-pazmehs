@@ -333,7 +333,7 @@ public class Operational extends EntityModel<Operational, String> {
      */
     @Fetch(value = FetchMode.SELECT)
     @ApiModelProperty("Data Informasi Alat Tangkap - (Dengan referensi Kode Operasional)")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_operasional" + XMARK)
     private List<OperationalOnFishingToolSpecification> dataSpesifikasiAlatTangkap = new ArrayList<>();
 
@@ -341,7 +341,7 @@ public class Operational extends EntityModel<Operational, String> {
      * Data Rincian Hasil Tangkapan
      */
     @ApiModelProperty("Data Informasi Detail Tangkapan Operasional - (Dengan referensi Kode Operasional)")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_operasional" + XMARK)
 //    private Set<OperationalCatchDetails> dataOperasionalDetailTangkapan;
     private List<OperationalCatchDetails> dataOperasionalDetailTangkapan = new ArrayList<>();

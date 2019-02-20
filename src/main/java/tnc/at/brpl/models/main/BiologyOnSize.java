@@ -116,7 +116,7 @@ public class BiologyOnSize extends EntityModel<BiologyOnSize, String> {
 //    @LazyCollection(LazyCollectionOption.FALSE)
     @Fetch(value = FetchMode.SUBSELECT)
     @ApiModelProperty("Data Rincian Jumlah Sampel yang digunakan - (Dengan referensi kode Biologi Ukuran)")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_biologiukuran" + XMARK)
     private List<BiologyOnSizeSampleDetail> dataSampleDetail; // = new HashSet<>();
 
@@ -124,7 +124,7 @@ public class BiologyOnSize extends EntityModel<BiologyOnSize, String> {
      * Detail ukuran ikan dari sample
      */
     @ApiModelProperty("Data Detail Biologi Ukuran - (Dengan referensi kode Biologi Ukuran)")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_biologiukuran" + XMARK)
     private List<BiologyOnSizeDetail> dataUkuranDetail; // = new ArrayList<>();
 

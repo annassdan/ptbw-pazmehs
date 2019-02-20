@@ -42,22 +42,22 @@ public class Landing3rdPartyApi {
     }
 
 
-//    @DeleteMapping("/get/operasional/by/{id}")
-//    public ResponseEntity<?> getOperasionalById3rdPartyData(@PathVariable("id") String id) {
-//        return ResponseEntity.ok("");
-//    }
+    @GetMapping("/get/operasional/by/{id}")
+    public ResponseEntity<?> getOperasionalById3rdPartyData(@PathVariable("id") String id) {
+        return ResponseEntity.ok(landing3rdPartyService.getOperasionalById3rdPartyData(id));
+    }
 
 
-//    @DeleteMapping("/get/biologiukuran/by/{id}")
-//    public ResponseEntity<?> getUkuranById3rdPartyData(@PathVariable("id") String id) {
-//        return ResponseEntity.ok("");
-//    }
+    @GetMapping("/get/biologiukuran/by/{id}")
+    public ResponseEntity<?> getUkuranById3rdPartyData(@PathVariable("id") String id) {
+        return ResponseEntity.ok(landing3rdPartyService.getUkuranById3rdPartyData(id));
+    }
 
 
-//    @DeleteMapping("/get/biologireproduksi/by/{id}")
-//    public ResponseEntity<?> getReproduksiById3rdPartyData(@PathVariable("id") String id) {
-//        return ResponseEntity.ok("");
-//    }
+    @GetMapping("/get/biologireproduksi/by/{id}")
+    public ResponseEntity<?> getReproduksiById3rdPartyData(@PathVariable("id") String id) {
+        return ResponseEntity.ok(landing3rdPartyService.getReproduksiById3rdPartyData(id));
+    }
 
 
     @DeleteMapping("/deleteby/{id}")
@@ -66,22 +66,22 @@ public class Landing3rdPartyApi {
     }
 
 
-//    @DeleteMapping("/delete/operasional/by/{id}")
-//    public ResponseEntity<?> deleteOperasionalById3rdPartyData(@PathVariable("id") String id) {
-//        return ResponseEntity.ok("");
-//    }
+    @DeleteMapping("/delete/operasional/by/{id}")
+    public ResponseEntity<?> deleteOperasionalById3rdPartyData(@PathVariable("id") String id) {
+        return ResponseEntity.ok(landing3rdPartyService.deleteOperasionalById3rdPartyData(id));
+    }
 
 
-//    @DeleteMapping("/delete/biologiukuran/by/{id}")
-//    public ResponseEntity<?> deleteUkuranById3rdPartyData(@PathVariable("id") String id) {
-//        return ResponseEntity.ok("");
-//    }
+    @DeleteMapping("/delete/biologiukuran/by/{id}")
+    public ResponseEntity<?> deleteUkuranById3rdPartyData(@PathVariable("id") String id) {
+        return ResponseEntity.ok(landing3rdPartyService.deleteUkuranById3rdPartyData(id));
+    }
 
 
-//    @DeleteMapping("/delete/biologireproduksi/by/{id}")
-//    public ResponseEntity<?> deleteReproduksiById3rdPartyData(@PathVariable("id") String id) {
-//        return ResponseEntity.ok("");
-//    }
+    @DeleteMapping("/delete/biologireproduksi/by/{id}")
+    public ResponseEntity<?> deleteReproduksiById3rdPartyData(@PathVariable("id") String id) {
+        return ResponseEntity.ok(landing3rdPartyService.deleteReproduksiById3rdPartyData(id));
+    }
 
 
 

@@ -1,6 +1,5 @@
 package tnc.at.brpl.utils.thirdparty;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import tnc.at.brpl.exceptions.ResourceInternalServerErrorException;
 import tnc.at.brpl.models.administrator.SysUser;
 import tnc.at.brpl.models.main.*;
@@ -136,7 +135,7 @@ public class Translator3rdParty {
 
     public List<BiologyOnReproductionDetail> transformReproductionDetail(List<BiologyOnReproductionDetail3rdPatyDTO> reproductionDetail3rdPatyDTO) {
 
-        if (user == null || auditDate == null)
+        if (user == null || auditDate == null || reproductionDetail3rdPatyDTO == null)
             return null;
 
         return reproductionDetail3rdPatyDTO.stream().map(dto -> {
@@ -174,12 +173,15 @@ public class Translator3rdParty {
     }
 
 
-    public List<BiologyOnReproduction> transformReproduction(List<BiologyOnReproduction3rdPartyDTO> reproduction3rdPartyDTOs, SysUser sysUser) {
+    public List<BiologyOnReproduction> transformReproductions(List<BiologyOnReproduction3rdPartyDTO> reproduction3rdPartyDTOs, SysUser sysUser) {
 
-        if (user == null || auditDate == null)
+        if (user == null || auditDate == null || reproduction3rdPartyDTOs == null)
             return null;
 
         return reproduction3rdPartyDTOs.stream().map(dto -> {
+
+            if (dto.getId().length() == 0)
+                throw new ResourceInternalServerErrorException("Ada data Reproduksi, yang tidak mempunyai ID. ID tidak boleh kosong");
 
             if (!wppValid(dto.getWpp()))
                 throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan WPP yang tidak valid");
@@ -219,10 +221,55 @@ public class Translator3rdParty {
         }).collect(Collectors.toList());
     }
 
+    public BiologyOnReproduction transformReproduction(BiologyOnReproduction3rdPartyDTO dto, SysUser sysUser) {
+
+        if (user == null || auditDate == null || dto == null)
+            return null;
+
+        if (dto.getId().length() == 0)
+            throw new ResourceInternalServerErrorException("Data Reproduksi, tidak mempunyai ID. ID tidak boleh kosong");
+
+        if (!wppValid(dto.getWpp()))
+            throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan WPP yang tidak valid");
+
+        if (!sumberdayaValid(dto.getNamaSumberDaya()))
+            throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan sumberdaya '" + dto.getNamaSumberDaya() + "' yang tidak valid dengan ketentuan BRPL");
+
+        if (!alatTangkapValid(dto.getNamaAlatTangkap()))
+            throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan alat tangkap '" + dto.getNamaAlatTangkap() + "' yang tidak valid dengan ketentuan BRPL");
+
+        checkDocumentStatus(dto.getStatusDokumen());
+
+        BiologyOnReproduction biology = BiologyOnReproduction.builder()
+                .uuidSumberDaya(dto.getNamaSumberDaya())
+                .namaLokasiSampling(dto.getNamaLokasiSampling())
+                .namaKapal(dto.getNamaKapal())
+                .uuidSpesies(dto.getNamaSpesies())
+                .daerahPenangkapan(dto.getDaerahPenangkapan())
+                .penampung(dto.isPenampung())
+                .penangkap(dto.isPenangkap())
+                .uuidAlatTangkap(dto.getNamaAlatTangkap())
+                .tanggalSampling(dto.getTanggalSampling())
+                .uuidEnumerator(dto.getNamaPencatat())
+                .dataDetailReproduksi(transformReproductionDetail(dto.getDataDetailReproduksi()))
+                .statusDokumen(dto.getStatusDokumen())
+                .photoName("")
+                .uuidPengupload(sysUser.getUuid())
+                .organisasi(sysUser.getOrganisasi())
+                .wpp(dto.getWpp())
+                .terverifikasiOleh("")
+                .untukEksternalTerverifikasiOleh("").build();
+        biology.setUuid(dto.getId());
+        biology.setDibuatPadaTanggal(auditDate);
+        biology.setTerakhirDiubahPadaTanggal(auditDate);
+        biology.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
+        return biology;
+    }
+
 
     public List<BiologyOnSizeSampleDetail> transformSizeSampleDetail(List<BiologyOnSizeSampleDetail3rdPartyDTO> sizeSampleDetail3rdPartyDTOs) {
 
-        if (user == null || auditDate == null)
+        if (user == null || auditDate == null || sizeSampleDetail3rdPartyDTOs == null)
             return null;
 
         return sizeSampleDetail3rdPartyDTOs.stream().map(dto -> {
@@ -253,7 +300,7 @@ public class Translator3rdParty {
 
     public List<BiologyOnSizeDetail> transformSizeDetail(List<BiologyOnSizeDetail3rdPartyDTO> sizeDetail3rdPartyDTOs) {
 
-        if (user == null || auditDate == null)
+        if (user == null || auditDate == null || sizeDetail3rdPartyDTOs == null)
             return null;
 
         return sizeDetail3rdPartyDTOs.stream().map(dto -> {
@@ -274,12 +321,15 @@ public class Translator3rdParty {
     }
 
 
-    public List<BiologyOnSize> transformSize(List<BiologyOnSize3rdPartyDTO> size3rdPartyDTOs, SysUser sysUser) {
+    public List<BiologyOnSize> transformSizes(List<BiologyOnSize3rdPartyDTO> size3rdPartyDTOs, SysUser sysUser) {
 
-        if (user == null || auditDate == null)
+        if (user == null || auditDate == null || size3rdPartyDTOs == null)
             return null;
 
         return size3rdPartyDTOs.stream().map(dto -> {
+
+            if (dto.getId().length() == 0)
+                throw new ResourceInternalServerErrorException("Ada data Ukuran, yang tidak mempunyai ID. ID tidak boleh kosong");
 
             if (!wppValid(dto.getWpp()))
                 throw new ResourceInternalServerErrorException("Ada data Ukuran, dengan WPP yang tidak valid");
@@ -339,10 +389,75 @@ public class Translator3rdParty {
         }).collect(Collectors.toList());
     }
 
+    public BiologyOnSize transformSize(BiologyOnSize3rdPartyDTO dto, SysUser sysUser) {
+
+        if (user == null || auditDate == null || dto == null)
+            return null;
+
+        if (dto.getId().length() == 0)
+            throw new ResourceInternalServerErrorException("Data Ukuran, tidak mempunyai ID. ID tidak boleh kosong");
+
+        if (!wppValid(dto.getWpp()))
+            throw new ResourceInternalServerErrorException("Ada data Ukuran, dengan WPP yang tidak valid");
+
+        if (!sumberdayaValid(dto.getNamaSumberDaya()))
+            throw new ResourceInternalServerErrorException("Ada data Ukuran, dengan sumberdaya '" + dto.getNamaSumberDaya() + "' yang tidak valid dengan ketentuan BRPL");
+
+        if (!alatTangkapValid(dto.getNamaAlatTangkap()))
+            throw new ResourceInternalServerErrorException("Ada data Ukuran, dengan alat tangkap '" + dto.getNamaAlatTangkap() + "' yang tidak valid dengan ketentuan BRPL");
+
+        checkDocumentStatus(dto.getStatusDokumen());
+
+
+        if (dto.getTotalSampelVolume() < 0)
+            throw new ResourceInternalServerErrorException("Ada data Ukuran, jumlah sampel pengukuran (Volume) dibawah 0");
+
+        if (dto.getTotalSampelIndividu() < 0)
+            throw new ResourceInternalServerErrorException("Ada data Ukuran, jumlah sampel pengukuran (Individu) dibawah 0");
+
+
+        if (dto.getTotalTangkapanVolume() < 0)
+            throw new ResourceInternalServerErrorException("Terdapat data Ukuran, dengan total tangkapan (Volume) dibawah 0");
+
+        if (dto.getTotalTangkapanIndividu() < 0)
+            throw new ResourceInternalServerErrorException("Terdapat data Ukuran, dengan total tangkapan (Individu) dibawah 0");
+
+
+        BiologyOnSize size = BiologyOnSize.builder()
+                .uuidEnumerator(dto.getNamaPencatat())
+                .uuidSumberDaya(dto.getNamaSumberDaya())
+                .namaLokasiSampling(dto.getNamaLokasiSampling())
+                .tanggalSampling(dto.getTanggalSampling())
+                .namaKapal(dto.getNamaKapal())
+                .daerahPenangkapan(dto.getDaerahPenangkapan())
+                .uuidAlatTangkap(dto.getNamaAlatTangkap())
+                .penampung(dto.isPenampung())
+                .penangkap(dto.isPenangkap())
+                .totalTangkapanVolume(dto.getTotalTangkapanVolume())
+                .totalTangkapanIndividu(dto.getTotalTangkapanIndividu())
+                .totalSampelVolume(dto.getTotalSampelVolume())
+                .totalSampelIndividu(dto.getTotalSampelIndividu())
+                .dataSampleDetail(transformSizeSampleDetail(dto.getDataSampleDetail()))
+                .dataUkuranDetail(transformSizeDetail(dto.getDataUkuranDetail()))
+                .statusDokumen(dto.getStatusDokumen())
+                .photoName("")
+                .uuidPengupload(sysUser.getUuid())
+                .organisasi(sysUser.getOrganisasi())
+                .wpp(dto.getWpp())
+                .terverifikasiOleh("")
+                .untukEksternalTerverifikasiOleh("")
+                .build();
+        size.setUuid(dto.getId());
+        size.setDibuatPadaTanggal(auditDate);
+        size.setTerakhirDiubahPadaTanggal(auditDate);
+        size.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
+        return size;
+    }
+
 
     public List<OperationalOnFishingToolSpecification> transformOperationalSpecification(List<OperationalOnFishingToolSpecification3rdPartyDTO> specification3rdPartyDTOs, String alatTangkap, String sumberdaya) {
 
-        if (user == null || auditDate == null)
+        if (user == null || auditDate == null || specification3rdPartyDTOs == null)
             return null;
 
         return specification3rdPartyDTOs.stream().map(dto -> {
@@ -366,7 +481,7 @@ public class Translator3rdParty {
 
     public List<OperationalCatchDetails> transformOperationalCatch(List<OperationalCatchDetails3rdPartyDTO> details3rdPartyDTOs) {
 
-        if (user == null || auditDate == null)
+        if (user == null || auditDate == null || details3rdPartyDTOs == null)
             return null;
 
         return details3rdPartyDTOs.stream().map(dto -> {
@@ -397,12 +512,15 @@ public class Translator3rdParty {
     }
 
 
-    public List<Operational> transformOperational(List<Operational3rdPartyDTO> operational3rdPartyDTs, SysUser sysUser) {
+    public List<Operational> transformOperationals(List<Operational3rdPartyDTO> operational3rdPartyDTs, SysUser sysUser) {
 
-        if (user == null || auditDate == null)
+        if (user == null || auditDate == null || operational3rdPartyDTs == null)
             return null;
 
         return operational3rdPartyDTs.stream().map(dto -> {
+
+            if (dto.getId().length() == 0)
+                throw new ResourceInternalServerErrorException("Ada data Operasional, yang tidak mempunyai ID. ID tidak boleh kosong");
 
             if (!wppValid(dto.getWpp()))
                 throw new ResourceInternalServerErrorException("Ada data Operasional, dengan WPP yang tidak valid");
@@ -485,10 +603,98 @@ public class Translator3rdParty {
         }).collect(Collectors.toList());
     }
 
+    public Operational transformOperational(Operational3rdPartyDTO dto, SysUser sysUser) {
+
+        if (user == null || auditDate == null || dto == null)
+            return null;
+
+        if (dto.getId().length() == 0)
+            throw new ResourceInternalServerErrorException("Data Operasional, tidak mempunyai ID. ID tidak boleh kosong");
+
+        if (!wppValid(dto.getWpp()))
+            throw new ResourceInternalServerErrorException("Ada data Operasional, dengan WPP yang tidak valid");
+
+        if (!sumberdayaValid(dto.getNamaSumberDaya()))
+            throw new ResourceInternalServerErrorException("Ada data Operasional, dengan sumberdaya '" + dto.getNamaSumberDaya() + "' yang tidak valid dengan ketentuan BRPL");
+
+        if (!alatTangkapValid(dto.getNamaAlatTangkap()))
+            throw new ResourceInternalServerErrorException("Ada data Operasional, dengan alat tangkap '" + dto.getNamaAlatTangkap() + "' yang tidak valid dengan ketentuan BRPL");
+
+        checkDocumentStatus(dto.getStatusDokumen());
+
+        Operational operational = Operational.builder()
+                .namaLokasiPendaratan(dto.getNamaLokasiPendaratan())
+                .uuidSumberDaya(dto.getNamaSumberDaya())
+                .uuidEnumerator(dto.getNamaPencatat())
+                .jamSampling(dto.getJamSampling())
+                .tanggalSampling(dto.getTanggalSampling())
+                .namaKapal(dto.getNamaKapal())
+                .tanggalBerangkat(dto.getTanggalBerangkat())
+                .tandaSelar(dto.getTandaSelar())
+                .tanggalKembali(dto.getTanggalKembali())
+                .namaPemilikKapal(dto.getNamaPemilikKapal())
+                .pelabuhanAsal(dto.getPelabuhanAsal())
+                .namaKapten(dto.getNamaKapten())
+                .jumlahAbk(dto.getJumlahAbk())
+                .panjangKapal(dto.getPanjangKapal())
+                .materialKapal(dto.getMaterialKapal())
+                .dayaCahaya(dto.getDayaCahaya())
+                .bobotKapal(dto.getBobotKapal())
+                .kapalBantu(dto.isKapalBantu())
+                .ukuranKapalBantu(dto.getUkuranKapalBantu())
+                .kapalAndon(dto.isKapalAndon())
+                .asalKapalAndon(dto.getAsalKapalAndon())
+                .jumlahPalka(dto.getJumlahPalka())
+                .jumlahBoks(dto.getJumlahBoks())
+                .mesinUtama(dto.getMesinUtama())
+                .freezer(dto.isFreezer())
+                .kapasitasFreezer(dto.getKapasitasFreezer())
+                .kapasitasPalkaBoks(dto.getKapasitasPalkaBoks())
+                .mesinBantu(dto.getMesinBantu())
+                .gps(dto.isGps())
+                .jenisGps(dto.getJenisGps())
+                .uuidAlatTangkap(dto.getNamaAlatTangkap())
+                .material(dto.getMaterialAlatTangkap())
+                .jumlahAlatTangkapYangDioperasikan(dto.getJumlahAlatTangkapYangDioperasikan())
+                .jumlahSetting(dto.getJumlahSetting())
+                .kedalamanAirMulai(dto.getKedalamanAirMulai())
+                .kedalamanAirHingga(dto.getKedalamanAirHingga())
+                .daerahPenangkapan(dto.getDaerahPenangkapan())
+                .jumlahHariPerTrip(dto.getJumlahHariPerTrip())
+                .jumlahHariMenangkap(dto.getJumlahHariMenangkap())
+                .jenisRumpon(dto.getJenisRumpon())
+                .jumlahBalokEs(dto.getJumlahBalokEs())
+                .jumlahRumponDikunjungi(dto.getJumlahRumponDikunjungi())
+                .jumlahRumponBerhasil(dto.getJumlahRumponBerhasil())
+                .waktuMemancing(dto.getWaktuMemancing())
+                .komentar(dto.getKomentar())
+                .sumberInformasi(dto.getSumberInformasi())
+                .jumlahTangkapanUntukDimakanDilautVolume(dto.getJumlahTangkapanUntukDimakanDilautVolume())
+                .jumlahTangkapanUntukDimakanDilautIndividu(dto.getJumlahTangkapanUntukDimakanDilautIndividu())
+                .dataSpesifikasiAlatTangkap(transformOperationalSpecification(dto.getDataSpesifikasiAlatTangkap(), dto.getNamaAlatTangkap(), dto.getNamaSumberDaya()))
+                .dataOperasionalDetailTangkapan(transformOperationalCatch(dto.getDataOperasionalDetailTangkapan()))
+                .jumlahTangkapanVolume(dto.getJumlahTangkapanVolume())
+                .jumlahTangkapanIndividu(dto.getJumlahTangkapanIndividu())
+                .lamaPerendaman(dto.getLamaPerendaman())
+                .statusDokumen(dto.getStatusDokumen())
+                .photoName("")
+                .uuidPengupload(sysUser.getUuid())
+                .organisasi(sysUser.getOrganisasi())
+                .wpp(dto.getWpp())
+                .terverifikasiOleh("")
+                .untukEksternalTerverifikasiOleh("")
+                .build();
+        operational.setUuid(dto.getId());
+        operational.setDibuatPadaTanggal(auditDate);
+        operational.setTerakhirDiubahPadaTanggal(auditDate);
+        operational.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
+        return operational;
+    }
+
 
     public List<LandingCatchDetail> transformLandingCatchDetail(List<LandingCatchDetail3rdPartyDTO> catchDetail3rdPartyDTOs) {
 
-        if (user == null || auditDate == null)
+        if (user == null || auditDate == null || catchDetail3rdPartyDTOs == null)
             return null;
 
         return catchDetail3rdPartyDTOs.stream().map(dto -> {
@@ -514,7 +720,7 @@ public class Translator3rdParty {
 
     public List<LandingDetail> transformLandingDetail(List<LandingDetail3rdPartyDTO> detail3rdPartyDTOs) {
 
-        if (user == null || auditDate == null)
+        if (user == null || auditDate == null || detail3rdPartyDTOs == null)
             return null;
 
         return detail3rdPartyDTOs.stream().map(dto -> {
@@ -555,8 +761,11 @@ public class Translator3rdParty {
 
     public Landing transformLanding(Landing3rdPartyDTO landing3rdPartyDTO, SysUser sysUser) {
 
-        if (user == null || auditDate == null)
+        if (user == null || auditDate == null || landing3rdPartyDTO == null)
             return null;
+
+        if (landing3rdPartyDTO.getId().length() == 0)
+            throw new ResourceInternalServerErrorException("Data Pendaratan, tidak mempunyai ID. ID tidak boleh kosong");
 
         if (!wppValid(landing3rdPartyDTO.getWpp()))
             throw new ResourceInternalServerErrorException("Pendaratan ini memiliki WPP yang tidak valid");
@@ -572,9 +781,9 @@ public class Translator3rdParty {
                 .uuidSumberDaya(landing3rdPartyDTO.getNamaSumberDaya())
                 .uuidEnumerator(landing3rdPartyDTO.getNamaPencatat())
                 .dataRincianPendaratan(transformLandingDetail(landing3rdPartyDTO.getDataRincianPendaratan()))
-                .dataOperasional(transformOperational(landing3rdPartyDTO.getDataOperasional(), sysUser))
-                .dataUkuran(transformSize(landing3rdPartyDTO.getDataUkuran(), sysUser))
-                .dataReproduksi(transformReproduction(landing3rdPartyDTO.getDataReproduksi(), sysUser))
+                .dataOperasional(transformOperationals(landing3rdPartyDTO.getDataOperasional(), sysUser))
+                .dataUkuran(transformSizes(landing3rdPartyDTO.getDataUkuran(), sysUser))
+                .dataReproduksi(transformReproductions(landing3rdPartyDTO.getDataReproduksi(), sysUser))
                 .userGroup(null)
                 .statusDokumen(landing3rdPartyDTO.getStatusDokumen())
                 .photoName("")
@@ -614,29 +823,32 @@ public class Translator3rdParty {
     }
 
 
-    public List<BiologyOnReproduction3rdPartyDTO> deTransformReproduction(List<BiologyOnReproduction> reproduction) {
+    public List<BiologyOnReproduction3rdPartyDTO> deTransformReproductions(List<BiologyOnReproduction> reproduction) {
 
 
-        return reproduction.stream().map(dto -> {
-            BiologyOnReproduction3rdPartyDTO biology = BiologyOnReproduction3rdPartyDTO.builder()
-                    .namaSumberDaya(dto.getUuidSumberDaya())
-                    .namaLokasiSampling(dto.getNamaLokasiSampling())
-                    .namaKapal(dto.getNamaKapal())
-                    .namaSpesies(dto.getUuidSpesies())
-                    .daerahPenangkapan(dto.getDaerahPenangkapan())
-                    .penampung(dto.isPenampung())
-                    .penangkap(dto.isPenangkap())
-                    .namaAlatTangkap(dto.getUuidAlatTangkap())
-                    .tanggalSampling(dto.getTanggalSampling())
-                    .namaPencatat(dto.getUuidEnumerator())
-                    .dataDetailReproduksi(deTransformReproductionDetail(dto.getDataDetailReproduksi()))
-                    .statusDokumen(dto.getStatusDokumen())
-                    .wpp(dto.getWpp())
-                    .id(dto.getUuid())
-                    .build();
+        return reproduction.stream().map(dto -> deTransformReproduction(dto)).collect(Collectors.toList());
+    }
 
-            return biology;
-        }).collect(Collectors.toList());
+
+    public BiologyOnReproduction3rdPartyDTO deTransformReproduction(BiologyOnReproduction dto) {
+        BiologyOnReproduction3rdPartyDTO biology = BiologyOnReproduction3rdPartyDTO.builder()
+                .namaSumberDaya(dto.getUuidSumberDaya())
+                .namaLokasiSampling(dto.getNamaLokasiSampling())
+                .namaKapal(dto.getNamaKapal())
+                .namaSpesies(dto.getUuidSpesies())
+                .daerahPenangkapan(dto.getDaerahPenangkapan())
+                .penampung(dto.isPenampung())
+                .penangkap(dto.isPenangkap())
+                .namaAlatTangkap(dto.getUuidAlatTangkap())
+                .tanggalSampling(dto.getTanggalSampling())
+                .namaPencatat(dto.getUuidEnumerator())
+                .dataDetailReproduksi(deTransformReproductionDetail(dto.getDataDetailReproduksi()))
+                .statusDokumen(dto.getStatusDokumen())
+                .wpp(dto.getWpp())
+                .id(dto.getUuid())
+                .build();
+
+        return biology;
     }
 
 
@@ -669,31 +881,34 @@ public class Translator3rdParty {
     }
 
 
-    public List<BiologyOnSize3rdPartyDTO> deTransformSize(List<BiologyOnSize> onSize) {
+    public List<BiologyOnSize3rdPartyDTO> deTransformSizes(List<BiologyOnSize> onSize) {
+        return onSize.stream().map(dto -> deTransformSize(dto)).collect(Collectors.toList());
+    }
 
-        return onSize.stream().map(dto -> {
-            BiologyOnSize3rdPartyDTO size = BiologyOnSize3rdPartyDTO.builder()
-                    .namaPencatat(dto.getUuidEnumerator())
-                    .namaSumberDaya(dto.getUuidSumberDaya())
-                    .namaLokasiSampling(dto.getNamaLokasiSampling())
-                    .tanggalSampling(dto.getTanggalSampling())
-                    .namaKapal(dto.getNamaKapal())
-                    .daerahPenangkapan(dto.getDaerahPenangkapan())
-                    .namaAlatTangkap(dto.getUuidAlatTangkap())
-                    .penampung(dto.isPenampung())
-                    .penangkap(dto.isPenangkap())
-                    .totalTangkapanVolume(dto.getTotalTangkapanVolume())
-                    .totalTangkapanIndividu(dto.getTotalTangkapanIndividu())
-                    .totalSampelVolume(dto.getTotalSampelVolume())
-                    .totalSampelIndividu(dto.getTotalSampelIndividu())
-                    .dataSampleDetail(deTransformSizeSampleDetail(dto.getDataSampleDetail()))
-                    .dataUkuranDetail(deTransformSizeDetail(dto.getDataUkuranDetail()))
-                    .statusDokumen(dto.getStatusDokumen())
-                    .wpp(dto.getWpp())
-                    .id(dto.getUuid())
-                    .build();
-            return size;
-        }).collect(Collectors.toList());
+
+    public BiologyOnSize3rdPartyDTO deTransformSize(BiologyOnSize dto) {
+
+        BiologyOnSize3rdPartyDTO size = BiologyOnSize3rdPartyDTO.builder()
+                .namaPencatat(dto.getUuidEnumerator())
+                .namaSumberDaya(dto.getUuidSumberDaya())
+                .namaLokasiSampling(dto.getNamaLokasiSampling())
+                .tanggalSampling(dto.getTanggalSampling())
+                .namaKapal(dto.getNamaKapal())
+                .daerahPenangkapan(dto.getDaerahPenangkapan())
+                .namaAlatTangkap(dto.getUuidAlatTangkap())
+                .penampung(dto.isPenampung())
+                .penangkap(dto.isPenangkap())
+                .totalTangkapanVolume(dto.getTotalTangkapanVolume())
+                .totalTangkapanIndividu(dto.getTotalTangkapanIndividu())
+                .totalSampelVolume(dto.getTotalSampelVolume())
+                .totalSampelIndividu(dto.getTotalSampelIndividu())
+                .dataSampleDetail(deTransformSizeSampleDetail(dto.getDataSampleDetail()))
+                .dataUkuranDetail(deTransformSizeDetail(dto.getDataUkuranDetail()))
+                .statusDokumen(dto.getStatusDokumen())
+                .wpp(dto.getWpp())
+                .id(dto.getUuid())
+                .build();
+        return size;
     }
 
 
@@ -733,72 +948,73 @@ public class Translator3rdParty {
     }
 
 
-    public List<Operational3rdPartyDTO> deTransformOperational(List<Operational> operationals) {
-
-        return operationals.stream().map(dto -> {
-            Operational3rdPartyDTO operational = Operational3rdPartyDTO.builder()
-                    .namaLokasiPendaratan(dto.getNamaLokasiPendaratan())
-                    .namaSumberDaya(dto.getUuidSumberDaya())
-                    .namaPencatat(dto.getUuidEnumerator())
-                    .jamSampling(dto.getJamSampling())
-                    .tanggalSampling(dto.getTanggalSampling())
-                    .namaKapal(dto.getNamaKapal())
-                    .tanggalBerangkat(dto.getTanggalBerangkat())
-                    .tandaSelar(dto.getTandaSelar())
-                    .tanggalKembali(dto.getTanggalKembali())
-                    .namaPemilikKapal(dto.getNamaPemilikKapal())
-                    .pelabuhanAsal(dto.getPelabuhanAsal())
-                    .namaKapten(dto.getNamaKapten())
-                    .jumlahAbk(dto.getJumlahAbk())
-                    .panjangKapal(dto.getPanjangKapal())
-                    .materialKapal(dto.getMaterialKapal())
-                    .dayaCahaya(dto.getDayaCahaya())
-                    .bobotKapal(dto.getBobotKapal())
-                    .kapalBantu(dto.isKapalBantu())
-                    .ukuranKapalBantu(dto.getUkuranKapalBantu())
-                    .kapalAndon(dto.isKapalAndon())
-                    .asalKapalAndon(dto.getAsalKapalAndon())
-                    .jumlahPalka(dto.getJumlahPalka())
-                    .jumlahBoks(dto.getJumlahBoks())
-                    .mesinUtama(dto.getMesinUtama())
-                    .freezer(dto.isFreezer())
-                    .kapasitasFreezer(dto.getKapasitasFreezer())
-                    .kapasitasPalkaBoks(dto.getKapasitasPalkaBoks())
-                    .mesinBantu(dto.getMesinBantu())
-                    .gps(dto.isGps())
-                    .jenisGps(dto.getJenisGps())
-                    .namaAlatTangkap(dto.getUuidAlatTangkap())
-                    .materialAlatTangkap(dto.getMaterial())
-                    .jumlahAlatTangkapYangDioperasikan(dto.getJumlahAlatTangkapYangDioperasikan())
-                    .jumlahSetting(dto.getJumlahSetting())
-                    .kedalamanAirMulai(dto.getKedalamanAirMulai())
-                    .kedalamanAirHingga(dto.getKedalamanAirHingga())
-                    .daerahPenangkapan(dto.getDaerahPenangkapan())
-                    .jumlahHariPerTrip(dto.getJumlahHariPerTrip())
-                    .jumlahHariMenangkap(dto.getJumlahHariMenangkap())
-                    .jenisRumpon(dto.getJenisRumpon())
-                    .jumlahBalokEs(dto.getJumlahBalokEs())
-                    .jumlahRumponDikunjungi(dto.getJumlahRumponDikunjungi())
-                    .jumlahRumponBerhasil(dto.getJumlahRumponBerhasil())
-                    .waktuMemancing(dto.getWaktuMemancing())
-                    .komentar(dto.getKomentar())
-                    .sumberInformasi(dto.getSumberInformasi())
-                    .jumlahTangkapanUntukDimakanDilautVolume(dto.getJumlahTangkapanUntukDimakanDilautVolume())
-                    .jumlahTangkapanUntukDimakanDilautIndividu(dto.getJumlahTangkapanUntukDimakanDilautIndividu())
-                    .dataSpesifikasiAlatTangkap(deTransformOperationalSpecification(dto.getDataSpesifikasiAlatTangkap(), dto.getUuidAlatTangkap()))
-                    .dataOperasionalDetailTangkapan(deTransformOperationalCatch(dto.getDataOperasionalDetailTangkapan()))
-                    .jumlahTangkapanVolume(dto.getJumlahTangkapanVolume())
-                    .jumlahTangkapanIndividu(dto.getJumlahTangkapanIndividu())
-                    .lamaPerendaman(dto.getLamaPerendaman())
-                    .statusDokumen(dto.getStatusDokumen())
-                    .wpp(dto.getWpp())
-                    .id(dto.getUuid())
-                    .build();
-
-            return operational;
-        }).collect(Collectors.toList());
+    public List<Operational3rdPartyDTO> deTransformOperationals(List<Operational> operationals) {
+        return operationals.stream().map(dto -> deTransformOperational(dto)).collect(Collectors.toList());
     }
 
+
+    public Operational3rdPartyDTO deTransformOperational(Operational dto) {
+        Operational3rdPartyDTO operational = Operational3rdPartyDTO.builder()
+                .namaLokasiPendaratan(dto.getNamaLokasiPendaratan())
+                .namaSumberDaya(dto.getUuidSumberDaya())
+                .namaPencatat(dto.getUuidEnumerator())
+                .jamSampling(dto.getJamSampling())
+                .tanggalSampling(dto.getTanggalSampling())
+                .namaKapal(dto.getNamaKapal())
+                .tanggalBerangkat(dto.getTanggalBerangkat())
+                .tandaSelar(dto.getTandaSelar())
+                .tanggalKembali(dto.getTanggalKembali())
+                .namaPemilikKapal(dto.getNamaPemilikKapal())
+                .pelabuhanAsal(dto.getPelabuhanAsal())
+                .namaKapten(dto.getNamaKapten())
+                .jumlahAbk(dto.getJumlahAbk())
+                .panjangKapal(dto.getPanjangKapal())
+                .materialKapal(dto.getMaterialKapal())
+                .dayaCahaya(dto.getDayaCahaya())
+                .bobotKapal(dto.getBobotKapal())
+                .kapalBantu(dto.isKapalBantu())
+                .ukuranKapalBantu(dto.getUkuranKapalBantu())
+                .kapalAndon(dto.isKapalAndon())
+                .asalKapalAndon(dto.getAsalKapalAndon())
+                .jumlahPalka(dto.getJumlahPalka())
+                .jumlahBoks(dto.getJumlahBoks())
+                .mesinUtama(dto.getMesinUtama())
+                .freezer(dto.isFreezer())
+                .kapasitasFreezer(dto.getKapasitasFreezer())
+                .kapasitasPalkaBoks(dto.getKapasitasPalkaBoks())
+                .mesinBantu(dto.getMesinBantu())
+                .gps(dto.isGps())
+                .jenisGps(dto.getJenisGps())
+                .namaAlatTangkap(dto.getUuidAlatTangkap())
+                .materialAlatTangkap(dto.getMaterial())
+                .jumlahAlatTangkapYangDioperasikan(dto.getJumlahAlatTangkapYangDioperasikan())
+                .jumlahSetting(dto.getJumlahSetting())
+                .kedalamanAirMulai(dto.getKedalamanAirMulai())
+                .kedalamanAirHingga(dto.getKedalamanAirHingga())
+                .daerahPenangkapan(dto.getDaerahPenangkapan())
+                .jumlahHariPerTrip(dto.getJumlahHariPerTrip())
+                .jumlahHariMenangkap(dto.getJumlahHariMenangkap())
+                .jenisRumpon(dto.getJenisRumpon())
+                .jumlahBalokEs(dto.getJumlahBalokEs())
+                .jumlahRumponDikunjungi(dto.getJumlahRumponDikunjungi())
+                .jumlahRumponBerhasil(dto.getJumlahRumponBerhasil())
+                .waktuMemancing(dto.getWaktuMemancing())
+                .komentar(dto.getKomentar())
+                .sumberInformasi(dto.getSumberInformasi())
+                .jumlahTangkapanUntukDimakanDilautVolume(dto.getJumlahTangkapanUntukDimakanDilautVolume())
+                .jumlahTangkapanUntukDimakanDilautIndividu(dto.getJumlahTangkapanUntukDimakanDilautIndividu())
+                .dataSpesifikasiAlatTangkap(deTransformOperationalSpecification(dto.getDataSpesifikasiAlatTangkap(), dto.getUuidAlatTangkap()))
+                .dataOperasionalDetailTangkapan(deTransformOperationalCatch(dto.getDataOperasionalDetailTangkapan()))
+                .jumlahTangkapanVolume(dto.getJumlahTangkapanVolume())
+                .jumlahTangkapanIndividu(dto.getJumlahTangkapanIndividu())
+                .lamaPerendaman(dto.getLamaPerendaman())
+                .statusDokumen(dto.getStatusDokumen())
+                .wpp(dto.getWpp())
+                .id(dto.getUuid())
+                .build();
+
+        return operational;
+    }
 
     public List<LandingCatchDetail3rdPartyDTO> deTransformLandingCatchDetail(List<LandingCatchDetail> catchDetails) {
 
@@ -839,6 +1055,7 @@ public class Translator3rdParty {
         }).collect(Collectors.toList());
     }
 
+
     public Landing3rdPartyDTO deTransformLanding(Landing landing) {
 
         Landing3rdPartyDTO landingDTO = Landing3rdPartyDTO.builder()
@@ -847,9 +1064,9 @@ public class Translator3rdParty {
                 .namaSumberDaya(landing.getUuidSumberDaya())
                 .namaPencatat(landing.getUuidEnumerator())
                 .dataRincianPendaratan(deTransformLandingDetail(landing.getDataRincianPendaratan()))
-                .dataOperasional(deTransformOperational(landing.getDataOperasional()))
-                .dataUkuran(deTransformSize(landing.getDataUkuran()))
-                .dataReproduksi(deTransformReproduction(landing.getDataReproduksi()))
+                .dataOperasional(deTransformOperationals(landing.getDataOperasional()))
+                .dataUkuran(deTransformSizes(landing.getDataUkuran()))
+                .dataReproduksi(deTransformReproductions(landing.getDataReproduksi()))
                 .statusDokumen(landing.getStatusDokumen())
                 .wpp(landing.getWpp())
                 .id(landing.getUuid())

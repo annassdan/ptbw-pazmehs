@@ -85,7 +85,7 @@ public class BiologyOnReproduction extends EntityModel<BiologyOnReproduction, St
     //detail
 
     @ApiModelProperty("Data Detail Biologi Reproduksi - (Dengan referensi kode Biologi reproduksi)")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_biologireproduksi" + XMARK)
 //    private Set<BiologyOnReproductionDetail> dataDetailReproduksi = new HashSet<>();
     private List<BiologyOnReproductionDetail> dataDetailReproduksi = new ArrayList<>();
