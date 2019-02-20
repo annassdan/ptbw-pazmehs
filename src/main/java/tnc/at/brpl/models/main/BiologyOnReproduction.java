@@ -102,7 +102,8 @@ public class BiologyOnReproduction extends EntityModel<BiologyOnReproduction, St
 
 
 //    @ApiModelProperty("Kepemilikan Data")
-//    @Column(name = "uuid_kepemilikan_data" + XMARK)
+//    @Column(name = "uuid_ke
+//    pemilikan_data" + XMARK)
 //    @ColumnDefault("''")
 //    private String uuidKepemilikanData;
 
@@ -128,6 +129,9 @@ public class BiologyOnReproduction extends EntityModel<BiologyOnReproduction, St
 
     @ApiModelProperty("Terverikasi Oleh pihak Luar oleh")
     private String untukEksternalTerverifikasiOleh;
+
+    @ColumnDefault("false")
+    private boolean byMachine;
 
 
 }

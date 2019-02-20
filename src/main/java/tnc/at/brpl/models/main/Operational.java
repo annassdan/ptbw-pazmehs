@@ -396,4 +396,8 @@ public class Operational extends EntityModel<Operational, String> {
     @ApiModelProperty("Terverikasi Oleh pihak Luar oleh")
     private String untukEksternalTerverifikasiOleh;
 
+
+    @ColumnDefault("false")
+    private boolean byMachine;
+
 }

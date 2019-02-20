@@ -128,6 +128,9 @@ public class Landing extends EntityModel<Landing, String> {
     private String untukEksternalTerverifikasiOleh;
 
 
+    @ColumnDefault("false")
+    private boolean byMachine;
+
 
 
 

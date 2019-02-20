@@ -169,4 +169,8 @@ public class BiologyOnSize extends EntityModel<BiologyOnSize, String> {
     private String untukEksternalTerverifikasiOleh;
 
 
+    @ColumnDefault("false")
+    private boolean byMachine;
+
+
 }

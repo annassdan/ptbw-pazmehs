@@ -212,6 +212,7 @@ public class Translator3rdParty {
                     .organisasi(sysUser.getOrganisasi())
                     .wpp(dto.getWpp())
                     .terverifikasiOleh("")
+                    .byMachine(true)
                     .untukEksternalTerverifikasiOleh("").build();
             biology.setUuid(dto.getId());
             biology.setDibuatPadaTanggal(auditDate);
@@ -258,6 +259,7 @@ public class Translator3rdParty {
                 .organisasi(sysUser.getOrganisasi())
                 .wpp(dto.getWpp())
                 .terverifikasiOleh("")
+                .byMachine(true)
                 .untukEksternalTerverifikasiOleh("").build();
         biology.setUuid(dto.getId());
         biology.setDibuatPadaTanggal(auditDate);
@@ -380,6 +382,7 @@ public class Translator3rdParty {
                     .wpp(dto.getWpp())
                     .terverifikasiOleh("")
                     .untukEksternalTerverifikasiOleh("")
+                    .byMachine(true)
                     .build();
             size.setUuid(dto.getId());
             size.setDibuatPadaTanggal(auditDate);
@@ -446,6 +449,7 @@ public class Translator3rdParty {
                 .wpp(dto.getWpp())
                 .terverifikasiOleh("")
                 .untukEksternalTerverifikasiOleh("")
+                .byMachine(true)
                 .build();
         size.setUuid(dto.getId());
         size.setDibuatPadaTanggal(auditDate);
@@ -594,6 +598,7 @@ public class Translator3rdParty {
                     .wpp(dto.getWpp())
                     .terverifikasiOleh("")
                     .untukEksternalTerverifikasiOleh("")
+                    .byMachine(true)
                     .build();
             operational.setUuid(dto.getId());
             operational.setDibuatPadaTanggal(auditDate);
@@ -683,6 +688,7 @@ public class Translator3rdParty {
                 .wpp(dto.getWpp())
                 .terverifikasiOleh("")
                 .untukEksternalTerverifikasiOleh("")
+                .byMachine(true)
                 .build();
         operational.setUuid(dto.getId());
         operational.setDibuatPadaTanggal(auditDate);
@@ -792,6 +798,7 @@ public class Translator3rdParty {
                 .wpp(landing3rdPartyDTO.getWpp())
                 .terverifikasiOleh("")
                 .untukEksternalTerverifikasiOleh("")
+                .byMachine(true)
                 .build();
 
         landing.setUuid(landing3rdPartyDTO.getId());
