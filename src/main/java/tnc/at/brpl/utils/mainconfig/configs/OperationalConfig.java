@@ -188,17 +188,21 @@ public class OperationalConfig extends BasicFormUploadConfig implements FormRegu
                         operational.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
                     else
                         operational.setStatusDokumen(DocumentStatus.DRAFT);
+
                     if (!operational.getOrganisasi().equals(Brpl.DEFAULT_ORGANIZATION)) {
                         operational.setOrganisasi(Brpl.DEFAULT_ORGANIZATION);
                     }
                 } else {
                     operational.setOrganisasi(sysUser.getOrganisasi());
                     if (role == 5) { // user biasa dari ngo
-                        operational.setStatusDokumen(DocumentStatus.PENDING);
+                        operational.setStatusDokumen(DocumentStatus.WAITING);
+                    } else if (role == 2) { // validator dari ngo
+                        operational.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
                     }
                 }
             } else {
                 operational.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
+                operational.setOrganisasi(Brpl.DEFAULT_ORGANIZATION);
             }
 
             operational.setUuidPengupload(uploaderUuid);

@@ -9,6 +9,7 @@ import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.models.main.BiologyOnSizeDetail;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.data.DocumentStatus;
+import tnc.at.brpl.utils.data.ThirdPartyDocumentStatus;
 import tnc.at.brpl.utils.entity.EntityModel;
 
 import javax.persistence.*;
@@ -89,7 +90,8 @@ public class BiologyOnSize3rdPartyDTO implements Brpl {
 
     @ApiModelProperty("Status Dokumen")
     @Column(name = "status_dokumen" + XMARK)
-    private DocumentStatus statusDokumen;
+//    private DocumentStatus statusDokumen;
+    private ThirdPartyDocumentStatus statusDokumen;
 
     @ApiModelProperty("WPP")
     @Column(name = "wpp" + XMARK)

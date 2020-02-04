@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.data.DocumentStatus;
+import tnc.at.brpl.utils.data.ThirdPartyDocumentStatus;
 import tnc.at.brpl.utils.entity.EntityModel;
 
 import javax.persistence.GeneratedValue;
@@ -78,7 +79,8 @@ public class Landing3rdPartyDTO implements Brpl {
     private String wpp;
 
     @ApiModelProperty("Status Dokumen")
-    private DocumentStatus statusDokumen;
+//    private DocumentStatus statusDokumen;
+    private ThirdPartyDocumentStatus statusDokumen;
 
 
 }

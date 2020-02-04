@@ -113,16 +113,10 @@ public class BrplApplication implements CommandLineRunner {
      */
     @Override
     public void run(String... strings) throws Exception {
-//        Page<Landing> landings = landingRepository.coba2(new PageRequest(0, 10),
-//
-//                "ANWAR");
-//
-//        logger.info(String.valueOf(landings.getContent().size()));
-
-        initSuperuser();
-        initPagesMap();
-        initResources();
-        initOrganizations();
+        //        initSuperuser();
+//        initPagesMap();
+//        initResources();
+//        initOrganizations();
 
         storageService.init(); // init penyimpanan data unggah dan unduh
 
@@ -130,9 +124,6 @@ public class BrplApplication implements CommandLineRunner {
         initOperationalConfig();
         initBiologyOnSizeConfig();
         initBiologyOnReproductionConfig();
-
-
-
     }
 
 

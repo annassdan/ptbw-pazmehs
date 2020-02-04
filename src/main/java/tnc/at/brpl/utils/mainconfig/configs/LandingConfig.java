@@ -201,12 +201,15 @@ public class LandingConfig extends BasicFormUploadConfig implements FormRegulati
                 } else {
                     landing.setOrganisasi(sysUser.getOrganisasi());
                     if (role == 5) { // user biasa dari ngo
-                        landing.setStatusDokumen(DocumentStatus.PENDING);
+                        landing.setStatusDokumen(DocumentStatus.WAITING);
+                    } else if (role == 2) { // validator dari ngo
+                        landing.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
                     }
                 }
 
             } else {
                 landing.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
+                landing.setOrganisasi(Brpl.DEFAULT_ORGANIZATION);
             }
 
 

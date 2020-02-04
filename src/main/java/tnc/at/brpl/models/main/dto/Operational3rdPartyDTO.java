@@ -10,6 +10,7 @@ import tnc.at.brpl.configurations.CustomTimeSerializer;
 import tnc.at.brpl.models.main.OperationalCatchDetails;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.data.DocumentStatus;
+import tnc.at.brpl.utils.data.ThirdPartyDocumentStatus;
 import tnc.at.brpl.utils.entity.EntityModel;
 
 import javax.persistence.*;
@@ -212,7 +213,8 @@ public class Operational3rdPartyDTO implements Brpl {
 
 
     @ApiModelProperty("Status Dokumen")
-    private DocumentStatus statusDokumen;
+//    private DocumentStatus statusDokumen;
+    private ThirdPartyDocumentStatus statusDokumen;
 
     @ApiModelProperty("Jumlah Tangkapan (Kg)")
     private double jumlahTangkapanVolume;

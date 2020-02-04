@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.data.DocumentStatus;
+import tnc.at.brpl.utils.data.ThirdPartyDocumentStatus;
 import tnc.at.brpl.utils.entity.EntityModel;
 
 import javax.persistence.*;
@@ -71,7 +72,8 @@ public class BiologyOnReproduction3rdPartyDTO implements Brpl {
 
     @ApiModelProperty("Status Dokumen")
     @Column(name = "status_dokumen" + XMARK)
-    private DocumentStatus statusDokumen;
+    private ThirdPartyDocumentStatus statusDokumen;
+//    private DocumentStatus statusDokumen;
 
     @ApiModelProperty("WPP")
     @Column(name = "wpp" + XMARK)

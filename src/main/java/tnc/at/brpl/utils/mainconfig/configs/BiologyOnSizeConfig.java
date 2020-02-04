@@ -210,17 +210,21 @@ public class BiologyOnSizeConfig extends BasicFormUploadConfig implements FormRe
                         biologyOnSize.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
                     else
                         biologyOnSize.setStatusDokumen(DocumentStatus.DRAFT);
+
                     if (!biologyOnSize.getOrganisasi().equals(Brpl.DEFAULT_ORGANIZATION)) {
                         biologyOnSize.setOrganisasi(Brpl.DEFAULT_ORGANIZATION);
                     }
                 } else {
                     biologyOnSize.setOrganisasi(sysUser.getOrganisasi());
                     if (role == 5) { // user biasa dari ngo
-                        biologyOnSize.setStatusDokumen(DocumentStatus.PENDING);
+                        biologyOnSize.setStatusDokumen(DocumentStatus.WAITING);
+                    } else if (role == 2) { // validator dari ngo
+                        biologyOnSize.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
                     }
                 }
             } else {
                 biologyOnSize.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
+                biologyOnSize.setOrganisasi(Brpl.DEFAULT_ORGANIZATION);
             }
 
 

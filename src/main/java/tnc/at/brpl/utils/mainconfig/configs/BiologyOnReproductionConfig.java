@@ -190,18 +190,22 @@ public class BiologyOnReproductionConfig extends BasicFormUploadConfig implement
                         biologyOnReproduction.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
                     else
                         biologyOnReproduction.setStatusDokumen(DocumentStatus.DRAFT);
+
                     if (!biologyOnReproduction.getOrganisasi().equals(Brpl.DEFAULT_ORGANIZATION)) {
                         biologyOnReproduction.setOrganisasi(Brpl.DEFAULT_ORGANIZATION);
                     }
                 } else {
                     biologyOnReproduction.setOrganisasi(sysUser.getOrganisasi());
                     if (role == 5) { // user biasa dari ngo
-                        biologyOnReproduction.setStatusDokumen(DocumentStatus.PENDING);
+                        biologyOnReproduction.setStatusDokumen(DocumentStatus.WAITING);
+                    } else if (role == 2) { // validator dari ngo
+                        biologyOnReproduction.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
                     }
                 }
 
             } else {
                 biologyOnReproduction.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
+                biologyOnReproduction.setOrganisasi(Brpl.DEFAULT_ORGANIZATION);
             }
 
 

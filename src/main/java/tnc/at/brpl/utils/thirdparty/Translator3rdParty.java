@@ -8,6 +8,7 @@ import tnc.at.brpl.services.thirdparty.Utility3rdPartyService;
 import tnc.at.brpl.services.thirdparty.util.AlatTangkap;
 import tnc.at.brpl.services.thirdparty.util.SumberDaya;
 import tnc.at.brpl.utils.data.DocumentStatus;
+import tnc.at.brpl.utils.data.ThirdPartyDocumentStatus;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -37,25 +38,62 @@ public class Translator3rdParty {
     }
 
 
+    private DocumentStatus enTransformDocumentStatus(ThirdPartyDocumentStatus thirdPartyDocumentStatus) {
+        switch (thirdPartyDocumentStatus) {
+            case PENDING: return DocumentStatus.PENDING;
+            case WAITING: return DocumentStatus.WAITING;
+            case VERIFIED: return DocumentStatus.NOT_VERIFIED;
+            default:
+                return DocumentStatus.WAITING;
+        }
+    }
+
+
+    private ThirdPartyDocumentStatus deTransformDocumentStatus(DocumentStatus status) {
+        switch (status) {
+            case PENDING: return ThirdPartyDocumentStatus.PENDING;
+            case WAITING: return ThirdPartyDocumentStatus.WAITING;
+            case NOT_VERIFIED: return ThirdPartyDocumentStatus.VERIFIED;
+            default:
+                return ThirdPartyDocumentStatus.WAITING;
+        }
+    }
+
+
     private boolean lengthTypesValid(String lt) {
+        if (lt == null || lt.length() == 0)
+            throw new ResourceInternalServerErrorException("Ada Tipe Panjang yang tidak valid...");
+
         return lengthTypes.stream().anyMatch(s -> s.toUpperCase().equals(lt.toUpperCase()));
     }
 
 
     private boolean sexValid(String sex) {
+        if (sex == null || sex.length() == 0)
+            throw new ResourceInternalServerErrorException("Ada Jenis Kelamin yang tidak valid...");
+
         return (sex.toUpperCase().equals("M") || sex.toUpperCase().equals("F"));
     }
 
     private boolean tkgValid(String tkg) {
+        if (tkg == null || tkg.length() == 0)
+            throw new ResourceInternalServerErrorException("Ada TKG yang tidak valid...");
+
         return utility3rdPartyService.tkg().stream().anyMatch(tkgObject -> tkgObject.getTkg().toUpperCase().equals(tkg.toUpperCase()));
     }
 
     private boolean sumberdayaValid(String sd) {
+        if (sd == null || sd.length() == 0)
+            throw new ResourceInternalServerErrorException("Ada Sumber Daya yang tidak valid...");
+
         return utility3rdPartyService.sumberDaya().stream().anyMatch(s -> s.getSumberDaya().toUpperCase().equals(sd.toUpperCase()));
     }
 
 
     private boolean alatTangkapValid(String al) {
+        if (al == null || al.length() == 0)
+            throw new ResourceInternalServerErrorException("Ada Alat Tangkap yang tidak valid...");
+
         return utility3rdPartyService.sumberDaya().stream()
                 .flatMap(sumberDaya -> sumberDaya.getDaftarAlatTangkap().stream())
                 .collect(Collectors.toList()).stream()
@@ -63,20 +101,10 @@ public class Translator3rdParty {
     }
 
     private boolean wppValid(String wpp) {
+        if (wpp == null || wpp.length() == 0)
+            throw new ResourceInternalServerErrorException("Ada WPP yang tidak valid...");
+
         return wpps.stream().anyMatch(s -> s.toUpperCase().equals(wpp.toUpperCase()));
-    }
-
-
-    private boolean alatTangkapValid(String sd, String al) {
-        Optional<SumberDaya> daya = utility3rdPartyService.sumberDaya().stream()
-                .filter(sumberDaya -> sumberDaya.getSumberDaya().toUpperCase().equals(sd.toUpperCase()))
-                .findFirst();
-
-        if (!daya.isPresent())
-            return false;
-
-        return  daya.get().getDaftarAlatTangkap().stream()
-                .anyMatch(alatTangkap -> alatTangkap.getAlatTangkap().toUpperCase().equals(al.toUpperCase()));
     }
 
 
@@ -125,8 +153,8 @@ public class Translator3rdParty {
                 });
     }
 
-    private void checkDocumentStatus(DocumentStatus status) {
-        if (status == DocumentStatus.PENDING || status == DocumentStatus.WAITING) {
+    private void checkDocumentStatus(ThirdPartyDocumentStatus status) {
+        if (status == ThirdPartyDocumentStatus.PENDING || status == ThirdPartyDocumentStatus.WAITING || status == ThirdPartyDocumentStatus.VERIFIED) {
         } else {
             throw new ResourceInternalServerErrorException("Ada data dengan status dokumen '"+ status.toString() +"', tidak dapat diproses. Silahkan gunakan status dokumen 'PENDING' atau 'WAITING'");
         }
@@ -180,7 +208,7 @@ public class Translator3rdParty {
 
         return reproduction3rdPartyDTOs.stream().map(dto -> {
 
-            if (dto.getId().length() == 0)
+            if (dto.getId() == null || dto.getId().length() == 0)
                 throw new ResourceInternalServerErrorException("Ada data Reproduksi, yang tidak mempunyai ID. ID tidak boleh kosong");
 
             if (!wppValid(dto.getWpp()))
@@ -206,7 +234,7 @@ public class Translator3rdParty {
                     .tanggalSampling(dto.getTanggalSampling())
                     .uuidEnumerator(dto.getNamaPencatat())
                     .dataDetailReproduksi(transformReproductionDetail(dto.getDataDetailReproduksi()))
-                    .statusDokumen(dto.getStatusDokumen())
+                    .statusDokumen(enTransformDocumentStatus(dto.getStatusDokumen()))
                     .photoName("")
                     .uuidPengupload(sysUser.getUuid())
                     .organisasi(sysUser.getOrganisasi())
@@ -253,7 +281,7 @@ public class Translator3rdParty {
                 .tanggalSampling(dto.getTanggalSampling())
                 .uuidEnumerator(dto.getNamaPencatat())
                 .dataDetailReproduksi(transformReproductionDetail(dto.getDataDetailReproduksi()))
-                .statusDokumen(dto.getStatusDokumen())
+                .statusDokumen(enTransformDocumentStatus(dto.getStatusDokumen()))
                 .photoName("")
                 .uuidPengupload(sysUser.getUuid())
                 .organisasi(sysUser.getOrganisasi())
@@ -330,7 +358,7 @@ public class Translator3rdParty {
 
         return size3rdPartyDTOs.stream().map(dto -> {
 
-            if (dto.getId().length() == 0)
+            if (dto.getId() == null || dto.getId().length() == 0)
                 throw new ResourceInternalServerErrorException("Ada data Ukuran, yang tidak mempunyai ID. ID tidak boleh kosong");
 
             if (!wppValid(dto.getWpp()))
@@ -375,7 +403,7 @@ public class Translator3rdParty {
                     .totalSampelIndividu(dto.getTotalSampelIndividu())
                     .dataSampleDetail(transformSizeSampleDetail(dto.getDataSampleDetail()))
                     .dataUkuranDetail(transformSizeDetail(dto.getDataUkuranDetail()))
-                    .statusDokumen(dto.getStatusDokumen())
+                    .statusDokumen(enTransformDocumentStatus(dto.getStatusDokumen()))
                     .photoName("")
                     .uuidPengupload(sysUser.getUuid())
                     .organisasi(sysUser.getOrganisasi())
@@ -442,7 +470,7 @@ public class Translator3rdParty {
                 .totalSampelIndividu(dto.getTotalSampelIndividu())
                 .dataSampleDetail(transformSizeSampleDetail(dto.getDataSampleDetail()))
                 .dataUkuranDetail(transformSizeDetail(dto.getDataUkuranDetail()))
-                .statusDokumen(dto.getStatusDokumen())
+                .statusDokumen(enTransformDocumentStatus(dto.getStatusDokumen()))
                 .photoName("")
                 .uuidPengupload(sysUser.getUuid())
                 .organisasi(sysUser.getOrganisasi())
@@ -523,7 +551,7 @@ public class Translator3rdParty {
 
         return operational3rdPartyDTs.stream().map(dto -> {
 
-            if (dto.getId().length() == 0)
+            if (dto.getId() == null || dto.getId().length() == 0)
                 throw new ResourceInternalServerErrorException("Ada data Operasional, yang tidak mempunyai ID. ID tidak boleh kosong");
 
             if (!wppValid(dto.getWpp()))
@@ -591,7 +619,7 @@ public class Translator3rdParty {
                     .jumlahTangkapanVolume(dto.getJumlahTangkapanVolume())
                     .jumlahTangkapanIndividu(dto.getJumlahTangkapanIndividu())
                     .lamaPerendaman(dto.getLamaPerendaman())
-                    .statusDokumen(dto.getStatusDokumen())
+                    .statusDokumen(enTransformDocumentStatus(dto.getStatusDokumen()))
                     .photoName("")
                     .uuidPengupload(sysUser.getUuid())
                     .organisasi(sysUser.getOrganisasi())
@@ -681,7 +709,7 @@ public class Translator3rdParty {
                 .jumlahTangkapanVolume(dto.getJumlahTangkapanVolume())
                 .jumlahTangkapanIndividu(dto.getJumlahTangkapanIndividu())
                 .lamaPerendaman(dto.getLamaPerendaman())
-                .statusDokumen(dto.getStatusDokumen())
+                .statusDokumen(enTransformDocumentStatus(dto.getStatusDokumen()))
                 .photoName("")
                 .uuidPengupload(sysUser.getUuid())
                 .organisasi(sysUser.getOrganisasi())
@@ -770,7 +798,7 @@ public class Translator3rdParty {
         if (user == null || auditDate == null || landing3rdPartyDTO == null)
             return null;
 
-        if (landing3rdPartyDTO.getId().length() == 0)
+        if (landing3rdPartyDTO.getId() == null || landing3rdPartyDTO.getId().length() == 0)
             throw new ResourceInternalServerErrorException("Data Pendaratan, tidak mempunyai ID. ID tidak boleh kosong");
 
         if (!wppValid(landing3rdPartyDTO.getWpp()))
@@ -791,7 +819,7 @@ public class Translator3rdParty {
                 .dataUkuran(transformSizes(landing3rdPartyDTO.getDataUkuran(), sysUser))
                 .dataReproduksi(transformReproductions(landing3rdPartyDTO.getDataReproduksi(), sysUser))
                 .userGroup(null)
-                .statusDokumen(landing3rdPartyDTO.getStatusDokumen())
+                .statusDokumen(enTransformDocumentStatus(landing3rdPartyDTO.getStatusDokumen()))
                 .photoName("")
                 .uuidPengupload(sysUser.getUuid())
                 .organisasi(sysUser.getOrganisasi())
@@ -850,7 +878,7 @@ public class Translator3rdParty {
                 .tanggalSampling(dto.getTanggalSampling())
                 .namaPencatat(dto.getUuidEnumerator())
                 .dataDetailReproduksi(deTransformReproductionDetail(dto.getDataDetailReproduksi()))
-                .statusDokumen(dto.getStatusDokumen())
+                .statusDokumen(deTransformDocumentStatus(dto.getStatusDokumen()))
                 .wpp(dto.getWpp())
                 .id(dto.getUuid())
                 .build();
@@ -911,7 +939,7 @@ public class Translator3rdParty {
                 .totalSampelIndividu(dto.getTotalSampelIndividu())
                 .dataSampleDetail(deTransformSizeSampleDetail(dto.getDataSampleDetail()))
                 .dataUkuranDetail(deTransformSizeDetail(dto.getDataUkuranDetail()))
-                .statusDokumen(dto.getStatusDokumen())
+                .statusDokumen(deTransformDocumentStatus(dto.getStatusDokumen()))
                 .wpp(dto.getWpp())
                 .id(dto.getUuid())
                 .build();
@@ -1015,7 +1043,7 @@ public class Translator3rdParty {
                 .jumlahTangkapanVolume(dto.getJumlahTangkapanVolume())
                 .jumlahTangkapanIndividu(dto.getJumlahTangkapanIndividu())
                 .lamaPerendaman(dto.getLamaPerendaman())
-                .statusDokumen(dto.getStatusDokumen())
+                .statusDokumen(deTransformDocumentStatus(dto.getStatusDokumen()))
                 .wpp(dto.getWpp())
                 .id(dto.getUuid())
                 .build();
@@ -1074,7 +1102,7 @@ public class Translator3rdParty {
                 .dataOperasional(deTransformOperationals(landing.getDataOperasional()))
                 .dataUkuran(deTransformSizes(landing.getDataUkuran()))
                 .dataReproduksi(deTransformReproductions(landing.getDataReproduksi()))
-                .statusDokumen(landing.getStatusDokumen())
+                .statusDokumen(deTransformDocumentStatus(landing.getStatusDokumen()))
                 .wpp(landing.getWpp())
                 .id(landing.getUuid())
                 .build();
