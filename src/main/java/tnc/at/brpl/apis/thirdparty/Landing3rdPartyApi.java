@@ -5,14 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import tnc.at.brpl.exceptions.ResourceInternalServerErrorException;
+import tnc.at.brpl.models.main.dto.BiologyOnReproduction3rdPartyDTO;
+import tnc.at.brpl.models.main.dto.BiologyOnSize3rdPartyDTO;
 import tnc.at.brpl.models.main.dto.Landing3rdPartyDTO;
+import tnc.at.brpl.models.main.dto.Operational3rdPartyDTO;
 import tnc.at.brpl.services.thirdparty.Landing3rdPartyService;
 import tnc.at.brpl.utils.Brpl;
 
 @RestController
 @Transactional
-@RequestMapping(value = "/api/client/data",
-        produces = {Brpl.MODE.JSON})
+@RequestMapping(value = "/sampling/api/v1", produces = {Brpl.MODE.JSON})
 @SuppressWarnings("unused")
 public class Landing3rdPartyApi {
 
@@ -28,6 +31,27 @@ public class Landing3rdPartyApi {
     public ResponseEntity<?> save3rdPartyData(@RequestBody Landing3rdPartyDTO landing3rdPartyDTO) {
         return ResponseEntity.ok(landing3rdPartyService.save(landing3rdPartyDTO));
     }
+
+    @PostMapping("/transfer/update")
+    public ResponseEntity<?> update3rdPartyData(@RequestBody Landing3rdPartyDTO landing3rdPartyDTO) {
+        return ResponseEntity.ok(landing3rdPartyService.update(landing3rdPartyDTO));
+    }
+
+    @PostMapping("/transfer/non-trip/biologiukuran")
+    public ResponseEntity<?> save3rdPartyDataNonTripBiologiUkuran(@RequestBody BiologyOnSize3rdPartyDTO biologyOnSize3rdPartyDTO) {
+        return ResponseEntity.ok(landing3rdPartyService.saveNonTripBiologiUkuran(biologyOnSize3rdPartyDTO));
+    }
+
+    @PostMapping("/transfer/non-trip/biologireproduksi")
+    public ResponseEntity<?> save3rdPartyDataNonTripBiologiReproduksi(@RequestBody BiologyOnReproduction3rdPartyDTO biologyOnReproduction3rdPartyDTO) {
+        return ResponseEntity.ok(landing3rdPartyService.saveNonTripBiologiReproduksi(biologyOnReproduction3rdPartyDTO));
+    }
+
+    @PostMapping("/transfer/non-trip/operasional")
+    public ResponseEntity<?> save3rdPartyDataNonTripOperasional(@RequestBody Operational3rdPartyDTO operational3rdPartyDTO) {
+        return ResponseEntity.ok(landing3rdPartyService.saveNonTripOperasional(operational3rdPartyDTO));
+    }
+
 
 
     @GetMapping(params = {"page", "size"})
@@ -82,9 +106,6 @@ public class Landing3rdPartyApi {
     public ResponseEntity<?> deleteReproduksiById3rdPartyData(@PathVariable("id") String id) {
         return ResponseEntity.ok(landing3rdPartyService.deleteReproduksiById3rdPartyData(id));
     }
-
-
-
 
 
 }

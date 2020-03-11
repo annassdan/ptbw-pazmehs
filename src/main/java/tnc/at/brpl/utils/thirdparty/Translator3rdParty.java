@@ -4,26 +4,15 @@ import tnc.at.brpl.exceptions.ResourceInternalServerErrorException;
 import tnc.at.brpl.models.administrator.SysUser;
 import tnc.at.brpl.models.main.*;
 import tnc.at.brpl.models.main.dto.*;
-import tnc.at.brpl.services.thirdparty.Utility3rdPartyService;
-import tnc.at.brpl.services.thirdparty.util.AlatTangkap;
-import tnc.at.brpl.services.thirdparty.util.SumberDaya;
 import tnc.at.brpl.utils.data.DocumentStatus;
 import tnc.at.brpl.utils.data.ThirdPartyDocumentStatus;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class Translator3rdParty {
-
-    final List<String> lengthTypes = Arrays.asList("CL", "CW", "DW", "FL", "ML", "SL", "TL", "OT");
-
-    final List<String> wpps = Arrays.asList("571", "572", "573", "711", "712", "713", "714", "715", "716", "717", "718");
-
-    Utility3rdPartyService utility3rdPartyService = new Utility3rdPartyService();
 
     private Date auditDate;
 
@@ -60,105 +49,105 @@ public class Translator3rdParty {
     }
 
 
-    private boolean lengthTypesValid(String lt) {
-        if (lt == null || lt.length() == 0)
-            throw new ResourceInternalServerErrorException("Ada Tipe Panjang yang tidak valid...");
-
-        return lengthTypes.stream().anyMatch(s -> s.toUpperCase().equals(lt.toUpperCase()));
-    }
-
-
-    private boolean sexValid(String sex) {
-        if (sex == null || sex.length() == 0)
-            throw new ResourceInternalServerErrorException("Ada Jenis Kelamin yang tidak valid...");
-
-        return (sex.toUpperCase().equals("M") || sex.toUpperCase().equals("F"));
-    }
-
-    private boolean tkgValid(String tkg) {
-        if (tkg == null || tkg.length() == 0)
-            throw new ResourceInternalServerErrorException("Ada TKG yang tidak valid...");
-
-        return utility3rdPartyService.tkg().stream().anyMatch(tkgObject -> tkgObject.getTkg().toUpperCase().equals(tkg.toUpperCase()));
-    }
-
-    private boolean sumberdayaValid(String sd) {
-        if (sd == null || sd.length() == 0)
-            throw new ResourceInternalServerErrorException("Ada Sumber Daya yang tidak valid...");
-
-        return utility3rdPartyService.sumberDaya().stream().anyMatch(s -> s.getSumberDaya().toUpperCase().equals(sd.toUpperCase()));
-    }
-
-
-    private boolean alatTangkapValid(String al) {
-        if (al == null || al.length() == 0)
-            throw new ResourceInternalServerErrorException("Ada Alat Tangkap yang tidak valid...");
-
-        return utility3rdPartyService.sumberDaya().stream()
-                .flatMap(sumberDaya -> sumberDaya.getDaftarAlatTangkap().stream())
-                .collect(Collectors.toList()).stream()
-                .anyMatch(alatTangkap -> alatTangkap.getAlatTangkap().toUpperCase().equals(al.toUpperCase()));
-    }
-
-    private boolean wppValid(String wpp) {
-        if (wpp == null || wpp.length() == 0)
-            throw new ResourceInternalServerErrorException("Ada WPP yang tidak valid...");
-
-        return wpps.stream().anyMatch(s -> s.toUpperCase().equals(wpp.toUpperCase()));
-    }
-
-
-    private void checkSpecificationOfAlatTangkap(String sd, String al, OperationalOnFishingToolSpecification3rdPartyDTO specification) {
-        Optional<SumberDaya> daya = utility3rdPartyService.sumberDaya().stream()
-                .filter(sumberDaya -> sumberDaya.getSumberDaya().toUpperCase().equals(sd.toUpperCase()))
-                .findFirst();
-
-        if (!daya.isPresent())
-            throw new ResourceInternalServerErrorException("Ada data Operasional, dimana jenis sumberdaya tidak dapat diproses untuk mem-validasi spesifikasi dari alat tangkap");
-
-        Optional<AlatTangkap> tangkap = daya.get().getDaftarAlatTangkap().stream()
-                .filter(alatTangkap -> alatTangkap.getAlatTangkap().toUpperCase().equals(al.toUpperCase()))
-                .findFirst();
-
-        if (!tangkap.isPresent())
-            throw new ResourceInternalServerErrorException("Ada data Operasional, dimana jenis Alat Tangkap yang dimaksud tidak dapat diproses untuk mem-validasi spesifikasi dari alat tangkap");
-
-        if (!tangkap.get().getDaftarSpesifikasi().stream().anyMatch(spesifikasi -> spesifikasi.getSpesifikasi().toUpperCase().equals(specification.getSpesifikasi().toUpperCase())))
-            throw new ResourceInternalServerErrorException("Ada data Operasional, " +
-                    "dimana spesifikasi '" + specification.getSpesifikasi() + "' untuk alat tangkap '" + al + "', tidak sesuai!!");
-
-        /* cek satuan dari data spesifikasi */
-        tangkap.get().getDaftarSpesifikasi().stream()
-                .filter(spesifikasi -> spesifikasi.getSpesifikasi().toUpperCase().equals(specification.getSpesifikasi().toUpperCase()))
-                .findFirst()
-                .ifPresent(spesifikasi -> {
-                    if (!spesifikasi.getSatuan().equals(specification.getSatuanSpesifikasi()))
-                        throw new ResourceInternalServerErrorException("Ada data Operasional, " +
-                                "dimana spesifikasi '" + specification.getSpesifikasi() + "' untuk alat tangkap '" + al + "', tidak mempunyai satuan yang sesuai dengan ketentuan BRPL." +
-                                " Seharusnya spesifikasi ini " + ((spesifikasi.getSatuan().length() == 0) ? "tidak mempunyai satuan (kosong)" : "mempunyai satuan '" + spesifikasi.getSatuan() + "'") +
-                                ", tetapi pada data anda " + ((specification.getSatuanSpesifikasi().length() == 0) ? "tidak menggunakan satuan (kosong)" : "ditemukan menggunakan satuan '" +specification.getSatuanSpesifikasi()+ "'")
-                        );
+//    private boolean lengthTypesValid(String lt) {
+//        if (lt == null || lt.length() == 0)
+//            throw new ResourceInternalServerErrorException("Ada Tipe Panjang yang tidak valid...");
+//
+//        return lengthTypes.stream().anyMatch(s -> s.toUpperCase().equals(lt.toUpperCase()));
+//    }
+//
+//
+//    private boolean sexValid(String sex) {
+//        if (sex == null || sex.length() == 0)
+//            throw new ResourceInternalServerErrorException("Ada Jenis Kelamin yang tidak valid...");
+//
+//        return (sex.toUpperCase().equals("M") || sex.toUpperCase().equals("F"));
+//    }
+//
+//    private boolean tkgValid(String tkg) {
+//        if (tkg == null || tkg.length() == 0)
+//            throw new ResourceInternalServerErrorException("Ada TKG yang tidak valid...");
+//
+//        return utility3rdPartyService.tkg().stream().anyMatch(tkgObject -> tkgObject.getTkg().toUpperCase().equals(tkg.toUpperCase()));
+//    }
+//
+//    private boolean sumberdayaValid(String sd) {
+//        if (sd == null || sd.length() == 0)
+//            throw new ResourceInternalServerErrorException("Ada Sumber Daya yang tidak valid...");
+//
+//        return utility3rdPartyService.sumberDaya().stream().anyMatch(s -> s.getSumberDaya().toUpperCase().equals(sd.toUpperCase()));
+//    }
+//
+//
+//    private boolean alatTangkapValid(String al) {
+//        if (al == null || al.length() == 0)
+//            throw new ResourceInternalServerErrorException("Ada Alat Tangkap yang tidak valid...");
+//
+//        return utility3rdPartyService.sumberDaya().stream()
+//                .flatMap(sumberDaya -> sumberDaya.getDaftarAlatTangkap().stream())
+//                .collect(Collectors.toList()).stream()
+//                .anyMatch(alatTangkap -> alatTangkap.getAlatTangkap().toUpperCase().equals(al.toUpperCase()));
+//    }
+//
+//    private boolean wppValid(String wpp) {
+//        if (wpp == null || wpp.length() == 0)
+//            throw new ResourceInternalServerErrorException("Ada WPP yang tidak valid...");
+//
+//        return wpps.stream().anyMatch(s -> s.toUpperCase().equals(wpp.toUpperCase()));
+//    }
 
 
-                    if (spesifikasi.getSatuan().length() > 0) {
-                        try {
-                            if (specification.getNilaiSpesifikasi().length() > 0)
-                                Integer.parseInt(specification.getNilaiSpesifikasi());
-                        } catch (Exception e) {
-                            throw new ResourceInternalServerErrorException("Ada data Operasional, " +
-                                    "dimana spesifikasi '" + specification.getSpesifikasi() + "' untuk alat tangkap '" + al + "', seharusnya nilai spesifikasi tersebut berupa 'ANGKA'. Karena memiliki satuan '"+ spesifikasi.getSatuan() +"'");
-                        }
-                    }
+//    private void checkSpecificationOfAlatTangkap(String sd, String al, OperationalOnFishingToolSpecification3rdPartyDTO specification) {
+//        Optional<SumberDaya> daya = utility3rdPartyService.sumberDaya().stream()
+//                .filter(sumberDaya -> sumberDaya.getSumberDaya().toUpperCase().equals(sd.toUpperCase()))
+//                .findFirst();
+//
+//        if (!daya.isPresent())
+//            throw new ResourceInternalServerErrorException("Ada data Operasional, dimana jenis sumberdaya tidak dapat diproses untuk mem-validasi spesifikasi dari alat tangkap");
+//
+//        Optional<AlatTangkap> tangkap = daya.get().getDaftarAlatTangkap().stream()
+//                .filter(alatTangkap -> alatTangkap.getAlatTangkap().toUpperCase().equals(al.toUpperCase()))
+//                .findFirst();
+//
+//        if (!tangkap.isPresent())
+//            throw new ResourceInternalServerErrorException("Ada data Operasional, dimana jenis Alat Tangkap yang dimaksud tidak dapat diproses untuk mem-validasi spesifikasi dari alat tangkap");
+//
+//        if (!tangkap.get().getDaftarSpesifikasi().stream().anyMatch(spesifikasi -> spesifikasi.getSpesifikasi().toUpperCase().equals(specification.getSpesifikasi().toUpperCase())))
+//            throw new ResourceInternalServerErrorException("Ada data Operasional, " +
+//                    "dimana spesifikasi '" + specification.getSpesifikasi() + "' untuk alat tangkap '" + al + "', tidak sesuai!!");
+//
+//        /* cek satuan dari data spesifikasi */
+//        tangkap.get().getDaftarSpesifikasi().stream()
+//                .filter(spesifikasi -> spesifikasi.getSpesifikasi().toUpperCase().equals(specification.getSpesifikasi().toUpperCase()))
+//                .findFirst()
+//                .ifPresent(spesifikasi -> {
+//                    if (!spesifikasi.getSatuan().equals(specification.getSatuanSpesifikasi()))
+//                        throw new ResourceInternalServerErrorException("Ada data Operasional, " +
+//                                "dimana spesifikasi '" + specification.getSpesifikasi() + "' untuk alat tangkap '" + al + "', tidak mempunyai satuan yang sesuai dengan ketentuan BRPL." +
+//                                " Seharusnya spesifikasi ini " + ((spesifikasi.getSatuan().length() == 0) ? "tidak mempunyai satuan (kosong)" : "mempunyai satuan '" + spesifikasi.getSatuan() + "'") +
+//                                ", tetapi pada data anda " + ((specification.getSatuanSpesifikasi().length() == 0) ? "tidak menggunakan satuan (kosong)" : "ditemukan menggunakan satuan '" +specification.getSatuanSpesifikasi()+ "'")
+//                        );
+//
+//
+//                    if (spesifikasi.getSatuan().length() > 0) {
+//                        try {
+//                            if (specification.getNilaiSpesifikasi().length() > 0)
+//                                Integer.parseInt(specification.getNilaiSpesifikasi());
+//                        } catch (Exception e) {
+//                            throw new ResourceInternalServerErrorException("Ada data Operasional, " +
+//                                    "dimana spesifikasi '" + specification.getSpesifikasi() + "' untuk alat tangkap '" + al + "', seharusnya nilai spesifikasi tersebut berupa 'ANGKA'. Karena memiliki satuan '"+ spesifikasi.getSatuan() +"'");
+//                        }
+//                    }
+//
+//                });
+//    }
 
-                });
-    }
-
-    private void checkDocumentStatus(ThirdPartyDocumentStatus status) {
-        if (status == ThirdPartyDocumentStatus.PENDING || status == ThirdPartyDocumentStatus.WAITING || status == ThirdPartyDocumentStatus.VERIFIED) {
-        } else {
-            throw new ResourceInternalServerErrorException("Ada data dengan status dokumen '"+ status.toString() +"', tidak dapat diproses. Silahkan gunakan status dokumen 'PENDING' atau 'WAITING'");
-        }
-    }
+//    private void checkDocumentStatus(ThirdPartyDocumentStatus status) {
+//        if (status == ThirdPartyDocumentStatus.WAITING || status == ThirdPartyDocumentStatus.VERIFIED) {
+//        } else {
+//            throw new ResourceInternalServerErrorException("Ada data dengan status dokumen '"+ status.toString() +"', tidak dapat diproses. Silahkan gunakan status dokumen 'PENDING' atau 'WAITING'");
+//        }
+//    }
 
 
     public List<BiologyOnReproductionDetail> transformReproductionDetail(List<BiologyOnReproductionDetail3rdPatyDTO> reproductionDetail3rdPatyDTO) {
@@ -167,24 +156,7 @@ public class Translator3rdParty {
             return null;
 
         return reproductionDetail3rdPatyDTO.stream().map(dto -> {
-
-            if (!lengthTypesValid(dto.getTipePanjang()))
-                throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan tipe panjang '" + dto.getTipePanjang() + "' yang tidak valid dengan ketentuan BRPL");
-
-            if (!sexValid(dto.getJenisKelamin()))
-                throw new ResourceInternalServerErrorException("Ada jenis kelamin ('" + dto.getJenisKelamin() + "') tidak valid");
-
-            if (dto.getPanjang() < 0)
-                throw new ResourceInternalServerErrorException("Ada data Reproduksi yang mempunyai panjang dibawah 0");
-
-            if (dto.getBerat() < 0)
-                throw new ResourceInternalServerErrorException("Ada data Reproduksi yang mempunyai berat dibawah 0");
-
-            if (!tkgValid(dto.getTkg()))
-                throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan nilai TKG '" + dto.getTkg() + "' tidak valid");
-
-
-            BiologyOnReproductionDetail detail = BiologyOnReproductionDetail.builder()
+             BiologyOnReproductionDetail detail = BiologyOnReproductionDetail.builder()
                     .panjang(dto.getPanjang())
                     .tipePanjang(dto.getTipePanjang())
                     .jenisKelamin(dto.getJenisKelamin())
@@ -207,20 +179,6 @@ public class Translator3rdParty {
             return null;
 
         return reproduction3rdPartyDTOs.stream().map(dto -> {
-
-            if (dto.getId() == null || dto.getId().length() == 0)
-                throw new ResourceInternalServerErrorException("Ada data Reproduksi, yang tidak mempunyai ID. ID tidak boleh kosong");
-
-            if (!wppValid(dto.getWpp()))
-                throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan WPP yang tidak valid");
-
-            if (!sumberdayaValid(dto.getNamaSumberDaya()))
-                throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan sumberdaya '" + dto.getNamaSumberDaya() + "' yang tidak valid dengan ketentuan BRPL");
-
-            if (!alatTangkapValid(dto.getNamaAlatTangkap()))
-                throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan alat tangkap '" + dto.getNamaAlatTangkap() + "' yang tidak valid dengan ketentuan BRPL");
-
-            checkDocumentStatus(dto.getStatusDokumen());
 
             BiologyOnReproduction biology = BiologyOnReproduction.builder()
                     .uuidSumberDaya(dto.getNamaSumberDaya())
@@ -254,20 +212,6 @@ public class Translator3rdParty {
 
         if (user == null || auditDate == null || dto == null)
             return null;
-
-        if (dto.getId().length() == 0)
-            throw new ResourceInternalServerErrorException("Data Reproduksi, tidak mempunyai ID. ID tidak boleh kosong");
-
-        if (!wppValid(dto.getWpp()))
-            throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan WPP yang tidak valid");
-
-        if (!sumberdayaValid(dto.getNamaSumberDaya()))
-            throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan sumberdaya '" + dto.getNamaSumberDaya() + "' yang tidak valid dengan ketentuan BRPL");
-
-        if (!alatTangkapValid(dto.getNamaAlatTangkap()))
-            throw new ResourceInternalServerErrorException("Ada data Reproduksi, dengan alat tangkap '" + dto.getNamaAlatTangkap() + "' yang tidak valid dengan ketentuan BRPL");
-
-        checkDocumentStatus(dto.getStatusDokumen());
 
         BiologyOnReproduction biology = BiologyOnReproduction.builder()
                 .uuidSumberDaya(dto.getNamaSumberDaya())
@@ -303,16 +247,6 @@ public class Translator3rdParty {
             return null;
 
         return sizeSampleDetail3rdPartyDTOs.stream().map(dto -> {
-
-            if (!lengthTypesValid(dto.getTipePanjang()))
-                throw new ResourceInternalServerErrorException("Ada data Sample Ukuran, dengan tipe panjang '" + dto.getTipePanjang() + "' yang tidak valid dengan ketentuan BRPL");
-
-            if (dto.getSampleVolume() < 0)
-                throw new ResourceInternalServerErrorException("Ada data Ukuran, untuk sample pengukuran, yang mempunyai total (Volume) dibawah 0");
-
-            if (dto.getSampleIndividu() < 0)
-                throw new ResourceInternalServerErrorException("Ada data Ukuran, untuk sample pengukuran, yang mempunyai total (Individu) dibawah 0");
-
             BiologyOnSizeSampleDetail sampleDetail = BiologyOnSizeSampleDetail.builder()
                     .uuidSpesies(dto.getNamaSpesies())
                     .sampleVolume(dto.getSampleVolume())
@@ -357,36 +291,6 @@ public class Translator3rdParty {
             return null;
 
         return size3rdPartyDTOs.stream().map(dto -> {
-
-            if (dto.getId() == null || dto.getId().length() == 0)
-                throw new ResourceInternalServerErrorException("Ada data Ukuran, yang tidak mempunyai ID. ID tidak boleh kosong");
-
-            if (!wppValid(dto.getWpp()))
-                throw new ResourceInternalServerErrorException("Ada data Ukuran, dengan WPP yang tidak valid");
-
-            if (!sumberdayaValid(dto.getNamaSumberDaya()))
-                throw new ResourceInternalServerErrorException("Ada data Ukuran, dengan sumberdaya '" + dto.getNamaSumberDaya() + "' yang tidak valid dengan ketentuan BRPL");
-
-            if (!alatTangkapValid(dto.getNamaAlatTangkap()))
-                throw new ResourceInternalServerErrorException("Ada data Ukuran, dengan alat tangkap '" + dto.getNamaAlatTangkap() + "' yang tidak valid dengan ketentuan BRPL");
-
-            checkDocumentStatus(dto.getStatusDokumen());
-
-
-            if (dto.getTotalSampelVolume() < 0)
-                throw new ResourceInternalServerErrorException("Ada data Ukuran, jumlah sampel pengukuran (Volume) dibawah 0");
-
-            if (dto.getTotalSampelIndividu() < 0)
-                throw new ResourceInternalServerErrorException("Ada data Ukuran, jumlah sampel pengukuran (Individu) dibawah 0");
-
-
-            if (dto.getTotalTangkapanVolume() < 0)
-                throw new ResourceInternalServerErrorException("Terdapat data Ukuran, dengan total tangkapan (Volume) dibawah 0");
-
-            if (dto.getTotalTangkapanIndividu() < 0)
-                throw new ResourceInternalServerErrorException("Terdapat data Ukuran, dengan total tangkapan (Individu) dibawah 0");
-
-
             BiologyOnSize size = BiologyOnSize.builder()
                     .uuidEnumerator(dto.getNamaPencatat())
                     .uuidSumberDaya(dto.getNamaSumberDaya())
@@ -424,35 +328,6 @@ public class Translator3rdParty {
 
         if (user == null || auditDate == null || dto == null)
             return null;
-
-        if (dto.getId().length() == 0)
-            throw new ResourceInternalServerErrorException("Data Ukuran, tidak mempunyai ID. ID tidak boleh kosong");
-
-        if (!wppValid(dto.getWpp()))
-            throw new ResourceInternalServerErrorException("Ada data Ukuran, dengan WPP yang tidak valid");
-
-        if (!sumberdayaValid(dto.getNamaSumberDaya()))
-            throw new ResourceInternalServerErrorException("Ada data Ukuran, dengan sumberdaya '" + dto.getNamaSumberDaya() + "' yang tidak valid dengan ketentuan BRPL");
-
-        if (!alatTangkapValid(dto.getNamaAlatTangkap()))
-            throw new ResourceInternalServerErrorException("Ada data Ukuran, dengan alat tangkap '" + dto.getNamaAlatTangkap() + "' yang tidak valid dengan ketentuan BRPL");
-
-        checkDocumentStatus(dto.getStatusDokumen());
-
-
-        if (dto.getTotalSampelVolume() < 0)
-            throw new ResourceInternalServerErrorException("Ada data Ukuran, jumlah sampel pengukuran (Volume) dibawah 0");
-
-        if (dto.getTotalSampelIndividu() < 0)
-            throw new ResourceInternalServerErrorException("Ada data Ukuran, jumlah sampel pengukuran (Individu) dibawah 0");
-
-
-        if (dto.getTotalTangkapanVolume() < 0)
-            throw new ResourceInternalServerErrorException("Terdapat data Ukuran, dengan total tangkapan (Volume) dibawah 0");
-
-        if (dto.getTotalTangkapanIndividu() < 0)
-            throw new ResourceInternalServerErrorException("Terdapat data Ukuran, dengan total tangkapan (Individu) dibawah 0");
-
 
         BiologyOnSize size = BiologyOnSize.builder()
                 .uuidEnumerator(dto.getNamaPencatat())
@@ -493,9 +368,6 @@ public class Translator3rdParty {
             return null;
 
         return specification3rdPartyDTOs.stream().map(dto -> {
-
-            checkSpecificationOfAlatTangkap(sumberdaya, alatTangkap, dto);
-
             OperationalOnFishingToolSpecification specification = OperationalOnFishingToolSpecification.builder()
                     .uuidAlatTangkap(alatTangkap)
                     .spesifikasi(dto.getSpesifikasi())
@@ -517,13 +389,6 @@ public class Translator3rdParty {
             return null;
 
         return details3rdPartyDTOs.stream().map(dto -> {
-
-            if (dto.getTotalBeratEkor() < 0)
-                throw new ResourceInternalServerErrorException("Ada data Operasional, untuk detail tangkapan Kapal, yang mempunyai detail berat tangkapan (Ekor) dibawah 0");
-
-            if (dto.getTotalBeratKg() < 0)
-                throw new ResourceInternalServerErrorException("Ada data Operasional, untuk detail tangkapan Kapal, yang mempunyai detail berat tangkapan (Kg) dibawah 0");
-
             OperationalCatchDetails details = OperationalCatchDetails.builder()
                     .uuidSpesies(dto.getNamaSpesies())
                     .kodeFao(dto.getKodeFao())
@@ -550,21 +415,6 @@ public class Translator3rdParty {
             return null;
 
         return operational3rdPartyDTs.stream().map(dto -> {
-
-            if (dto.getId() == null || dto.getId().length() == 0)
-                throw new ResourceInternalServerErrorException("Ada data Operasional, yang tidak mempunyai ID. ID tidak boleh kosong");
-
-            if (!wppValid(dto.getWpp()))
-                throw new ResourceInternalServerErrorException("Ada data Operasional, dengan WPP yang tidak valid");
-
-            if (!sumberdayaValid(dto.getNamaSumberDaya()))
-                throw new ResourceInternalServerErrorException("Ada data Operasional, dengan sumberdaya '" + dto.getNamaSumberDaya() + "' yang tidak valid dengan ketentuan BRPL");
-
-            if (!alatTangkapValid(dto.getNamaAlatTangkap()))
-                throw new ResourceInternalServerErrorException("Ada data Operasional, dengan alat tangkap '" + dto.getNamaAlatTangkap() + "' yang tidak valid dengan ketentuan BRPL");
-
-            checkDocumentStatus(dto.getStatusDokumen());
-
             Operational operational = Operational.builder()
                     .namaLokasiPendaratan(dto.getNamaLokasiPendaratan())
                     .uuidSumberDaya(dto.getNamaSumberDaya())
@@ -640,20 +490,6 @@ public class Translator3rdParty {
 
         if (user == null || auditDate == null || dto == null)
             return null;
-
-        if (dto.getId().length() == 0)
-            throw new ResourceInternalServerErrorException("Data Operasional, tidak mempunyai ID. ID tidak boleh kosong");
-
-        if (!wppValid(dto.getWpp()))
-            throw new ResourceInternalServerErrorException("Ada data Operasional, dengan WPP yang tidak valid");
-
-        if (!sumberdayaValid(dto.getNamaSumberDaya()))
-            throw new ResourceInternalServerErrorException("Ada data Operasional, dengan sumberdaya '" + dto.getNamaSumberDaya() + "' yang tidak valid dengan ketentuan BRPL");
-
-        if (!alatTangkapValid(dto.getNamaAlatTangkap()))
-            throw new ResourceInternalServerErrorException("Ada data Operasional, dengan alat tangkap '" + dto.getNamaAlatTangkap() + "' yang tidak valid dengan ketentuan BRPL");
-
-        checkDocumentStatus(dto.getStatusDokumen());
 
         Operational operational = Operational.builder()
                 .namaLokasiPendaratan(dto.getNamaLokasiPendaratan())
@@ -732,7 +568,6 @@ public class Translator3rdParty {
             return null;
 
         return catchDetail3rdPartyDTOs.stream().map(dto -> {
-
             if (dto.getTangkapanVolume() < 0)
                 throw new ResourceInternalServerErrorException("Ada data detail tangkapan Kapal, yang mempunyai detail tangkapan (Volume) dibawah 0");
 
@@ -758,16 +593,6 @@ public class Translator3rdParty {
             return null;
 
         return detail3rdPartyDTOs.stream().map(dto -> {
-
-            if (!alatTangkapValid(dto.getNamaAlatTangkap()))
-                throw new ResourceInternalServerErrorException("Ada data Kapal, dengan alat tangkap '" + dto.getNamaAlatTangkap() + "' yang tidak valid dengan ketentuan BRPL");
-
-            if (dto.getTotalTangkapanVolume() < 0)
-                throw new ResourceInternalServerErrorException("Ada data Kapal, yang mempunyai total tangkapan (Volume) dibawah 0");
-
-            if (dto.getTotalTangkapanIndividu() < 0)
-                throw new ResourceInternalServerErrorException("Ada data Kapal, yang mempunyai total tangkapan (Individu) dibawah 0");
-
             LandingDetail detail = LandingDetail.builder()
                     .namaKapal(dto.getNamaKapal())
                     .penampung(dto.isPenampung())
@@ -797,17 +622,6 @@ public class Translator3rdParty {
 
         if (user == null || auditDate == null || landing3rdPartyDTO == null)
             return null;
-
-        if (landing3rdPartyDTO.getId() == null || landing3rdPartyDTO.getId().length() == 0)
-            throw new ResourceInternalServerErrorException("Data Pendaratan, tidak mempunyai ID. ID tidak boleh kosong");
-
-        if (!wppValid(landing3rdPartyDTO.getWpp()))
-            throw new ResourceInternalServerErrorException("Pendaratan ini memiliki WPP yang tidak valid");
-
-        if (!sumberdayaValid(landing3rdPartyDTO.getNamaSumberDaya()))
-            throw new ResourceInternalServerErrorException("Data Pendaratan, dengan sumberdaya '" + landing3rdPartyDTO.getNamaSumberDaya() + "' yang tidak valid dengan ketentuan BRPL");
-
-        checkDocumentStatus(landing3rdPartyDTO.getStatusDokumen());
 
         Landing landing = Landing.builder()
                 .tanggalPendaratan(landing3rdPartyDTO.getTanggalPendaratan())
@@ -859,8 +673,6 @@ public class Translator3rdParty {
 
 
     public List<BiologyOnReproduction3rdPartyDTO> deTransformReproductions(List<BiologyOnReproduction> reproduction) {
-
-
         return reproduction.stream().map(dto -> deTransformReproduction(dto)).collect(Collectors.toList());
     }
 

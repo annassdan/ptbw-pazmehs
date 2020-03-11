@@ -1,5 +1,7 @@
 package tnc.at.brpl.utils.other;
 
+import org.apache.commons.text.WordUtils;
+import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.data.DocumentStatus;
 
 import javax.print.Doc;
@@ -8,7 +10,44 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+@SuppressWarnings("unused")
 public class Shared {
+
+    public static Date toFormatedDate(String source) {
+        try {
+            return new SimpleDateFormat(Brpl.DATE_PATTERN).parse(source);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean isStringNullOrEmpty(String obj) {
+        return obj == null || verifyString(obj).length() == 0 || verifyString(obj).toLowerCase().equals("null");
+    }
+
+    public static boolean isStringEmpty(String obj) {
+        return verifyString(obj).length() == 0 || verifyString(obj).toLowerCase().equals("null");
+    }
+
+    public static String verifyString(String obj) {
+        return verifyString(obj, false);
+    }
+
+    public static String verifyString(String obj, boolean tranformToTitleCase) {
+        if (obj == null)
+            return "";
+
+        if (tranformToTitleCase) {
+            obj = obj.toLowerCase().replaceAll("\\s+", " ").trim();
+            final char[] delimiters = { ' ', '-' };
+            return WordUtils.capitalizeFully(obj, delimiters);
+        } else {
+            obj = obj.replaceAll("\\s+", " ").trim();
+            return obj;
+        }
+    }
+
 
     public static DocumentStatus analyzingDocumentStatus(String status) {
         switch (status) {

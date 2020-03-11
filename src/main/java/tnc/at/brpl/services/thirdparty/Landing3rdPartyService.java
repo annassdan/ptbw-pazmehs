@@ -24,6 +24,9 @@ import tnc.at.brpl.repositories.main.BiologyOnSizeRepository;
 import tnc.at.brpl.repositories.main.LandingRepository;
 import tnc.at.brpl.repositories.main.OperationalRepository;
 import tnc.at.brpl.services.main.LandingService;
+import tnc.at.brpl.utils.data.validators.LandingValidator;
+import tnc.at.brpl.utils.data.validators.ValidatorUtil;
+import tnc.at.brpl.utils.data.validators.thirdparty.Landing3rdPartyValidator;
 import tnc.at.brpl.utils.thirdparty.Translator3rdParty;
 
 import java.util.Date;
@@ -74,27 +77,80 @@ public class Landing3rdPartyService {
 
     /**
      *
-     * @param landing3rdPartyDTO
-     * @return
+     * @param landing3rdPartyDTO save data sampling from mitra organization
+     * @return Landing3rdPartyDTO
      */
     public Landing3rdPartyDTO save(Landing3rdPartyDTO landing3rdPartyDTO) {
+        ValidatorUtil.expectNoThrowError(Landing3rdPartyValidator.validateAll(landing3rdPartyDTO));
+
         generateDateForAudit();
         SysUser sysUser = getUserInformation();
-
-        /* cek data berdasarkan ID, apakah sudah ada di database atau belum */
-        if (landing3rdPartyDTO.getId().length() > 0) {
-            Landing checkResult = landingRepository.findOne(landing3rdPartyDTO.getId());
-            if (checkResult != null)
-                throw new ResourceInternalServerErrorException("Data Pendaratan sudah ada di Sistem e-BRPL, " +
-                        "Silahkan lakukan proses update jika ada perubahan pada data ini");
-        } else
-            throw new ResourceInternalServerErrorException("Data Pendaratan ini tidak memiliki ID");
 
         user = sysUserRepository.findByPengguna(getUsername());
 
         Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
         Landing landing = landingRepository.save(rdParty.transformLanding(landing3rdPartyDTO, sysUser));
         return rdParty.deTransformLanding(landing);
+    }
+
+
+    /**
+     *
+     * @param landing3rdPartyDTO
+     * @return
+     */
+    public Landing3rdPartyDTO update(Landing3rdPartyDTO landing3rdPartyDTO) {
+        if (landing3rdPartyDTO.getDataRincianPendaratan().isEmpty()) {
+            throw new ResourceInternalServerErrorException("Data ini tidak mempunyai rincian kapal pendaratan, ");
+        }
+
+        generateDateForAudit();
+        SysUser sysUser = getUserInformation();
+
+        /* cek data berdasarkan ID, apakah sudah ada di database atau belum */
+        if (landing3rdPartyDTO.getId() == null || landing3rdPartyDTO.getId().length() == 0) {
+            throw new ResourceInternalServerErrorException("Data Pendaratan ini tidak memiliki ID");
+        } else {
+            Landing checkResult = landingRepository.findOne(landing3rdPartyDTO.getId());
+            if (checkResult == null)
+                throw new ResourceInternalServerErrorException("Data Pendaratan belum ada di Sistem e-BRPL, " +
+                        "Silahkan lakukan proses input terlebih dahulu!");
+        }
+
+        user = sysUserRepository.findByPengguna(getUsername());
+
+        Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
+        Landing landing = landingRepository.save(rdParty.transformLanding(landing3rdPartyDTO, sysUser));
+        return rdParty.deTransformLanding(landing);
+    }
+
+
+    public BiologyOnSize3rdPartyDTO saveNonTripBiologiUkuran(BiologyOnSize3rdPartyDTO biologyOnSize3rdPartyDTO) {
+        generateDateForAudit();
+        SysUser sysUser = getUserInformation();
+
+        /* cek data berdasarkan ID, apakah sudah ada di database atau belum */
+        if (biologyOnSize3rdPartyDTO.getId() == null || biologyOnSize3rdPartyDTO.getId().length() == 0) {
+            throw new ResourceInternalServerErrorException("Data Ukuran ini tidak memiliki ID");
+        } else {
+            Landing checkResult = landingRepository.findOne(biologyOnSize3rdPartyDTO.getId());
+            if (checkResult != null)
+                throw new ResourceInternalServerErrorException("Data Ukuran sudah ada di Sistem e-BRPL, " +
+                        "Silahkan lakukan proses update jika ada perubahan pada data ini");
+        }
+
+        user = sysUserRepository.findByPengguna(getUsername());
+
+        return null;
+    }
+
+
+    public BiologyOnReproduction3rdPartyDTO saveNonTripBiologiReproduksi(BiologyOnReproduction3rdPartyDTO biologyOnReproduction3rdPartyDTO) {
+        return null;
+    }
+
+    public Operational3rdPartyDTO saveNonTripOperasional(Operational3rdPartyDTO operational3rdPartyDTO) {
+        return null;
     }
 
 
@@ -238,7 +294,6 @@ public class Landing3rdPartyService {
         reproductionRepository.delete(id);
         return Delete3rdPartyResponse.builder().message("Data dengan ID '" + id + "', berhasil dihapus dari database." ).build();
     }
-
 
 
 

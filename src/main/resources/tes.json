@@ -1,242 +1,253 @@
 {
-  "dataOperasional": [
+  "id":"12",
+  "dataOperasional":[
     {
-      "asalKapalAndon": "PPN Bengkulu",
-      "bobotKapal": 20,
-      "daerahPenangkapan": "444, 555",
-      "dataOperasionalDetailTangkapan": [
+      "asalKapalAndon":"",
+      "bobotKapal":   2,
+      "daerahPenangkapan":"K27",
+      "dataOperasionalDetailTangkapan":[
         {
-          "asin": true,
-          "beku": true,
-          "id": "",
-          "kodeFao": "",
-          "loin": true,
-          "namaSpesies": "Kembung",
-          "rebus": true,
-          "segar": true,
-          "totalBeratEkor": 0,
-          "totalBeratKg": 35
+          "asin":false,
+          "beku":false,
+          "id":"",
+          "kodeFAO":"",
+          "loin":false,
+          "rebus":false,
+          "segar":true,
+          "totalBeratEkor":"0",
+          "totalBeratKg":"1.59",
+          "namaSpesies":"Plectropomus maculatus"
         },
         {
-          "asin": false,
-          "beku": true,
-          "id": "",
-          "kodeFao": "",
-          "loin": false,
-          "namaSpesies": "Layang",
-          "rebus": true,
-          "segar": true,
-          "totalBeratEkor": 0,
-          "totalBeratKg": 5
-        }
-      ],
-      "dataSpesifikasiAlatTangkap": [
+          "asin":false,
+          "beku":false,
+          "id":"",
+          "kodeFAO":"",
+          "loin":false,
+          "rebus":false,
+          "segar":true,
+          "totalBeratEkor":"0",
+          "totalBeratKg":"1.18",
+          "namaSpesies":"Plectropomus maculatus"
+        },
         {
-          "id": "",
-          "nilaiSpesifikasi": "2",
-          "satuanSpesifikasi": "",
-          "spesifikasi": "Nomor Mata Pancing"
+          "asin":false,
+          "beku":false,
+          "id":"",
+          "kodeFAO":"",
+          "loin":false,
+          "rebus":false,
+          "segar":true,
+          "totalBeratEkor":"0",
+          "totalBeratKg":"1.35",
+          "namaSpesies":"Cromileptes altivelis"
+        },
+        {
+          "asin":false,
+          "beku":false,
+          "id":"",
+          "kodeFAO":"",
+          "loin":false,
+          "rebus":false,
+          "segar":true,
+          "totalBeratEkor":"0",
+          "totalBeratKg":"3.50",
+          "namaSpesies":"Epinephelus malabaricus"
         }
       ],
-      "dayaCahaya": 20,
-      "freezer": false,
-      "gps": false,
-      "id": "358dd6e6-7e8d-4a39-bc55-693cb7bd367as",
-      "jamSampling": "14:00",
-      "jenisGps": "",
-      "jenisRumpon": "",
-      "jumlahAbk": 5,
-      "jumlahAlatTangkapYangDioperasikan": 3,
-      "jumlahBalokEs": 3,
-      "jumlahBoks": 2,
-      "jumlahHariMenangkap": 3,
-      "jumlahHariPerTrip": 10,
-      "jumlahPalka": 0,
-      "jumlahRumponBerhasil": 0,
-      "jumlahRumponDikunjungi": 0,
-      "jumlahSetting": 10,
-      "jumlahTangkapanIndividu": 0,
-      "jumlahTangkapanUntukDimakanDilautIndividu": 0,
-      "jumlahTangkapanUntukDimakanDilautVolume": 1,
-      "jumlahTangkapanVolume": 40,
-      "kapalAndon": true,
-      "kapalBantu": true,
-      "kapasitasFreezer": 2,
-      "kapasitasPalkaBoks": 3,
-      "kedalamanAirHingga": 20,
-      "kedalamanAirMulai": 5,
-      "komentar": "Pemancingan sedang mengalami masa yang baik",
-      "lamaPerendaman": 3,
-      "materialAlatTangkap": "Nilon",
-      "materialKapal": "Kayu",
-      "mesinBantu": 0,
-      "mesinUtama": 10,
-      "namaAlatTangkap": "Pancing Ulur",
-      "namaKapal": "A",
-      "namaKapten": "Dirgantara Udayana",
-      "namaLokasiPendaratan": "PPN Bangka Belitung",
-      "namaPemilikKapal": "Dinda Kirana",
-      "namaPencatat": "Misela",
-      "namaSumberDaya": "Pelagis Besar",
-      "panjangKapal": 30,
-      "pelabuhanAsal": "Bangka Belitung",
-      "statusDokumen": "WAITING",
-      "sumberInformasi": "Nakhoda",
-      "tandaSelar": "UI-YU86",
-      "tanggalBerangkat": "01/12/2017",
-      "tanggalKembali": "11/12/2019",
-      "tanggalSampling": "12/12/2019",
-      "ukuranKapalBantu": 0,
-      "waktuMemancing": "Siang",
-      "wpp": "711"
+      "dataSpesifikasiAlatTangkap":[
+        {
+          "spesifikasi":"Jumlah Mata Panah",
+          "id":"LJ210120173",
+          "satuanSpesifikasi":"buah",
+          "nilaiSpesifikasi":     1
+        }
+      ],
+      "dayaCahaya":"0",
+      "freezer":   false,
+      "gps":   false,
+      "jamSampling":"08:00:00",
+      "id":"LJ210120173",
+      "jenisGps":"",
+      "jenisRumpon":"-",
+      "jumlahAbk":   2,
+      "jumlahAlatTangkapYangDioperasikan":   1,
+      "jumlahBalokEs":   0,
+      "jumlahBoks":   0,
+      "jumlahHariMenangkap":   1,
+      "jumlahHariPerTrip":   1,
+      "jumlahPalka":   0,
+      "jumlahRumponBerhasil":"0",
+      "jumlahRumponDikunjungi":"0",
+      "jumlahSetting":   0,
+      "jumlahTangkapanIndividu":   9,
+      "jumlahTangkapanUntukDimakanDilautIndividu":   0,
+      "jumlahTangkapanUntukDimakanDilautVolume":   0,
+      "jumlahTangkapanVolume":   7.62,
+      "kapalAndon":   false,
+      "kapalBantu":   false,
+      "kapasitasFreezer":   0,
+      "kapasitasPalkaBoks":   0,
+      "kedalamanAirHingga":   22,
+      "kedalamanAirMulai":   0,
+      "komentar":"",
+      "lamaPerendaman":   0,
+      "materialAlatTangkap":"",
+      "materialKapal":"",
+      "mesinBantu":   0,
+      "mesinUtama":   5,
+      "namaAlatTangkap":"Panah",
+      "namaKapal":"A. BAKRI",
+      "namaKapten":"A. BAKRI",
+      "namaLokasiPendaratan":"LABUHAN JAMBU",
+      "namaPemilikKapal":"A. BAKRI",
+      "namaPencatat":"ILHAM",
+      "namaSumberDaya":"Demersal",
+      "panjangKapal":   0,
+      "pelabuhanAsal":"",
+      "statusDokumen":"VERIFIED",
+      "sumberInformasi":"ABK/KAPTEN",
+      "tandaSelar":   0,
+      "tanggalBerangkat":"20/01/2017",
+      "tanggalKembali":"21/01/2017",
+      "tanggalSampling":"21/01/2017",
+      "ukuranKapalBantu":   0,
+      "waktuMemancing":"",
+      "wpp":"713"
     }
   ],
-  "dataReproduksi": [
+  "tanggalPendaratan":"04/04/2020",
+  "dataRincianPendaratan":[
     {
-      "daerahPenangkapan": "444, 555",
-      "dataDetailReproduksi": [
+      "cahaya":   false,
+      "daerahPenangkapan":"K27",
+      "dataRincianTangkapanPendaratan":[
         {
-          "berat": 20,
-          "beratIsiPerut": 0,
-          "id": "",
-          "jenisKelamin": "F",
-          "panjang": 10,
-          "tipePanjang": "TL",
-          "tkg": "2"
+          "id":"",
+          "namaSpesies":"Plectropomus maculatus",
+          "tangkapanIndividu":"2",
+          "tangkapanVolume":"1.59"
         },
         {
-          "berat": 25,
-          "beratIsiPerut": 0,
-          "id": "",
-          "jenisKelamin": "F",
-          "panjang": 8,
-          "tipePanjang": "TL",
-          "tkg": "1"
+          "id":"",
+          "namaSpesies":"Plectropomus maculatus",
+          "tangkapanIndividu":"3",
+          "tangkapanVolume":"1.18"
         },
         {
-          "berat": 10,
-          "beratIsiPerut": 0,
-          "id": "",
-          "jenisKelamin": "F",
-          "panjang": 18,
-          "tipePanjang": "TL",
-          "tkg": "3"
+          "id":"",
+          "namaSpesies":"Cromileptes altivelis",
+          "tangkapanIndividu":"2",
+          "tangkapanVolume":"1.35"
         },
         {
-          "berat": 2,
-          "beratIsiPerut": 0,
-          "id": "",
-          "jenisKelamin": "F",
-          "panjang": 3,
-          "tipePanjang": "TL",
-          "tkg": "5"
+          "id":"",
+          "namaSpesies":"Epinephelus malabaricus",
+          "tangkapanIndividu":"2",
+          "tangkapanVolume":"3.50"
         }
       ],
-      "id": "358dd6e6-7e8d-4a39-bc55-693cb7bd36715",
-      "namaAlatTangkap": "Pancing Ulur",
-      "namaKapal": "A",
-      "namaLokasiSampling": "PPN Bangka Belitung",
-      "namaPencatat": "Misela",
-      "namaSpesies": "Kembung",
-      "namaSumberDaya": "Pelagis Besar",
-      "penampung": false,
-      "penangkap": true,
-      "statusDokumen": "WAITING",
-      "tanggalSampling": "12/12/2019",
-      "wpp": "711"
+      "id":"LJ210120173",
+      "jumlahKapalPenangkap":   1,
+      "jumlahMataPancing":   0,
+      "jumlahSetting":   0,
+      "namaAlatTangkap":"Panah",
+      "namaKapal":"A. BAKRI",
+      "penampung":   false,
+      "penangkap":   true,
+      "rumpon":   false,
+      "totalTangkapanIndividu":   9,
+      "totalTangkapanVolume":   7.62,
+      "jumlahHariMenangkap":"21",
+      "jumlahHariPerTrip":"21"
     }
   ],
-  "dataRincianPendaratan": [
+  "dataUkuran":[
     {
-      "cahaya": true,
-      "daerahPenangkapan": "444, 555",
-      "dataRincianTangkapanPendaratan": [
+      "daerahPenangkapan":"K27",
+      "id":"LJ210120173",
+      "namaAlatTangkap":"Panah",
+      "namaKapal":"A. BAKRI",
+      "namaLokasiSampling":"LABUHAN JAMBU",
+      "namaPencatat":"ILHAM",
+      "namaSumberDaya":"Demersal",
+      "penampung":   false,
+      "penangkap":   true,
+      "statusDokumen":"VERIFIED",
+      "tanggalSampling":"21/01/2017",
+      "totalSampelIndividu":   11,
+      "totalSampelVolume":   0,
+      "totalTangkapanIndividu":   9,
+      "totalTangkapanVolume":   7.62,
+      "wpp":"713",
+      "dataUkuranDetail":[
         {
-          "id": "",
-          "namaSpesies": "Kembung",
-          "tangkapanIndividu": 0,
-          "tangkapanVolume": 35
+          "id":"",
+          "namaSpesies":"Plectropomus maculatus",
+          "panjang":"41.11"
         },
         {
-          "id": "",
-          "namaSpesies": "Layang",
-          "tangkapanIndividu": 0,
-          "tangkapanVolume": 5
+          "id":"",
+          "namaSpesies":"Plectropomus maculatus",
+          "panjang":"42.16"
+        },
+        {
+          "id":"",
+          "namaSpesies":"Cromileptes altivelis",
+          "panjang":"37.38"
+        },
+        {
+          "id":"",
+          "namaSpesies":"Cromileptes altivelis",
+          "panjang":"34.03"
+        },
+        {
+          "id":"",
+          "namaSpesies":"Plectropomus maculatus",
+          "panjang":"32.44"
+        },
+        {
+          "id":"",
+          "namaSpesies":"Plectropomus maculatus",
+          "panjang":"31.44"
+        },
+        {
+          "id":"",
+          "namaSpesies":"Plectropomus maculatus",
+          "panjang":"35.27"
+        },
+        {
+          "id":"",
+          "namaSpesies":"Plectropomus maculatus",
+          "panjang":"37.87"
+        },
+        {
+          "id":"",
+          "namaSpesies":"Plectropomus maculatus",
+          "panjang":"28.66"
+        },
+        {
+          "id":"",
+          "namaSpesies":"Epinephelus malabaricus",
+          "panjang":"53.13"
+        },
+        {
+          "id":"",
+          "namaSpesies":"Epinephelus malabaricus",
+          "panjang":"43.65"
         }
       ],
-      "id": "",
-      "jumlahHariMenangkap": 3,
-      "jumlahHariPerTrip": 10,
-      "jumlahKapalPenangkap": 2,
-      "jumlahMataPancing": 23,
-      "jumlahSetting": 11,
-      "namaAlatTangkap": "Pancing Ulur",
-      "namaKapal": "A",
-      "penampung": false,
-      "penangkap": true,
-      "rumpon": true,
-      "totalTangkapanIndividu": 0,
-      "totalTangkapanVolume": 40
+      "dataSampleDetail":[
+
+      ]
     }
   ],
-  "dataUkuran": [
-    {
-      "daerahPenangkapan": "444, 555",
-      "dataSampleDetail": [
-        {
-          "id": "",
-          "namaSpesies": "Kembung",
-          "sampleIndividu": 0,
-          "sampleVolume": 20,
-          "tipePanjang": "FL"
-        },
-        {
-          "id": "",
-          "namaSpesies": "Layang",
-          "sampleIndividu": 0,
-          "sampleVolume": 10,
-          "tipePanjang": "FL"
-        }
-      ],
-      "dataUkuranDetail": [
-        {
-          "id": "",
-          "namaSpesies": "Kembung",
-          "panjang": 33.3
-        },
-        {
-          "id": "",
-          "namaSpesies": "Kembung",
-          "panjang": 20.3
-        },
-        {
-          "id": "",
-          "namaSpesies": "Layang",
-          "panjang": 20.5
-        }
-      ],
-      "id": "358dd6e6-7e8d-4a39-bc55-693cb7bd36721",
-      "namaAlatTangkap": "Pancing Ulur",
-      "namaKapal": "A",
-      "namaLokasiSampling": "PPN Bangka Belitung",
-      "namaPencatat": "Misela",
-      "namaSumberDaya": "Pelagis Kecil",
-      "penampung": false,
-      "penangkap": true,
-      "statusDokumen": "WAITING",
-      "tanggalSampling": "12/12/2019",
-      "totalSampelIndividu": 0,
-      "totalSampelVolume": 30,
-      "totalTangkapanIndividu": 0,
-      "totalTangkapanVolume": 60,
-      "wpp": "711"
-    }
-  ],
-  "id": "358dd6e6-7e8d-4a39-bc55-693cb7bd367",
-  "namaLokasiPendaratan": "PPN Bangka Belitung",
-  "namaPencatat": "Misela",
-  "namaSumberDaya": "Pelagis Kecil",
-  "statusDokumen": "WAITING",
-  "tanggalPendaratan": "12/12/2019",
-  "wpp": "711"
+  "namaLokasiPendaratan":"LABUHAN JAMBU",
+  "namaPencatat":"Annas",
+  "namaSumberDaya":"Demersal",
+  "statusDokumen":"VERIFIED",
+  "wpp":"713",
+  "dataReproduksi":[
+
+  ]
 }

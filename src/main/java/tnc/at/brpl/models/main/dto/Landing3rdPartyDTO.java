@@ -7,9 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.utils.Brpl;
-import tnc.at.brpl.utils.data.DocumentStatus;
 import tnc.at.brpl.utils.data.ThirdPartyDocumentStatus;
-import tnc.at.brpl.utils.entity.EntityModel;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

@@ -197,9 +197,9 @@ public class BiologyOnReproductionConfig extends BasicFormUploadConfig implement
                 } else {
                     biologyOnReproduction.setOrganisasi(sysUser.getOrganisasi());
                     if (role == 5) { // user biasa dari ngo
-                        biologyOnReproduction.setStatusDokumen(DocumentStatus.WAITING);
+                        biologyOnReproduction.setStatusDokumen(DocumentStatus.PENDING);
                     } else if (role == 2) { // validator dari ngo
-                        biologyOnReproduction.setStatusDokumen(DocumentStatus.NOT_VERIFIED);
+                        biologyOnReproduction.setStatusDokumen(DocumentStatus.WAITING);
                     }
                 }
 

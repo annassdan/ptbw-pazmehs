@@ -16,7 +16,7 @@ import java.util.Optional;
 public class Utility3rdPartyService {
 
 
-    private List<SumberDaya> sumberDayaList
+    final private static List<SumberDaya> sumberDayaList
             = Arrays.asList(
                     SumberDaya.builder().sumberDaya("Pelagis Besar")
                             .daftarAlatTangkap(Arrays.asList(
@@ -277,7 +277,12 @@ public class Utility3rdPartyService {
     );
 
 
-    public List<Tkg> tkg() {
+    final public static List<String> lengthTypes = Arrays.asList("CL", "CW", "DW", "FL", "ML", "SL", "TL", "OT");
+
+    final public static List<String> wpps = Arrays.asList("571", "572", "573", "711", "712", "713", "714", "715", "716", "717", "718");
+
+
+    public static List<Tkg> tkg() {
         List<Tkg> Tkgs = Arrays.asList(
                 Tkg.builder().tkg("1").build(),
                 Tkg.builder().tkg("2").build(),
@@ -297,7 +302,7 @@ public class Utility3rdPartyService {
     }
 
 
-    public List<SumberDaya> sumberDaya() {
+    public static List<SumberDaya> sumberDaya() {
         return sumberDayaList;
     }
 
