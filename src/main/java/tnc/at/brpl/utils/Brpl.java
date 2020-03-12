@@ -12,9 +12,11 @@ package tnc.at.brpl.utils;
 @SuppressWarnings("unused")
 public interface Brpl {
 
+    String MITRA_ID_DELIMITER = "#@BRPL#";
+
     String STATIC_TOKEN = "105ce49f-6b15-440c-a78d-91e04f58aDAN";
 
-    String DB_NAME = "db_brpl_final";
+    String DB_NAME = "e_brpl";
 
     String FORM_SURRENT_VERSION = "21-03-2018";
 
