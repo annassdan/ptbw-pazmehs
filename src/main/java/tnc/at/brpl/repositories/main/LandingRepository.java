@@ -22,30 +22,8 @@ import java.util.List;
  * @author annasldan   ~| annasmn34333@gmail.com | TNC Indonesia |~
  */
 @Transactional
-@SuppressWarnings("unused")
+//@SuppressWarnings("unused")
 public interface LandingRepository extends RepositoryListener<Landing, String> {
-
-    Page<Landing> findAllByOrganisasiOrderByDibuatPadaTanggalAsc(Pageable pageable, String organisasi);
-
-
-//    @Query("SELECT data FROM Landing data WHERE " +
-//            "data.uuid = :uuid AND " +
-//            "data.dataRincianPendaratan.namaKapal = :namaKapal ")
-//    Page<Landing> coba(Pageable pageable,
-//                       @Param("uuid") String uuid,
-//                       @Param("namaKapal") String namaKapal);
-
-
-//    @Query("SELECT data FROM Landing data WHERE " +
-//            "EXISTS ( " +
-//            " SELECT data2 FROM LandingDetail data2 WHERE " +
-//            " data2.namaKapal = :namaKapal " +
-//            " )")
-
-//    @Query("SELECT data FROM Landing data JOIN data.dataRincianPendaratan data2 WHERE " +
-//            " data2.namaKapal = :namaKapal ")
-//    Page<Landing> coba2(Pageable pageable,
-//                        @Param("namaKapal") String namaKapal);
 
     @Query("SELECT data FROM Landing data JOIN data.dataRincianPendaratan data2 WHERE " +
             " data.uuid = :uuid AND  " +
@@ -68,11 +46,6 @@ public interface LandingRepository extends RepositoryListener<Landing, String> {
             @Param("namaLokasiPendaratan") String namaLokasiPendaratan,
             @Param("uuidSumberDaya") String uuidSumberDaya,
             @Param("uuidEnumerator") String uuidEnumerator,
-//            @Param("organisasi") List<LandingDetail> dataRincianPendaratan,
-//            @Param("organisasi") String photoName,
-//            @Param("organisasi") List<Operational> dataOperasional,
-//            @Param("organisasi") List<BiologyOnSize> dataUkuran,
-//            @Param("organisasi") List<BiologyOnReproduction> dataReproduksi,
             @Param("organisasi") String organisasi,
             @Param("wpp") String wpp
     );
@@ -114,27 +87,7 @@ public interface LandingRepository extends RepositoryListener<Landing, String> {
                                                                                                        DocumentStatus statusDokumenNot);
 
 
-    Page<Landing> findAllByWppOrUuidPenguploadOrStatusDokumenNotOrderByDibuatPadaTanggalAsc(Pageable var1,
-                                                                                            String wpp,
-                                                                                            String uuidPengupload,
-                                                                                            DocumentStatus statusDokumenNot);
 
-
-    /**
-     * Digunakan untuk menampilkan data utama dengan status login sebagai validator NGO
-     *
-     * @param var1
-     * @param organisasi
-     * @param uuidPengupload
-     * @return
-     */
-    @Query("SELECT data FROM Landing data WHERE " +
-            "organisasi = :organisasi OR data.uuidPengupload = :uuidPengupload " +
-            "GROUP BY data.uuid " +
-            "ORDER BY data.uuid ASC")
-    Page<Landing> fetchingDataAsValidatorNGO(Pageable var1,
-                                             @Param("organisasi") String organisasi,
-                                             @Param("uuidPengupload") String uuidPengupload);
 
 
     @Query("SELECT COUNT(data) FROM Landing data WHERE " +
@@ -481,6 +434,11 @@ public interface LandingRepository extends RepositoryListener<Landing, String> {
             @Param("lokasiPendaratan") String lokasiPendaratan,
             @Param("waktuPendaratanMulai") Date waktuPendaratanMulai,
             @Param("waktuPendaratanHingga") Date waktuPendaratanHingga);
+
+
+    Page<Landing> findAllByOrganisasiOrderByDibuatPadaTanggalAsc(Pageable pageable, String organisasi);
+
+    Page<Landing> findAllByOrganisasiOrderByDibuatPadaTanggalDesc(Pageable pageable, String organisasi);
 
 
 }

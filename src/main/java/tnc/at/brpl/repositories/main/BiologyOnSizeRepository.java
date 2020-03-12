@@ -105,33 +105,6 @@ public interface BiologyOnSizeRepository extends RepositoryListener<BiologyOnSiz
                                                                                                   DocumentStatus statusDokumenNot);
 
 
-//    /**
-//     * Digunakan untuk menampilkan data utama dengan status login sebagai validator
-//     *
-//     * @param var1
-//     * @param wpp
-//     * @param uuidPengupload
-//     * @param statusDokumenNot
-//     * @return
-//     */
-//    @Query("SELECT data FROM BiologyOnSize data WHERE " +
-//            "data.wpp = :wpp AND (data.uuidPengupload = :uuidPengupload OR data.statusDokumen != :statusDokumenNot) " +
-//            "GROUP BY data.uuid ORDER BY data.uuid ASC")
-//    Page<BiologyOnSize> fetchingDataAsValidator(Pageable var1,
-//                                          @Param("wpp") String wpp,
-//                                          @Param("uuidPengupload") String uuidPengupload,
-//                                          @Param("statusDokumenNot") DocumentStatus statusDokumenNot);
-//
-//
-//    /**
-//     *
-//     * @param var1
-//     * @return
-//     */
-//    @Query("SELECT data FROM BiologyOnSize data  " +
-//            "GROUP BY data.uuid ORDER BY data.uuid ASC")
-//    Page<BiologyOnSize> fetchingDataAsForExportExcel(Pageable var1);
-
 
 
     /**
@@ -293,40 +266,6 @@ public interface BiologyOnSizeRepository extends RepositoryListener<BiologyOnSiz
                                                      @Param("tanggalSamplingHingga") Date tanggalSamplingHingga);
 
 
-//    /**
-//     * Fungsi yang digunakan untuk mengambil data yang akan diexport ke excel sebagai superuser atau administrator
-//     *
-//     * @param var1
-//     * @param organisasi
-//     * @param wpp
-//     * @param sumberdaya
-//     * @param pencatat
-//     * @param namaLokasiSampling
-//     * @return
-//     */
-//    @Query("SELECT data FROM BiologyOnSize data  WHERE  " +
-//            "LOWER(data.organisasi) LIKE LOWER('%' || :organisasi || '%') AND " +
-//            "(:status is null OR data.statusDokumen = :status) AND " +
-//            "data.wpp LIKE %:wpp% AND " +
-//            "LOWER(data.uuidSumberDaya) LIKE LOWER('%' || :sumberdaya || '%') AND " +
-//            "LOWER(data.uuidEnumerator) LIKE LOWER('%' || :pencatat || '%') AND " +
-//            "LOWER(data.namaLokasiSampling) LIKE LOWER('%' || :namaLokasiSampling || '%') AND " +
-//            "LOWER(data.namaKapal) LIKE LOWER('%' || :namaKapal || '%') AND " +
-//            "LOWER(data.uuidAlatTangkap) LIKE LOWER('%' || :alatTangkap || '%') AND " +
-//
-//            "LOWER(data.daerahPenangkapan) LIKE LOWER('%' || :gridDaerahPenangkapan || '%')  " +
-//            "GROUP BY data.uuid ORDER BY data.uuid ASC ")
-//    Page<BiologyOnSize> fetchingDataAsForExportExcel(Pageable var1,
-//                                                     @Param("organisasi") String organisasi,
-//                                               @Param("status") DocumentStatus status,
-//                                                     @Param("wpp") String wpp,
-//                                                     @Param("sumberdaya") String sumberdaya,
-//                                                     @Param("pencatat") String pencatat,
-//                                                     @Param("namaLokasiSampling") String namaLokasiSampling,
-//                                                     @Param("namaKapal") String namaKapal,
-//                                                     @Param("alatTangkap") String alatTangkap,
-//
-//                                                     @Param("gridDaerahPenangkapan") String gridDaerahPenangkapan);
 
 
     /**
@@ -368,38 +307,6 @@ public interface BiologyOnSizeRepository extends RepositoryListener<BiologyOnSiz
                           @Param("tanggalSamplingMulai") Date tanggalSamplingMulai,
                           @Param("tanggalSamplingHingga") Date tanggalSamplingHingga);
 
-
-//    /**
-//     * Fungsi yang digunakan untuk menghitung jumlah data yang akan diexport ke excel sebagai superuser ataupun administrator
-//     *
-//     * @param organisasi
-//     * @param wpp
-//     * @param sumberdaya
-//     * @param pencatat
-//     * @param namaLokasiSampling
-//     * @return
-//     */
-//    @Query("SELECT COUNT(data) FROM BiologyOnSize data  WHERE " +
-//            "LOWER(data.organisasi) LIKE LOWER('%' || :organisasi || '%') AND " +
-//            "(:status is null OR data.statusDokumen = :status) AND " +
-//            "data.wpp LIKE %:wpp% AND " +
-//            "LOWER(data.uuidSumberDaya) LIKE LOWER('%' || :sumberdaya || '%') AND " +
-//            "LOWER(data.uuidEnumerator) LIKE LOWER('%' || :pencatat || '%') AND " +
-//            "LOWER(data.namaLokasiSampling) LIKE LOWER('%' || :namaLokasiSampling || '%') AND " +
-//            "LOWER(data.namaKapal) LIKE LOWER('%' || :namaKapal || '%') AND " +
-//            "LOWER(data.uuidAlatTangkap) LIKE LOWER('%' || :alatTangkap || '%') AND " +
-//
-//            "LOWER(data.daerahPenangkapan) LIKE LOWER('%' || :gridDaerahPenangkapan || '%')  ")
-//    long countAsSuperuser(@Param("organisasi") String organisasi,
-//                                               @Param("status") DocumentStatus status,
-//                          @Param("wpp") String wpp,
-//                          @Param("sumberdaya") String sumberdaya,
-//                          @Param("pencatat") String pencatat,
-//                          @Param("namaLokasiSampling") String namaLokasiSampling,
-//                          @Param("namaKapal") String namaKapal,
-//                          @Param("alatTangkap") String alatTangkap,
-//
-//                          @Param("gridDaerahPenangkapan") String gridDaerahPenangkapan);
 
 
     /**
@@ -448,43 +355,7 @@ public interface BiologyOnSizeRepository extends RepositoryListener<BiologyOnSiz
                                                                      @Param("tanggalSamplingMulai") Date tanggalSamplingMulai,
                                                                      @Param("tanggalSamplingHingga") Date tanggalSamplingHingga);
 
-//
-//    /**
-//     * @param var1
-//     * @param wpp
-//     * @param uuidPengupload
-//     * @param statusDokumenNot
-//     * @param organisasi
-//     * @param sumberdaya
-//     * @param pencatat
-//     * @param namaLokasiSampling
-//     * @return
-//     */
-//    @Query("SELECT data FROM BiologyOnSize data WHERE " +
-//            "data.wpp = :wpp AND (data.uuidPengupload = :uuidPengupload OR data.statusDokumen != :statusDokumenNot) AND " +
-//            "LOWER(data.organisasi) LIKE LOWER('%' || :organisasi || '%') AND " +
-//            "(:status is null OR data.statusDokumen = :status) AND " +
-//            "LOWER(data.uuidSumberDaya) LIKE LOWER('%' || :sumberdaya || '%') AND " +
-//            "LOWER(data.uuidEnumerator) LIKE LOWER('%' || :pencatat || '%') AND " +
-//            "LOWER(data.namaLokasiSampling) LIKE LOWER('%' || :namaLokasiSampling || '%') AND " +
-//            "LOWER(data.namaKapal) LIKE LOWER('%' || :namaKapal || '%') AND " +
-//            "LOWER(data.uuidAlatTangkap) LIKE LOWER('%' || :alatTangkap || '%') AND " +
-//
-//            "LOWER(data.daerahPenangkapan) LIKE LOWER('%' || :gridDaerahPenangkapan || '%') " +
-//            "GROUP BY data.uuid ORDER BY data.uuid ASC ")
-//    Page<BiologyOnSize> fetchingDataAsForExportExcelAsValidatorPJWPP(Pageable var1,
-//                                                                     @Param("wpp") String wpp,
-//                                                                     @Param("uuidPengupload") String uuidPengupload,
-//                                                                     @Param("statusDokumenNot") DocumentStatus statusDokumenNot,
-//                                                                     @Param("organisasi") String organisasi,
-//                                               @Param("status") DocumentStatus status,
-//                                                                     @Param("sumberdaya") String sumberdaya,
-//                                                                     @Param("pencatat") String pencatat,
-//                                                                     @Param("namaLokasiSampling") String namaLokasiSampling,
-//                                                                     @Param("namaKapal") String namaKapal,
-//                                                                     @Param("alatTangkap") String alatTangkap,
-//
-//                                                                     @Param("gridDaerahPenangkapan") String gridDaerahPenangkapan);
+
 
 
     /**
@@ -531,39 +402,6 @@ public interface BiologyOnSizeRepository extends RepositoryListener<BiologyOnSiz
                                @Param("tanggalSamplingHingga") Date tanggalSamplingHingga);
 
 
-//    /**
-//     * @param wpp
-//     * @param uuidPengupload
-//     * @param statusDokumenNot
-//     * @param organisasi
-//     * @param sumberdaya
-//     * @param pencatat
-//     * @param namaLokasiSampling
-//     * @return
-//     */
-//    @Query("SELECT COUNT(data) FROM BiologyOnSize data WHERE " +
-//            "data.wpp = :wpp AND (data.uuidPengupload = :uuidPengupload OR data.statusDokumen != :statusDokumenNot) AND " +
-//            "LOWER(data.organisasi) LIKE LOWER('%' || :organisasi || '%') AND " +
-//            "(:status is null OR data.statusDokumen = :status) AND " +
-//            "LOWER(data.uuidSumberDaya) LIKE LOWER('%' || :sumberdaya || '%') AND " +
-//            "LOWER(data.uuidEnumerator) LIKE LOWER('%' || :pencatat || '%') AND " +
-//            "LOWER(data.namaLokasiSampling) LIKE LOWER('%' || :namaLokasiSampling || '%') AND " +
-//            "LOWER(data.namaKapal) LIKE LOWER('%' || :namaKapal || '%') AND " +
-//            "LOWER(data.uuidAlatTangkap) LIKE LOWER('%' || :alatTangkap || '%') AND " +
-//
-//            "LOWER(data.daerahPenangkapan) LIKE LOWER('%' || :gridDaerahPenangkapan || '%') ")
-//    long countAsValidatorPJWPP(@Param("wpp") String wpp,
-//                               @Param("uuidPengupload") String uuidPengupload,
-//                               @Param("statusDokumenNot") DocumentStatus statusDokumenNot,
-//                               @Param("organisasi") String organisasi,
-//                                               @Param("status") DocumentStatus status,
-//                               @Param("sumberdaya") String sumberdaya,
-//                               @Param("pencatat") String pencatat,
-//                               @Param("namaLokasiSampling") String namaLokasiSampling,
-//                               @Param("namaKapal") String namaKapal,
-//                               @Param("alatTangkap") String alatTangkap,
-//
-//                               @Param("gridDaerahPenangkapan") String gridDaerahPenangkapan);
 
 
     /**
@@ -660,41 +498,6 @@ public interface BiologyOnSizeRepository extends RepositoryListener<BiologyOnSiz
                                   @Param("tanggalSamplingHingga") Date tanggalSamplingHingga);
 
 
-//    /**
-//     * @param uuidSumberDaya
-//     * @param uuidPengupload
-//     * @param statusDokumenNot
-//     * @param organisasi
-//     * @param wpp
-//     * @param pencatat
-//     * @param namaLokasiSampling
-//     * @return
-//     */
-//    @Query("SELECT COUNT(data) FROM BiologyOnSize data WHERE " +
-//            "LOWER(data.uuidSumberDaya) LIKE LOWER('%' || :uuidSumberDaya || '%')  AND (data.uuidPengupload = :uuidPengupload OR data.statusDokumen != :statusDokumenNot) AND " +
-//            "LOWER(data.organisasi) LIKE LOWER('%' || :organisasi || '%') AND " +
-//            "(:status is null OR data.statusDokumen = :status) AND " +
-//            "data.wpp LIKE %:wpp% AND " +
-//            "LOWER(data.uuidEnumerator) LIKE LOWER('%' || :pencatat || '%') AND " +
-//            "LOWER(data.namaLokasiSampling) LIKE LOWER('%' || :namaLokasiSampling || '%') AND " +
-//            "LOWER(data.namaKapal) LIKE LOWER('%' || :namaKapal || '%') AND " +
-//            "LOWER(data.uuidAlatTangkap) LIKE LOWER('%' || :alatTangkap || '%') AND " +
-//
-//            "LOWER(data.daerahPenangkapan) LIKE LOWER('%' || :gridDaerahPenangkapan || '%') ")
-//    long countAsValidatorPeneliti(@Param("uuidSumberDaya") String uuidSumberDaya,
-//                                  @Param("uuidPengupload") String uuidPengupload,
-//                                  @Param("statusDokumenNot") DocumentStatus statusDokumenNot,
-//
-//                                  @Param("organisasi") String organisasi,
-//                                               @Param("status") DocumentStatus status,
-//                                  @Param("wpp") String wpp,
-//                                  @Param("pencatat") String pencatat,
-//                                  @Param("namaLokasiSampling") String namaLokasiSampling,
-//                                  @Param("namaKapal") String namaKapal,
-//                                  @Param("alatTangkap") String alatTangkap,
-//
-//                                  @Param("gridDaerahPenangkapan") String gridDaerahPenangkapan);
-
 
     /**
      * @param var1
@@ -731,31 +534,6 @@ public interface BiologyOnSizeRepository extends RepositoryListener<BiologyOnSiz
                                                  @Param("tanggalSamplingHingga") Date tanggalSamplingHingga);
 
 
-//    /**
-//     * @param var1
-//     * @param uuidPengupload
-//     * @param organisasi
-//     * @return
-//     */
-//    @Query("SELECT data FROM BiologyOnSize data WHERE " +
-//            "data.uuidPengupload = :uuidPengupload AND " +
-//            "LOWER(data.organisasi) LIKE LOWER('%' || :organisasi || '%') AND " +
-//            "(:status is null OR data.statusDokumen = :status) AND " +
-//            "LOWER(data.namaLokasiSampling) LIKE LOWER('%' || :namaLokasiSampling || '%') AND " +
-//            "LOWER(data.namaKapal) LIKE LOWER('%' || :namaKapal || '%') AND " +
-//            "LOWER(data.uuidAlatTangkap) LIKE LOWER('%' || :alatTangkap || '%') AND " +
-//
-//            "LOWER(data.daerahPenangkapan) LIKE LOWER('%' || :gridDaerahPenangkapan || '%') " +
-//            "GROUP BY data.uuid ORDER BY data.uuid ASC")
-//    Page<BiologyOnSize> fetchingDataAsNormalUser(Pageable var1,
-//                                                 @Param("uuidPengupload") String uuidPengupload,
-//                                                 @Param("organisasi") String organisasi,
-//                                               @Param("status") DocumentStatus status,
-//                                                 @Param("namaLokasiSampling") String namaLokasiSampling,
-//                                                 @Param("namaKapal") String namaKapal,
-//                                                 @Param("alatTangkap") String alatTangkap,
-//
-//                                                 @Param("gridDaerahPenangkapan") String gridDaerahPenangkapan);
 
 
     /**
@@ -790,28 +568,8 @@ public interface BiologyOnSizeRepository extends RepositoryListener<BiologyOnSiz
             @Param("tanggalSamplingMulai") Date tanggalSamplingMulai,
             @Param("tanggalSamplingHingga") Date tanggalSamplingHingga);
 
+    Page<BiologyOnSize> findAllByOrganisasiOrderByDibuatPadaTanggalAsc(Pageable paging, String organisasi);
 
-//    /**
-//     * @param uuidPengupload
-//     * @param organisasi
-//     * @return
-//     */
-//    @Query("SELECT COUNT(data) FROM BiologyOnSize data WHERE " +
-//            "data.uuidPengupload = :uuidPengupload AND " +
-//            "LOWER(data.organisasi) LIKE LOWER('%' || :organisasi || '%') AND " +
-//            "(:status is null OR data.statusDokumen = :status) AND " +
-//            "LOWER(data.namaLokasiSampling) LIKE LOWER('%' || :namaLokasiSampling || '%') AND " +
-//            "LOWER(data.namaKapal) LIKE LOWER('%' || :namaKapal || '%') AND " +
-//            "LOWER(data.uuidAlatTangkap) LIKE LOWER('%' || :alatTangkap || '%') AND " +
-//
-//            "LOWER(data.daerahPenangkapan) LIKE LOWER('%' || :gridDaerahPenangkapan || '%') ")
-//    long countDataAsNormalUser(@Param("uuidPengupload") String uuidPengupload,
-//                               @Param("organisasi") String organisasi,
-//                                               @Param("status") DocumentStatus status,
-//                               @Param("namaLokasiSampling") String namaLokasiSampling,
-//                               @Param("namaKapal") String namaKapal,
-//                               @Param("alatTangkap") String alatTangkap,
-//
-//                               @Param("gridDaerahPenangkapan") String gridDaerahPenangkapan);
+    Page<BiologyOnSize> findAllByOrganisasiOrderByDibuatPadaTanggalDesc(Pageable paging, String organisasi);
 
 }

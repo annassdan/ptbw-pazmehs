@@ -20,7 +20,7 @@ import java.util.Date;
  * @author annasldan   ~| annasmn34333@gmail.com | TNC Indonesia |~
  */
 @Transactional
-@SuppressWarnings("unused")
+//@SuppressWarnings("unused")
 public interface OperationalRepository extends RepositoryListener<Operational, String> {
 
 
@@ -175,38 +175,6 @@ public interface OperationalRepository extends RepositoryListener<Operational, S
                                                                                                 DocumentStatus statusDokumenNot);
 
 
-//    /**
-//     * Digunakan untuk menampilkan data utama dengan status login sebagai validator
-//     *
-//     * @param var1
-//     * @param wpp
-//     * @param uuidPengupload
-//     * @param statusDokumenNot
-//     * @return
-//     */
-//    @Query("SELECT data FROM Operational data WHERE " +
-//            "data.wpp = :wpp AND (data.uuidPengupload = :uuidPengupload OR data.statusDokumen != :statusDokumenNot) " +
-//            "GROUP BY data.uuid ORDER BY data.uuid ASC")
-//    Page<Operational> fetchingDataAsValidator(Pageable var1,
-//                                          @Param("wpp") String wpp,
-//                                          @Param("uuidPengupload") String uuidPengupload,
-//                                          @Param("statusDokumenNot") DocumentStatus statusDokumenNot);
-//
-//
-//    /**
-//     *
-//     * @param var1
-//     * @return
-//     */
-//    @Query("SELECT data FROM Operational data " +
-//            "GROUP BY data.uuid ORDER BY data.uuid ASC")
-//    Page<Operational> fetchingDataAsForExportExcel(Pageable var1);
-//
-//
-////    Page<Operational> fetchingDataAsForExportExcelUsingSpecification(Specification<Operational> var1, Pageable var2);
-
-
-
     /**
      * Digunakan untuk menampilkan data utama dengan status login sebagai validator NGO
      *
@@ -305,44 +273,6 @@ public interface OperationalRepository extends RepositoryListener<Operational, S
                                                                    @Param("tanggalKembaliHingga") Date tanggalKembaliHingga);
 
 
-    /**
-     * Digunakan untuk menampilkan data utama dengan status login sebagai validator PJ WPP
-     *
-     * @param var1
-     * @param wpp
-     * @param uuidPengupload
-     * @param statusDokumenNot
-     * @return
-     */
-    @Query("SELECT data FROM Operational data WHERE " +
-            "data.wpp = :wpp AND (data.uuidPengupload = :uuidPengupload OR " +
-            "(data.statusDokumen != :statusDokumenNot OR data.statusDokumen != 'PENDING' )" +
-            ") " +
-            "GROUP BY data.uuid ORDER BY data.uuid ASC")
-    Page<Operational> fetchingDataAsValidatorPJWPP(Pageable var1,
-                                                   @Param("wpp") String wpp,
-                                                   @Param("uuidPengupload") String uuidPengupload,
-                                                   @Param("statusDokumenNot") DocumentStatus statusDokumenNot);
-
-
-    /**
-     * Digunakan untuk menampilkan data utama dengan status login sebagai validator Peneliti
-     *
-     * @param var1
-     * @param uuidSumberDaya
-     * @param uuidPengupload
-     * @param statusDokumenNot
-     * @return
-     */
-    @Query("SELECT data FROM Operational data WHERE " +
-            "LOWER(data.uuidSumberDaya) LIKE LOWER('%' || :uuidSumberDaya || '%') AND (data.uuidPengupload = :uuidPengupload OR " +
-            "(data.statusDokumen != :statusDokumenNot OR data.statusDokumen != 'PENDING' )" +
-            ") " +
-            "GROUP BY data.uuid ORDER BY data.uuid ASC")
-    Page<Operational> fetchingDataAsValidatorPeneliti(Pageable var1,
-                                                      @Param("uuidSumberDaya") String uuidSumberDaya,
-                                                      @Param("uuidPengupload") String uuidPengupload,
-                                                      @Param("statusDokumenNot") DocumentStatus statusDokumenNot);
 
 
     /**
@@ -760,5 +690,10 @@ public interface OperationalRepository extends RepositoryListener<Operational, S
             @Param("tanggalKembaliMulai") Date tanggalKembaliMulai,
             @Param("tanggalKembaliHingga") Date tanggalKembaliHingga);
 
+
+
+    Page<Operational> findAllByOrganisasiOrderByDibuatPadaTanggalAsc(Pageable pageable, String organisasi);
+
+    Page<Operational> findAllByOrganisasiOrderByDibuatPadaTanggalDesc(Pageable pageable, String organisasi);
 
 }
