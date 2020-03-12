@@ -405,7 +405,7 @@ public class Translator3rdParty implements Brpl {
         }).collect(Collectors.toList());
     }
 
-    public Landing transformLanding(Landing3rdPartyDTO landing3rdPartyDTO, SysUser sysUser) {
+    public Landing transformLanding(Landing3rdPartyDTO landing3rdPartyDTO) {
 
         if (user == null || auditDate == null || landing3rdPartyDTO == null)
             return null;
@@ -422,8 +422,8 @@ public class Translator3rdParty implements Brpl {
                 .userGroup(null)
                 .statusDokumen(enTransformDocumentStatus(landing3rdPartyDTO.getStatusDokumen()))
                 .photoName("")
-                .uuidPengupload(sysUser.getUuid())
-                .organisasi(sysUser.getOrganisasi())
+                .uuidPengupload(user.getUuid())
+                .organisasi(user.getOrganisasi())
                 .wpp(landing3rdPartyDTO.getWpp())
                 .terverifikasiOleh("")
                 .untukEksternalTerverifikasiOleh("")
