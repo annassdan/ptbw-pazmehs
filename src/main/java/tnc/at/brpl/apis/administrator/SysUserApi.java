@@ -28,19 +28,6 @@ import tnc.at.brpl.utils.api.response.ResponseType;
 @SuppressWarnings("unused")
 public class SysUserApi extends ApiModel<SysUser, SysUserService> {
 
-    public ResponseEntity<ResponseResolver<?>> cc(@RequestParam("spell") String spell) {
-
-
-
-
-        return  ResponseResolver.builder()
-                .type(ResponseType.READ_ONE)
-                .body("aa").error("")
-                .build().map();
-    }
-
-
-
     /**
      * Fungsi yang digunakan untuk login pada System BRPL
      *
