@@ -60,9 +60,8 @@ public class NonTripService {
         /* validate data */
         ValidatorUtil.expectNoThrowError(Operational3rdPartyValidator.validate(operational3rdPartyDTO));
 
-        SysUser sysUser = getUserInformation();
-        Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
-        operationalRepository.save(rdParty.transformOperational(operational3rdPartyDTO, sysUser));
+        Translator3rdParty rdParty = new Translator3rdParty(new Date(), getUserInformation());
+        operationalRepository.save(rdParty.transformOperational(operational3rdPartyDTO));
         return operational3rdPartyDTO;
     }
 
@@ -80,7 +79,7 @@ public class NonTripService {
             throw new ResourceInternalServerErrorException("Maaf tidak dapat ubah, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
         Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
-        operationalRepository.save(rdParty.transformOperational(operational3rdPartyDTO, sysUser));
+        operationalRepository.save(rdParty.transformOperational(operational3rdPartyDTO));
         return operational3rdPartyDTO;
     }
 
@@ -134,9 +133,8 @@ public class NonTripService {
         /* validate data */
         ValidatorUtil.expectNoThrowError(BiologyOnSize3rdPartyValidator.validate(biologyOnSize3rdPartyDTO));
 
-        SysUser sysUser = getUserInformation();
-        Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
-        sizeRepository.save(rdParty.transformSize(biologyOnSize3rdPartyDTO, sysUser));
+        Translator3rdParty rdParty = new Translator3rdParty(new Date(), getUserInformation());
+        sizeRepository.save(rdParty.transformSize(biologyOnSize3rdPartyDTO));
         return biologyOnSize3rdPartyDTO;
     }
 
@@ -154,7 +152,7 @@ public class NonTripService {
             throw new ResourceInternalServerErrorException("Maaf tidak dapat ubah, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
         Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
-        sizeRepository.save(rdParty.transformSize(biologyOnSize3rdPartyDTO, sysUser));
+        sizeRepository.save(rdParty.transformSize(biologyOnSize3rdPartyDTO));
         return biologyOnSize3rdPartyDTO;
     }
 
@@ -209,9 +207,8 @@ public class NonTripService {
         /* validate data */
         ValidatorUtil.expectNoThrowError(BiologyOnReproduction3rdPartyValidator.validate(biologyOnReproduction3rdPartyDTO));
 
-        SysUser sysUser = getUserInformation();
-        Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
-        reproductionRepository.save(rdParty.transformReproduction(biologyOnReproduction3rdPartyDTO, sysUser));
+        Translator3rdParty rdParty = new Translator3rdParty(new Date(), getUserInformation());
+        reproductionRepository.save(rdParty.transformReproduction(biologyOnReproduction3rdPartyDTO));
         return biologyOnReproduction3rdPartyDTO;
     }
 
@@ -229,7 +226,7 @@ public class NonTripService {
             throw new ResourceInternalServerErrorException("Maaf tidak dapat ubah, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
         Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
-        reproductionRepository.save(rdParty.transformReproduction(biologyOnReproduction3rdPartyDTO, sysUser));
+        reproductionRepository.save(rdParty.transformReproduction(biologyOnReproduction3rdPartyDTO));
         return biologyOnReproduction3rdPartyDTO;
     }
 

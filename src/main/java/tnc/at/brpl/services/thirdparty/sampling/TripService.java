@@ -62,9 +62,8 @@ public class TripService {
         /* validate the data first */
         ValidatorUtil.expectNoThrowError(Landing3rdPartyValidator.validateAll(landing3rdPartyDTO));
 
-        SysUser sysUser = getUserInformation();
-        Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
-        landingRepository.save(rdParty.transformLanding(landing3rdPartyDTO, sysUser));
+        Translator3rdParty rdParty = new Translator3rdParty(new Date(), getUserInformation());
+        landingRepository.save(rdParty.transformLanding(landing3rdPartyDTO));
         return landing3rdPartyDTO;
     }
 
@@ -82,7 +81,7 @@ public class TripService {
             throw new ResourceInternalServerErrorException("Maaf tidak dapat ubah, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
         Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
-        landingRepository.save(rdParty.transformLanding(landing3rdPartyDTO, sysUser));
+        landingRepository.save(rdParty.transformLanding(landing3rdPartyDTO));
         return landing3rdPartyDTO;
     }
 
