@@ -3,7 +3,6 @@ package tnc.at.brpl.apis.thirdparty.sampling;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tnc.at.brpl.models.main.dto.Landing3rdPartyDTO;
 import tnc.at.brpl.services.thirdparty.Delete3rdPartyResponse;
@@ -12,7 +11,6 @@ import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.data.DataOrder;
 
 @RestController
-@Transactional
 @RequestMapping(value = "/sampling/api/v1/trip", produces = {Brpl.MODE.JSON})
 public class TripApi {
 
