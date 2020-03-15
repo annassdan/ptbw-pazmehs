@@ -2,8 +2,11 @@ package tnc.at.brpl.models.integration;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.models.master.Species;
 import tnc.at.brpl.utils.Brpl;
@@ -17,7 +20,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.OTHER + Brpl.CONTENT.OTHER.SIZING)
 public class Sizing extends EntityModel<Sizing, String> implements Brpl {
 

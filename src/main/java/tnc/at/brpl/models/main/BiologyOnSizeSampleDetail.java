@@ -1,7 +1,11 @@
 package tnc.at.brpl.models.main;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.entity.EntityModel;
 
@@ -19,7 +23,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE + Brpl.CONTENT.BIOLOGY_ON_SIZE_SAMPLE_DETAIL)
 public class BiologyOnSizeSampleDetail extends EntityModel<BiologyOnSizeSampleDetail, String> {
 

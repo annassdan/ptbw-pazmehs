@@ -1,8 +1,6 @@
 package tnc.at.brpl.utils.mainconfig.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
@@ -11,8 +9,10 @@ import java.util.List;
  *
  * @author annasldan ~| annasmn34333@gmail.com | TNC Indonesia |~
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class FieldLooping {
 

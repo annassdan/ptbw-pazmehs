@@ -1,6 +1,7 @@
 package tnc.at.brpl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -210,6 +211,7 @@ public class BrplApplication implements CommandLineRunner {
         TypeReference<List<FieldModel>> typeReference = new TypeReference<List<FieldModel>>() {
         };
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return objectMapper.readValue(configFile, typeReference);
     }
 

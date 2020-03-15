@@ -36,7 +36,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-//        logger.info("GENERATE TOKEN.....PROCESS 1");
         security.checkTokenAccess("isAuthenticated()");
     }
 
@@ -45,7 +44,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         logger.info("GENERATE TOKENOAUTH");
 //        .authorities("ROLE_SUPERUSER", "ROLE_VALIDATOR", "ROLE_CLIENT", "ROLE_GUEST")
         clients.inMemory().withClient("fayaqun" )
-                .authorizedGrantTypes("client_credentials", "password", "refresh_token")
+                /*"refresh_token" */
+                .authorizedGrantTypes("client_credentials", "password")
                 .authorities("ROLE_ADMIN","ROLE_CLIENT")
                 .scopes("read", "write", "trust")
                 .resourceIds("oauth2-resource")
@@ -55,15 +55,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-//        logger.info("GENERATE TOKEN.....PROCESS 2");
         endpoints.tokenStore(tokenStore()).authenticationManager(authManager);
     }
 
 
     @Bean
     public TokenStore tokenStore() {
-
-//        logger.info("GENERATE TOKEN.....1");
         return new InMemoryTokenStore();
     }
 

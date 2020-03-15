@@ -37,15 +37,13 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/api/administrator/**",
                         "/api/sampling/**",
                         "/api/datamentah/**").permitAll()
-                .antMatchers("/testlink", "/api/integrasi/**", "/api/master/spesies/", "/api/client/data/**"
+                .antMatchers("/api/integrasi/**", "/api/master/spesies/", "/sampling/api/v1/**"
                         ).authenticated();
     }
 
 
     @Bean
     public TokenStore tokenStore() {
-//        logger.info("GENERATE TOKEN.....2");
-
         return new InMemoryTokenStore();
 
     }

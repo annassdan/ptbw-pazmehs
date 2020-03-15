@@ -1,14 +1,14 @@
 
 package tnc.at.brpl.models.main;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Target;
 import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.models.administrator.SysUserGroup;
 import tnc.at.brpl.utils.Brpl;
@@ -16,7 +16,9 @@ import tnc.at.brpl.utils.data.DocumentStatus;
 import tnc.at.brpl.utils.entity.EntityModel;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -29,7 +31,7 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE + Brpl.CONTENT.LANDING)
 public class Landing extends EntityModel<Landing, String> {
 
@@ -63,7 +65,7 @@ public class Landing extends EntityModel<Landing, String> {
     @ApiModelProperty("Data Operasional - (Dengan referensi Kode Pendaratan)")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "uuid_pendaratan" + XMARK)
-//    private Set<LandingDetail> dataRincianPendaratan = new HashSet<>();
+    @Builder.Default
     private List<LandingDetail> dataRincianPendaratan = new ArrayList<>();
 
     @ApiModelProperty("Status Dokumen")
@@ -87,6 +89,7 @@ public class Landing extends EntityModel<Landing, String> {
     @ApiModelProperty("Data Operasional - (Dengan referensi Kode Pendaratan)")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_pendaratan" + XMARK)
+    @Builder.Default
     private List<Operational> dataOperasional = new ArrayList<>();
 
     /**
@@ -96,6 +99,7 @@ public class Landing extends EntityModel<Landing, String> {
     @ApiModelProperty("Data Sampling Biology Ukuran - (Dengan referensi kode Pendaratan)")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_pendaratan" + XMARK)
+    @Builder.Default
     private List<BiologyOnSize> dataUkuran = new ArrayList<>();
 
     /**
@@ -105,6 +109,7 @@ public class Landing extends EntityModel<Landing, String> {
     @ApiModelProperty("Data Sampling Biology Reproduksi - (Dengan referensi kode Pendaratan)")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_pendaratan" + XMARK)
+    @Builder.Default
     private List<BiologyOnReproduction> dataReproduksi = new ArrayList<>();
 
     @ApiModelProperty("Organisasi Pemilik Data")
@@ -131,7 +136,10 @@ public class Landing extends EntityModel<Landing, String> {
     @ColumnDefault("false")
     private boolean byMachine;
 
+    @ColumnDefault("1")
+    private int dataVersion;
 
-
+    @ColumnDefault("false")
+    private boolean nonTrip;
 
 }

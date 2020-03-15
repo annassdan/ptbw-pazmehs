@@ -1,5 +1,9 @@
 package tnc.at.brpl.utils.thirdparty;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 import tnc.at.brpl.exceptions.ResourceInternalServerErrorException;
 import tnc.at.brpl.models.administrator.SysUser;
 import tnc.at.brpl.models.main.*;
@@ -12,32 +16,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @SuppressWarnings("unused")
 public class Translator3rdParty implements Brpl {
 
-    private Date auditDate;
+    private boolean nonTrip;
 
-    SysUser user;
-
-    public Translator3rdParty() {
-    }
-
-
-    public String encodeId(String originalId) {
-        if (user == null)
-            return originalId;
-        return user.getUuid() + MITRA_ID_DELIMITER + originalId;
-    }
-
-    public String decodeId(String encodedId) {
-        String[] splitedId = encodedId.split(MITRA_ID_DELIMITER, 2);
-        return splitedId.length == 0 || splitedId.length == 1 ? encodedId : splitedId[1];
-    }
-
-    public Translator3rdParty(Date auditDate, SysUser user) {
-        this.auditDate = auditDate;
-        this.user = user;
-    }
+    private SysUser user;
 
 
     private DocumentStatus enTransformDocumentStatus(ThirdPartyDocumentStatus thirdPartyDocumentStatus) {
@@ -70,7 +58,7 @@ public class Translator3rdParty implements Brpl {
 
     public List<BiologyOnReproductionDetail> transformReproductionDetail(List<BiologyOnReproductionDetail3rdPatyDTO> reproductionDetail3rdPatyDTO) {
 
-        if (user == null || auditDate == null || reproductionDetail3rdPatyDTO == null)
+        if (user == null || reproductionDetail3rdPatyDTO == null)
             return null;
 
         return reproductionDetail3rdPatyDTO.stream().map(dto -> {
@@ -81,11 +69,8 @@ public class Translator3rdParty implements Brpl {
                     .berat(dto.getBerat())
                     .beratIsiPerut(dto.getBeratIsiPerut())
                     .tkg(dto.getTkg())
+                    .uuid(TranslatorUser3rdParty.encodeId(dto))
                     .build();
-            detail.setUuid(encodeId(dto.getId()));
-            detail.setDibuatPadaTanggal(auditDate);
-            detail.setTerakhirDiubahPadaTanggal(auditDate);
-            detail.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
             return detail;
         }).collect(Collectors.toList());
     }
@@ -93,7 +78,7 @@ public class Translator3rdParty implements Brpl {
 
     public List<BiologyOnReproduction> transformReproductions(List<BiologyOnReproduction3rdPartyDTO> reproduction3rdPartyDTOs) {
 
-        if (user == null || auditDate == null || reproduction3rdPartyDTOs == null)
+        if (user == null || reproduction3rdPartyDTOs == null)
             return null;
 
         return reproduction3rdPartyDTOs.stream().map(dto -> transformReproduction(dto)).collect(Collectors.toList());
@@ -101,7 +86,7 @@ public class Translator3rdParty implements Brpl {
 
     public BiologyOnReproduction transformReproduction(BiologyOnReproduction3rdPartyDTO dto) {
 
-        if (user == null || auditDate == null || dto == null)
+        if (user == null || dto == null)
             return null;
 
         BiologyOnReproduction biology = BiologyOnReproduction.builder()
@@ -123,18 +108,16 @@ public class Translator3rdParty implements Brpl {
                 .wpp(dto.getWpp())
                 .terverifikasiOleh("")
                 .byMachine(true)
+                .uuid(TranslatorUser3rdParty.encodeId(dto))
+                .nonTrip(nonTrip)
                 .untukEksternalTerverifikasiOleh("").build();
-        biology.setUuid(encodeId(dto.getId()));
-        biology.setDibuatPadaTanggal(auditDate);
-        biology.setTerakhirDiubahPadaTanggal(auditDate);
-        biology.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
         return biology;
     }
 
 
     public List<BiologyOnSizeSampleDetail> transformSizeSampleDetail(List<BiologyOnSizeSampleDetail3rdPartyDTO> sizeSampleDetail3rdPartyDTOs) {
 
-        if (user == null || auditDate == null || sizeSampleDetail3rdPartyDTOs == null)
+        if (user == null || sizeSampleDetail3rdPartyDTOs == null)
             return null;
 
         return sizeSampleDetail3rdPartyDTOs.stream().map(dto -> {
@@ -143,11 +126,8 @@ public class Translator3rdParty implements Brpl {
                     .sampleVolume(dto.getSampleVolume())
                     .sampleIndividu(dto.getSampleIndividu())
                     .tipePanjang(dto.getTipePanjang())
+                    .uuid(TranslatorUser3rdParty.encodeId(dto))
                     .build();
-            sampleDetail.setUuid(encodeId(dto.getId()));
-            sampleDetail.setDibuatPadaTanggal(auditDate);
-            sampleDetail.setTerakhirDiubahPadaTanggal(auditDate);
-            sampleDetail.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
             return sampleDetail;
         }).collect(Collectors.toList());
     }
@@ -155,18 +135,15 @@ public class Translator3rdParty implements Brpl {
 
     public List<BiologyOnSizeDetail> transformSizeDetail(List<BiologyOnSizeDetail3rdPartyDTO> sizeDetail3rdPartyDTOs) {
 
-        if (user == null || auditDate == null || sizeDetail3rdPartyDTOs == null)
+        if (user == null || sizeDetail3rdPartyDTOs == null)
             return null;
 
         return sizeDetail3rdPartyDTOs.stream().map(dto -> {
             BiologyOnSizeDetail detail = BiologyOnSizeDetail.builder()
                     .uuidSpesies(dto.getNamaSpesies())
                     .panjang(dto.getPanjang())
+                    .uuid(TranslatorUser3rdParty.encodeId(dto))
                     .build();
-            detail.setUuid(encodeId(dto.getId()));
-            detail.setDibuatPadaTanggal(auditDate);
-            detail.setTerakhirDiubahPadaTanggal(auditDate);
-            detail.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
             return detail;
         }).collect(Collectors.toList());
     }
@@ -174,7 +151,7 @@ public class Translator3rdParty implements Brpl {
 
     public List<BiologyOnSize> transformSizes(List<BiologyOnSize3rdPartyDTO> size3rdPartyDTOs) {
 
-        if (user == null || auditDate == null || size3rdPartyDTOs == null)
+        if (user == null || size3rdPartyDTOs == null)
             return null;
 
         return size3rdPartyDTOs.stream().map(dto -> transformSize(dto)).collect(Collectors.toList());
@@ -182,7 +159,7 @@ public class Translator3rdParty implements Brpl {
 
     public BiologyOnSize transformSize(BiologyOnSize3rdPartyDTO dto) {
 
-        if (user == null || auditDate == null || dto == null)
+        if (user == null || dto == null)
             return null;
 
         BiologyOnSize size = BiologyOnSize.builder()
@@ -209,18 +186,16 @@ public class Translator3rdParty implements Brpl {
                 .terverifikasiOleh("")
                 .untukEksternalTerverifikasiOleh("")
                 .byMachine(true)
+                .uuid(TranslatorUser3rdParty.encodeId(dto))
+                .nonTrip(nonTrip)
                 .build();
-        size.setUuid(encodeId(dto.getId()));
-        size.setDibuatPadaTanggal(auditDate);
-        size.setTerakhirDiubahPadaTanggal(auditDate);
-        size.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
         return size;
     }
 
 
     public List<OperationalOnFishingToolSpecification> transformOperationalSpecification(List<OperationalOnFishingToolSpecification3rdPartyDTO> specification3rdPartyDTOs, String alatTangkap) {
 
-        if (user == null || auditDate == null || specification3rdPartyDTOs == null)
+        if (user == null || specification3rdPartyDTOs == null)
             return null;
 
         return specification3rdPartyDTOs.stream().map(dto -> {
@@ -229,11 +204,8 @@ public class Translator3rdParty implements Brpl {
                     .spesifikasi(dto.getSpesifikasi())
                     .nilaiSpesifikasi(dto.getNilaiSpesifikasi())
                     .satuanSpesifikasi(dto.getSatuanSpesifikasi())
+                    .uuid(TranslatorUser3rdParty.encodeId(dto))
                     .build();
-            specification.setUuid(encodeId(dto.getId()));
-            specification.setDibuatPadaTanggal(auditDate);
-            specification.setTerakhirDiubahPadaTanggal(auditDate);
-            specification.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
             return specification;
         }).collect(Collectors.toList());
     }
@@ -241,7 +213,7 @@ public class Translator3rdParty implements Brpl {
 
     public List<OperationalCatchDetails> transformOperationalCatch(List<OperationalCatchDetails3rdPartyDTO> details3rdPartyDTOs) {
 
-        if (user == null || auditDate == null || details3rdPartyDTOs == null)
+        if (user == null || details3rdPartyDTOs == null)
             return null;
 
         return details3rdPartyDTOs.stream().map(dto -> {
@@ -255,11 +227,8 @@ public class Translator3rdParty implements Brpl {
                     .asin(dto.isAsin())
                     .loin(dto.isLoin())
                     .rebus(dto.isRebus())
+                    .uuid(TranslatorUser3rdParty.encodeId(dto))
                     .build();
-            details.setUuid(encodeId(dto.getId()));
-            details.setDibuatPadaTanggal(auditDate);
-            details.setTerakhirDiubahPadaTanggal(auditDate);
-            details.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
             return details;
         }).collect(Collectors.toList());
     }
@@ -267,7 +236,7 @@ public class Translator3rdParty implements Brpl {
 
     public List<Operational> transformOperationals(List<Operational3rdPartyDTO> operational3rdPartyDTs) {
 
-        if (user == null || auditDate == null || operational3rdPartyDTs == null)
+        if (user == null || operational3rdPartyDTs == null)
             return null;
 
         return operational3rdPartyDTs.stream().map(dto -> transformOperational(dto)).collect(Collectors.toList());
@@ -275,7 +244,7 @@ public class Translator3rdParty implements Brpl {
 
     public Operational transformOperational(Operational3rdPartyDTO dto) {
 
-        if (user == null || auditDate == null || dto == null)
+        if (user == null || dto == null)
             return null;
 
         Operational operational = Operational.builder()
@@ -340,18 +309,16 @@ public class Translator3rdParty implements Brpl {
                 .terverifikasiOleh("")
                 .untukEksternalTerverifikasiOleh("")
                 .byMachine(true)
+                .uuid(TranslatorUser3rdParty.encodeId(dto))
+                .nonTrip(nonTrip)
                 .build();
-        operational.setUuid(encodeId(dto.getId()));
-        operational.setDibuatPadaTanggal(auditDate);
-        operational.setTerakhirDiubahPadaTanggal(auditDate);
-        operational.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
         return operational;
     }
 
 
     public List<LandingCatchDetail> transformLandingCatchDetail(List<LandingCatchDetail3rdPartyDTO> catchDetail3rdPartyDTOs) {
 
-        if (user == null || auditDate == null || catchDetail3rdPartyDTOs == null)
+        if (user == null || catchDetail3rdPartyDTOs == null)
             return null;
 
         return catchDetail3rdPartyDTOs.stream().map(dto -> {
@@ -365,18 +332,15 @@ public class Translator3rdParty implements Brpl {
                     .uuidSpesies(dto.getNamaSpesies())
                     .tangkapanVolume(dto.getTangkapanVolume())
                     .tangkapanIndividu(dto.getTangkapanIndividu())
+                    .uuid(TranslatorUser3rdParty.encodeId(dto))
                     .build();
-            catchDetail.setUuid(encodeId(dto.getId()));
-            catchDetail.setDibuatPadaTanggal(auditDate);
-            catchDetail.setTerakhirDiubahPadaTanggal(auditDate);
-            catchDetail.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
             return catchDetail;
         }).collect(Collectors.toList());
     }
 
     public List<LandingDetail> transformLandingDetail(List<LandingDetail3rdPartyDTO> detail3rdPartyDTOs) {
 
-        if (user == null || auditDate == null || detail3rdPartyDTOs == null)
+        if (user == null || detail3rdPartyDTOs == null)
             return null;
 
         return detail3rdPartyDTOs.stream().map(dto -> {
@@ -396,20 +360,13 @@ public class Translator3rdParty implements Brpl {
                     .totalTangkapanVolume(dto.getTotalTangkapanVolume())
                     .totalTangkapanIndividu(dto.getTotalTangkapanIndividu())
                     .dataRincianTangkapanPendaratan(transformLandingCatchDetail(dto.getDataRincianTangkapanPendaratan()))
+                    .uuid(TranslatorUser3rdParty.encodeId(dto))
                     .build();
-            detail.setUuid(encodeId(dto.getId()));
-            detail.setDibuatPadaTanggal(auditDate);
-            detail.setTerakhirDiubahPadaTanggal(auditDate);
-            detail.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
             return detail;
         }).collect(Collectors.toList());
     }
 
     public Landing transformLanding(Landing3rdPartyDTO landing3rdPartyDTO) {
-
-        if (user == null || auditDate == null || landing3rdPartyDTO == null)
-            return null;
-
         Landing landing = Landing.builder()
                 .tanggalPendaratan(landing3rdPartyDTO.getTanggalPendaratan())
                 .namaLokasiPendaratan(landing3rdPartyDTO.getNamaLokasiPendaratan())
@@ -428,13 +385,9 @@ public class Translator3rdParty implements Brpl {
                 .terverifikasiOleh("")
                 .untukEksternalTerverifikasiOleh("")
                 .byMachine(true)
+                .nonTrip(nonTrip)
+                .uuid(TranslatorUser3rdParty.encodeId(landing3rdPartyDTO))
                 .build();
-
-        landing.setUuid(encodeId(landing3rdPartyDTO.getId()));
-        landing.setDibuatPadaTanggal(auditDate);
-        landing.setTerakhirDiubahPadaTanggal(auditDate);
-        landing.setDibuatAtauTerakhirDiubahOleh(user.getUuid());
-
         return landing;
     }
 
@@ -451,7 +404,7 @@ public class Translator3rdParty implements Brpl {
                     .berat(dto.getBerat())
                     .beratIsiPerut(dto.getBeratIsiPerut())
                     .tkg(dto.getTkg())
-                    .id(decodeId(dto.getUuid()))
+                    .id(TranslatorUser3rdParty.decodeId(dto.getUuid()))
                     .build();
             return detail;
         }).collect(Collectors.toList());
@@ -478,7 +431,7 @@ public class Translator3rdParty implements Brpl {
                 .dataDetailReproduksi(deTransformReproductionDetail(dto.getDataDetailReproduksi()))
                 .statusDokumen(deTransformDocumentStatus(dto.getStatusDokumen()))
                 .wpp(dto.getWpp())
-                .id(decodeId(dto.getUuid()))
+                .id(TranslatorUser3rdParty.decodeId(dto.getUuid()))
                 .build();
 
         return biology;
@@ -493,7 +446,7 @@ public class Translator3rdParty implements Brpl {
                     .sampleVolume(dto.getSampleVolume())
                     .sampleIndividu(dto.getSampleIndividu())
                     .tipePanjang(dto.getTipePanjang())
-                    .id(decodeId(dto.getUuid()))
+                    .id(TranslatorUser3rdParty.decodeId(dto.getUuid()))
                     .build();
 
             return sampleDetail;
@@ -507,7 +460,7 @@ public class Translator3rdParty implements Brpl {
             BiologyOnSizeDetail3rdPartyDTO detail = BiologyOnSizeDetail3rdPartyDTO.builder()
                     .namaSpesies(dto.getUuidSpesies())
                     .panjang(dto.getPanjang())
-                    .id(decodeId(dto.getUuid()))
+                    .id(TranslatorUser3rdParty.decodeId(dto.getUuid()))
                     .build();
             return detail;
         }).collect(Collectors.toList());
@@ -539,7 +492,7 @@ public class Translator3rdParty implements Brpl {
                 .dataUkuranDetail(deTransformSizeDetail(dto.getDataUkuranDetail()))
                 .statusDokumen(deTransformDocumentStatus(dto.getStatusDokumen()))
                 .wpp(dto.getWpp())
-                .id(decodeId(dto.getUuid()))
+                .id(TranslatorUser3rdParty.decodeId(dto.getUuid()))
                 .build();
         return size;
     }
@@ -552,7 +505,7 @@ public class Translator3rdParty implements Brpl {
                     .spesifikasi(dto.getSpesifikasi())
                     .nilaiSpesifikasi(dto.getNilaiSpesifikasi())
                     .satuanSpesifikasi(dto.getSatuanSpesifikasi())
-                    .id(decodeId(dto.getUuid()))
+                    .id(TranslatorUser3rdParty.decodeId(dto.getUuid()))
                     .build();
             return specification;
         }).collect(Collectors.toList());
@@ -571,7 +524,7 @@ public class Translator3rdParty implements Brpl {
                     .asin(dto.isAsin())
                     .loin(dto.isLoin())
                     .rebus(dto.isRebus())
-                    .id(decodeId(dto.getUuid()))
+                    .id(TranslatorUser3rdParty.decodeId(dto.getUuid()))
                     .build();
 
             return details;
@@ -641,7 +594,7 @@ public class Translator3rdParty implements Brpl {
                 .lamaPerendaman(dto.getLamaPerendaman())
                 .statusDokumen(deTransformDocumentStatus(dto.getStatusDokumen()))
                 .wpp(dto.getWpp())
-                .id(decodeId(dto.getUuid()))
+                .id(TranslatorUser3rdParty.decodeId(dto.getUuid()))
                 .build();
 
         return operational;
@@ -654,7 +607,7 @@ public class Translator3rdParty implements Brpl {
                     .namaSpesies(dto.getUuidSpesies())
                     .tangkapanVolume(dto.getTangkapanVolume())
                     .tangkapanIndividu(dto.getTangkapanIndividu())
-                    .id(decodeId(dto.getUuid()))
+                    .id(TranslatorUser3rdParty.decodeId(dto.getUuid()))
                     .build();
             return catchDetail;
         }).collect(Collectors.toList());
@@ -680,7 +633,7 @@ public class Translator3rdParty implements Brpl {
                     .totalTangkapanVolume(dto.getTotalTangkapanVolume())
                     .totalTangkapanIndividu(dto.getTotalTangkapanIndividu())
                     .dataRincianTangkapanPendaratan(deTransformLandingCatchDetail(dto.getDataRincianTangkapanPendaratan()))
-                    .id(decodeId(dto.getUuid()))
+                    .id(TranslatorUser3rdParty.decodeId(dto.getUuid()))
                     .build();
             return detail;
         }).collect(Collectors.toList());
@@ -688,6 +641,7 @@ public class Translator3rdParty implements Brpl {
 
 
     public Landing3rdPartyDTO deTransformLanding(Landing landing) {
+
 
         Landing3rdPartyDTO landingDTO = Landing3rdPartyDTO.builder()
                 .tanggalPendaratan(landing.getTanggalPendaratan())
@@ -700,7 +654,7 @@ public class Translator3rdParty implements Brpl {
                 .dataReproduksi(deTransformReproductions(landing.getDataReproduksi()))
                 .statusDokumen(deTransformDocumentStatus(landing.getStatusDokumen()))
                 .wpp(landing.getWpp())
-                .id(decodeId(landing.getUuid()))
+                .id(TranslatorUser3rdParty.decodeId(landing.getUuid()))
                 .build();
 
         return landingDTO;

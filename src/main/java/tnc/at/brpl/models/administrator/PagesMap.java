@@ -2,10 +2,8 @@ package tnc.at.brpl.models.administrator;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import lombok.experimental.SuperBuilder;
 import tnc.at.brpl.utils.Brpl;
-import tnc.at.brpl.utils.SysUserRoleType;
 import tnc.at.brpl.utils.entity.EntityModel;
 
 import javax.persistence.*;
@@ -22,7 +20,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE  + Brpl.ADMIN + Brpl.CONTENT.PAGES_MAP)
 @SuppressWarnings("unused")
 public class PagesMap extends EntityModel<PagesMap, String> {
@@ -49,6 +47,7 @@ public class PagesMap extends EntityModel<PagesMap, String> {
     @ApiModelProperty("Hak Akses yang bisa digunakan untuk mengakses halaman ini")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "uuid_pages_map" + XMARK)
+    @Builder.Default
     private List<PagesMapRoles> dataHakAkses = new ArrayList<>();
 
 

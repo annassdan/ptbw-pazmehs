@@ -168,6 +168,7 @@ public interface Brpl {
         String BIOLOGY_ON_SIZE = "biologiukuran";
         String BIOLOGY_ON_SIZE_DETAIL = "biologiukurandetail";
         String BIOLOGY_ON_SIZE_SAMPLE_DETAIL = "biologiukuranrinciansample";
+        String HISTORY = "history";
 
         interface OTHER {
             String BOAT = "boat";

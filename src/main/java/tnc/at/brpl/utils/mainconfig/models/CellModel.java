@@ -1,6 +1,8 @@
 package tnc.at.brpl.utils.mainconfig.models;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 /**
  * Copyright (c) 2017.
  *
@@ -8,6 +10,7 @@ import lombok.*;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CellModel {
 

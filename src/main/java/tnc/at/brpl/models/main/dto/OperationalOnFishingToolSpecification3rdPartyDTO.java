@@ -2,6 +2,7 @@ package tnc.at.brpl.models.main.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import tnc.at.brpl.utils.Brpl;
@@ -15,15 +16,15 @@ import javax.persistence.Id;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @SuppressWarnings("unused")
-public class OperationalOnFishingToolSpecification3rdPartyDTO implements Brpl {
+public class OperationalOnFishingToolSpecification3rdPartyDTO extends Main3rdPartyDTO implements Brpl {
 
-    @Id
-    @GenericGenerator(name = "brpl_id", strategy = "tnc.at.brpl.configurations.BrplIdGenerator")
-    @GeneratedValue(generator = "brpl_id")
-    @ApiModelProperty("ID")
-    private String id;
+//    @Id
+//    @GenericGenerator(name = "brpl_id", strategy = "tnc.at.brpl.configurations.BrplIdGenerator")
+//    @GeneratedValue(generator = "brpl_id")
+//    @ApiModelProperty("ID")
+//    private String id;
 
 //    @ApiModelProperty("Kode Alat Tangkap")
 //    @Column(name = "uuid_alat_tangkap" + XMARK)

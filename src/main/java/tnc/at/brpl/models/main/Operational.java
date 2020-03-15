@@ -2,17 +2,16 @@
 package tnc.at.brpl.models.main;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.configurations.CustomTimeSerializer;
 import tnc.at.brpl.utils.Brpl;
-import tnc.at.brpl.utils.UnpredictableBoolean;
 import tnc.at.brpl.utils.data.DocumentStatus;
 import tnc.at.brpl.utils.entity.EntityModel;
 
@@ -20,7 +19,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -33,17 +31,10 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE + Brpl.CONTENT.OPERATIONAL)
 public class Operational extends EntityModel<Operational, String> {
 
-    /** Header */
-//    @ApiModelProperty("Tanggal Pendaratan")
-//    @Temporal(TemporalType.DATE)
-//    @JsonSerialize(using = CustomDateSerializer.class)
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN)
-//    @Column(name = "tanggal_pendaratan" + XMARK)
-//    private Date tanggalPendaratan;
 
     @ApiModelProperty("Nama tempat Pendaratan")
     @Column(name = "nama_lokasi_pendaratan" + XMARK)
@@ -290,15 +281,6 @@ public class Operational extends EntityModel<Operational, String> {
     @Column(name = "jumlah_rumpon_berhasil" + XMARK)
     private int jumlahRumponBerhasil;
 
-//    @ApiModelProperty("Jumlah settign selema trip")
-//    @Column(name = "jumlah_setting_per_trip" + XMARK)
-//    private int jumlahSettingPerTrip;
-
-//    @Deprecated // Sepertinya akan dihilangkan diganti dengan jumlah hari efektif
-//    @ApiModelProperty("Jumlah Hari Operasi")
-//    @Column(name = "jumlah_hari_efektif" + XMARK)
-//    private int jumlahHariEfektif;
-
     @ApiModelProperty("Waktu Operasi")
     @Column(name = "waktu_memancing" + XMARK)
     private String waktuMemancing;
@@ -320,14 +302,6 @@ public class Operational extends EntityModel<Operational, String> {
     @Column(name = "jumlah_tangkapan_untuk_dimakan_dilaut_individu" + XMARK)
     private int jumlahTangkapanUntukDimakanDilautIndividu;
 
-
-
-
-
-//    @ApiModelProperty("Deskripsi")
-//    @Column(name = "deskripsi" + XMARK)
-//    private String deskripsi; // optional
-    // =====================================
     /**
      * Data Operasional Spesifikasi Alat Tangkap
      */
@@ -335,6 +309,7 @@ public class Operational extends EntityModel<Operational, String> {
     @ApiModelProperty("Data Informasi Alat Tangkap - (Dengan referensi Kode Operasional)")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_operasional" + XMARK)
+    @Builder.Default
     private List<OperationalOnFishingToolSpecification> dataSpesifikasiAlatTangkap = new ArrayList<>();
 
     /**
@@ -343,7 +318,7 @@ public class Operational extends EntityModel<Operational, String> {
     @ApiModelProperty("Data Informasi Detail Tangkapan Operasional - (Dengan referensi Kode Operasional)")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_operasional" + XMARK)
-//    private Set<OperationalCatchDetails> dataOperasionalDetailTangkapan;
+    @Builder.Default
     private List<OperationalCatchDetails> dataOperasionalDetailTangkapan = new ArrayList<>();
 
     @ApiModelProperty("Status Dokumen")
@@ -353,12 +328,6 @@ public class Operational extends EntityModel<Operational, String> {
     @ApiModelProperty("Foto Dokumtenasi")
     @Column(name = "foto_dokumentasi" + XMARK)
     private String photoName;
-
-//    @ApiModelProperty("Kepemilikan Data")
-//    @Column(name = "uuid_kepemilikan_data" + XMARK)
-//    @ColumnDefault("''")
-//    private String uuidKepemilikanData;
-
 
     @ApiModelProperty("Jumlah Tangkapan (Kg)")
     @Column(name = "jumlah_tangkapan_volume" + XMARK)
@@ -399,5 +368,12 @@ public class Operational extends EntityModel<Operational, String> {
 
     @ColumnDefault("false")
     private boolean byMachine;
+
+
+    @ColumnDefault("1")
+    private int dataVersion;
+
+    @ColumnDefault("false")
+    private boolean nonTrip;
 
 }

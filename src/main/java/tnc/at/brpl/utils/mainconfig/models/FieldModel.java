@@ -1,6 +1,7 @@
 package tnc.at.brpl.utils.mainconfig.models;
 
 import lombok.*;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.util.List;
 
@@ -9,8 +10,10 @@ import java.util.List;
  *
  * @author annasldan ~| annasmn34333@gmail.com | TNC Indonesia |~
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class FieldModel {
 

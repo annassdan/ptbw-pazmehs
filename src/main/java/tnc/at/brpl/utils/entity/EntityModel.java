@@ -4,10 +4,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import tnc.at.brpl.configurations.CustomDateTimeSerializer;
 
 import javax.persistence.*;
@@ -24,8 +30,13 @@ import java.util.Date;
  *                      Copyright (c) 2017.
  * @author annasldan   ~| annasmn34333@gmail.com | TNC Indonesia |~
  */
-//@Builder(builderMethodName = "superBuilder")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+@SuperBuilder
+//        (builderMethodName = "builderAtBaseEntity", buildMethodName = "buildBaseEntity")
 public abstract class EntityModel<ClassEntity extends EntityListener, ID extends Serializable>
         implements Serializable, EntityListener<ID> {
 
@@ -41,8 +52,7 @@ public abstract class EntityModel<ClassEntity extends EntityListener, ID extends
     @Column(name = "uuid", unique = true, nullable = false)
     private String uuid;
 
-
-
+    @CreatedDate
     @ApiModelProperty("Tanggal Dibuatnya Data")
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_PATTERN)
@@ -51,6 +61,8 @@ public abstract class EntityModel<ClassEntity extends EntityListener, ID extends
     private Date dibuatPadaTanggal;
 
 
+
+    @LastModifiedDate
     @ApiModelProperty("Tanggal Terakhir Diubah")
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_PATTERN)
@@ -59,11 +71,18 @@ public abstract class EntityModel<ClassEntity extends EntityListener, ID extends
     private Date terakhirDiubahPadaTanggal;
 
 
+    @LastModifiedBy
     @ApiModelProperty("Dibuat/ terakhir diubah oleh siapa?")
     @Column(name = "terakhir_diubah_oleh")
     @ColumnDefault("''")
     private String dibuatAtauTerakhirDiubahOleh;
 
+
+    @CreatedBy
+    @ApiModelProperty("Dibuat/ terakhir diubah oleh siapa?")
+    @Column(name = "dibuat_oleh")
+    @ColumnDefault("''")
+    private String dibuatOleh;
 
     /**
      * Class Entitas
@@ -73,50 +92,50 @@ public abstract class EntityModel<ClassEntity extends EntityListener, ID extends
     public ClassEntity entity;
 
 
-    @Override
-    public String getUuid() {
-        return uuid;
-    }
-
-    /**
-     * Mengeset Manual nilai dari Primary Key
-     *
-     * @param uuid Primary Key
-     */
-    @Override
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    @Override
-    public Date getDibuatPadaTanggal() {
-        return this.dibuatPadaTanggal;
-    }
-
-    @Override
-    public void setDibuatPadaTanggal(Date date) {
-        this.dibuatPadaTanggal = date;
-    }
-
-    @Override
-    public Date getTerakhirDiubahPadaTanggal() {
-        return this.terakhirDiubahPadaTanggal;
-    }
-
-    @Override
-    public void setTerakhirDiubahPadaTanggal(Date date) {
-        this.terakhirDiubahPadaTanggal = date;
-    }
-
-    @Override
-    public String getDibuatAtauTerakhirDiubahOleh() {
-        return this.dibuatAtauTerakhirDiubahOleh;
-    }
-
-    @Override
-    public void setDibuatAtauTerakhirDiubahOleh(String oleh) {
-        this.dibuatAtauTerakhirDiubahOleh = oleh;
-    }
+//    @Override
+//    public String getUuid() {
+//        return uuid;
+//    }
+//
+//    /**
+//     * Mengeset Manual nilai dari Primary Key
+//     *
+//     * @param uuid Primary Key
+//     */
+//    @Override
+//    public void setUuid(String uuid) {
+//        this.uuid = uuid;
+//    }
+//
+//    @Override
+//    public Date getDibuatPadaTanggal() {
+//        return this.dibuatPadaTanggal;
+//    }
+//
+//    @Override
+//    public void setDibuatPadaTanggal(Date date) {
+//        this.dibuatPadaTanggal = date;
+//    }
+//
+//    @Override
+//    public Date getTerakhirDiubahPadaTanggal() {
+//        return this.terakhirDiubahPadaTanggal;
+//    }
+//
+//    @Override
+//    public void setTerakhirDiubahPadaTanggal(Date date) {
+//        this.terakhirDiubahPadaTanggal = date;
+//    }
+//
+//    @Override
+//    public String getDibuatAtauTerakhirDiubahOleh() {
+//        return this.dibuatAtauTerakhirDiubahOleh;
+//    }
+//
+//    @Override
+//    public void setDibuatAtauTerakhirDiubahOleh(String oleh) {
+//        this.dibuatAtauTerakhirDiubahOleh = oleh;
+//    }
 
 
 }

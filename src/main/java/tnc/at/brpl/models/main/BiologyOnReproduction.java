@@ -5,14 +5,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.utils.Brpl;
-import tnc.at.brpl.utils.UnpredictableBoolean;
 import tnc.at.brpl.utils.data.DocumentStatus;
 import tnc.at.brpl.utils.entity.EntityModel;
+
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Copyright (c) 2017.
@@ -24,7 +27,7 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE + Brpl    .CONTENT.BIOLOGY_ON_REPRODUCTION)
 public class BiologyOnReproduction extends EntityModel<BiologyOnReproduction, String> {
 
@@ -63,10 +66,6 @@ public class BiologyOnReproduction extends EntityModel<BiologyOnReproduction, St
 //    private UnpredictableBoolean penangkap;
     private boolean penangkap;
 
-//    @ApiModelProperty("Lama Memancing")
-//    @Column(name = "lama_memancing" + XMARK)
-//    private int lamaMemancing;
-
     @ApiModelProperty("Kode Alat Tangkap")
     @Column(name = "uuid_alat_tangkap" + XMARK)
     private String uuidAlatTangkap;
@@ -87,7 +86,7 @@ public class BiologyOnReproduction extends EntityModel<BiologyOnReproduction, St
     @ApiModelProperty("Data Detail Biologi Reproduksi - (Dengan referensi kode Biologi reproduksi)")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_biologireproduksi" + XMARK)
-//    private Set<BiologyOnReproductionDetail> dataDetailReproduksi = new HashSet<>();
+    @Builder.Default
     private List<BiologyOnReproductionDetail> dataDetailReproduksi = new ArrayList<>();
 
 
@@ -99,14 +98,6 @@ public class BiologyOnReproduction extends EntityModel<BiologyOnReproduction, St
     @ApiModelProperty("Foto Dokumtenasi")
     @Column(name = "foto_dokumentasi" + XMARK)
     private String photoName;
-
-
-//    @ApiModelProperty("Kepemilikan Data")
-//    @Column(name = "uuid_ke
-//    pemilikan_data" + XMARK)
-//    @ColumnDefault("''")
-//    private String uuidKepemilikanData;
-
 
     @ApiModelProperty("Pengupload Data")
     @Column(name = "uuid_pengupload" + XMARK)
@@ -133,5 +124,10 @@ public class BiologyOnReproduction extends EntityModel<BiologyOnReproduction, St
     @ColumnDefault("false")
     private boolean byMachine;
 
+    @ColumnDefault("1")
+    private int dataVersion;
+
+    @ColumnDefault("false")
+    private boolean nonTrip;
 
 }

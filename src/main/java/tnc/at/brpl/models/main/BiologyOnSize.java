@@ -5,20 +5,22 @@ package tnc.at.brpl.models.main;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import org.hibernate.annotations.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.utils.Brpl;
-import tnc.at.brpl.utils.UnitType;
-import tnc.at.brpl.utils.UnpredictableBoolean;
 import tnc.at.brpl.utils.data.DocumentStatus;
 import tnc.at.brpl.utils.entity.EntityModel;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -31,7 +33,7 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE + Brpl.CONTENT.BIOLOGY_ON_SIZE)
 public class BiologyOnSize extends EntityModel<BiologyOnSize, String> {
 
@@ -96,19 +98,6 @@ public class BiologyOnSize extends EntityModel<BiologyOnSize, String> {
     @Column(name = "total_sampel_volume" + XMARK)
     private double totalSampelVolume;
 
-    /*@Enumerated(EnumType.STRING)
-    @ApiModelProperty("Satuan total yang disampling (KG / EKOR)")
-    @Column(name = "satuan_total_sampel" + XMARK)
-    private UnitType satuanTotalSampel;*/
-
-
-
-    //
-
-
-    //@ApiModelProperty("Panjang Fork Length")
-    //@Column(name = "fork_length" + XMARK)
-    //private double forkLength;
 
     /**
      * Data detail sample yang diambil
@@ -139,13 +128,6 @@ public class BiologyOnSize extends EntityModel<BiologyOnSize, String> {
     @Column(name = "foto_dokumentasi" + XMARK)
     private String photoName;
 
-//
-//    @ApiModelProperty("Kepemilikan Data")
-//    @Column(name = "uuid_kepemilikan_data" + XMARK)
-//    @ColumnDefault("''")
-//    private String uuidKepemilikanData;
-
-
     @ApiModelProperty("Pengupload Data")
     @Column(name = "uuid_pengupload" + XMARK)
     @ColumnDefault("''")
@@ -172,5 +154,11 @@ public class BiologyOnSize extends EntityModel<BiologyOnSize, String> {
     @ColumnDefault("false")
     private boolean byMachine;
 
+
+    @ColumnDefault("1")
+    private int dataVersion;
+
+    @ColumnDefault("false")
+    private boolean nonTrip;
 
 }

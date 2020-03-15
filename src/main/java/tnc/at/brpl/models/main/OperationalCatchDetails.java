@@ -1,11 +1,18 @@
 
 package tnc.at.brpl.models.main;
+
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.entity.EntityModel;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Copyright (c) 2017.
@@ -17,17 +24,10 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE + Brpl.CONTENT.CATCH_DETAIL)
 public class OperationalCatchDetails extends EntityModel<OperationalCatchDetails, String> {
 
-/*    *//**
-     * Data Operasional
-     *//*
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "dataOperasionalDetailTangkapan")
-    //@JoinColumn(name = "operational_id" + XMARK)
-    @JsonIgnore
-    private Operational dataOperasional;*/
 
     @ApiModelProperty("Kode Spesies")
     @Column(name = "uuid_spesies" + XMARK)

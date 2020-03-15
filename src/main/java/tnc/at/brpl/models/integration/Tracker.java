@@ -1,21 +1,19 @@
 package tnc.at.brpl.models.integration;
 
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.entity.EntityModel;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 //@Entity
 //@Getter
 //@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 //@Table(name = Brpl.OTHER + Brpl.CONTENT.OTHER.TRACKER)
 public class Tracker extends EntityModel<Tracker, String> implements Brpl {
 

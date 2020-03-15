@@ -2,13 +2,17 @@ package tnc.at.brpl.models.integration;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.entity.EntityModel;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -17,7 +21,9 @@ import java.util.Date;
 //@Setter
 //@NoArgsConstructor
 //@AllArgsConstructor
-//@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 //@Table(name = Brpl.OTHER + Brpl.CONTENT.OTHER.FINDMESPOT)
 public class Findmespot extends EntityModel<Findmespot, String> implements Brpl {
 

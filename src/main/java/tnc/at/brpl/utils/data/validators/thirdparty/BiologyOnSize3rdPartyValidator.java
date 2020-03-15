@@ -3,16 +3,22 @@ package tnc.at.brpl.utils.data.validators.thirdparty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import tnc.at.brpl.models.administrator.SysUser;
 import tnc.at.brpl.models.administrator.oauth.CustomUserDetails;
 import tnc.at.brpl.models.main.BiologyOnSize;
+import tnc.at.brpl.models.main.BiologyOnSizeDetail;
+import tnc.at.brpl.models.main.BiologyOnSizeSampleDetail;
 import tnc.at.brpl.models.main.dto.BiologyOnSize3rdPartyDTO;
 import tnc.at.brpl.models.main.dto.BiologyOnSizeDetail3rdPartyDTO;
 import tnc.at.brpl.models.main.dto.BiologyOnSizeSampleDetail3rdPartyDTO;
 import tnc.at.brpl.repositories.administrator.SysUserRepository;
+import tnc.at.brpl.repositories.main.BiologyOnSizeDetailRepository;
 import tnc.at.brpl.repositories.main.BiologyOnSizeRepository;
+import tnc.at.brpl.repositories.main.BiologyOnSizeSampleDetailRepository;
 import tnc.at.brpl.utils.data.ThirdPartyDocumentStatus;
 import tnc.at.brpl.utils.data.validators.ValidatorUtil;
 import tnc.at.brpl.utils.other.Shared;
+import tnc.at.brpl.utils.thirdparty.TranslatorUser3rdParty;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -25,11 +31,20 @@ public class BiologyOnSize3rdPartyValidator {
 
     private static BiologyOnSizeRepository biologyOnSizeRepository;
 
+    private static BiologyOnSizeDetailRepository biologyOnSizeDetailRepository;
+
+    private static BiologyOnSizeSampleDetailRepository biologyOnSizeSampleRepository;
+
+    private static SysUserRepository sysUserRepository;
+
     @Autowired
     private BiologyOnSizeRepository biologyOnSizeRepositoryInjecter;
 
     @Autowired
-    private static SysUserRepository sysUserRepository;
+    private static BiologyOnSizeDetailRepository biologyOnSizeDetailRepositoryInjecter;
+
+    @Autowired
+    private static BiologyOnSizeSampleDetailRepository biologyOnSizeSampleRepositoryInjecter;
 
     @Autowired
     private SysUserRepository sysUserRepositoryInjecter;
@@ -37,6 +52,8 @@ public class BiologyOnSize3rdPartyValidator {
     @PostConstruct
     private void init() {
         biologyOnSizeRepository = biologyOnSizeRepositoryInjecter;
+        biologyOnSizeDetailRepository = biologyOnSizeDetailRepositoryInjecter;
+        biologyOnSizeSampleRepository = biologyOnSizeSampleRepositoryInjecter;
         sysUserRepository = sysUserRepositoryInjecter;
     }
 
@@ -50,16 +67,6 @@ public class BiologyOnSize3rdPartyValidator {
 
     public static List<String> validateSize3rdParty(BiologyOnSize3rdPartyDTO biologyOnSize3rdPartyDTO) {
         List<String> errorMessage = new ArrayList<>();
-
-        /* cek data berdasarkan ID, apakah sudah ada di database atau belum */
-        if (Shared.isStringNullOrEmpty(biologyOnSize3rdPartyDTO.getId())) {
-            errorMessage.add("Data Pendaratan ini tidak memiliki ID");
-        } else {
-            BiologyOnSize checkResult = biologyOnSizeRepository.findOne(biologyOnSize3rdPartyDTO.getId());
-            if (checkResult != null)
-                errorMessage.add("Data Biologi Ukuran dengan ID " + biologyOnSize3rdPartyDTO.getId() +
-                        " sudah ada di Sistem e-BRPL, Silahkan lakukan proses update jika ada perubahan pada data ini.");
-        }
 
         /* verify Lokasi Pendaratan */
         if (Shared.isStringNullOrEmpty(biologyOnSize3rdPartyDTO.getNamaLokasiSampling()))
@@ -93,7 +100,7 @@ public class BiologyOnSize3rdPartyValidator {
         if (Shared.isStringNullOrEmpty(biologyOnSize3rdPartyDTO.getNamaKapal()))
             errorMessage.add("Mohon inputkan nama kapal yang benar");
 
-        if (!ValidatorUtil.alatTangkapValid(Shared.verifyString(biologyOnSize3rdPartyDTO.getNamaSumberDaya())))
+        if (!ValidatorUtil.alatTangkapValid(Shared.verifyString(biologyOnSize3rdPartyDTO.getNamaSumberDaya()), biologyOnSize3rdPartyDTO.getNamaAlatTangkap()))
             errorMessage.add("Alat tangkap \'" + Shared.verifyString(biologyOnSize3rdPartyDTO.getNamaAlatTangkap(), true) +
                     "', tidak diakomodir untuk Sumber Daya '" + Shared.verifyString(biologyOnSize3rdPartyDTO.getNamaSumberDaya(), true) + "'." +
                     "Silahkan lihat kembali daftar alat tangkap yang diakomodir oleh BRPL pada API alat tangkap. ");
@@ -113,14 +120,33 @@ public class BiologyOnSize3rdPartyValidator {
 
         if (biologyOnSize3rdPartyDTO.getStatusDokumen() == ThirdPartyDocumentStatus.WAITING || biologyOnSize3rdPartyDTO.getStatusDokumen() == ThirdPartyDocumentStatus.VERIFIED) {
         } else {
-            errorMessage.add("Ada data dengan status dokumen '"+ biologyOnSize3rdPartyDTO.getStatusDokumen().toString() +"', tidak dapat diproses. Silahkan gunakan status dokumen 'VERIVIED' atau 'WAITING'");
+            errorMessage.add("Ada data dengan status dokumen '" + biologyOnSize3rdPartyDTO.getStatusDokumen().toString() + "', tidak dapat diproses. Silahkan gunakan status dokumen 'VERIVIED' atau 'WAITING'");
         }
 
         return errorMessage;
     }
 
-    public static List<String> validateSizeSample3rdParty(BiologyOnSizeSampleDetail3rdPartyDTO biologyOnSizeSampleDetail3rdPartyDTO) {
+    public static List<String> validateSizeSample3rdParty(BiologyOnSizeSampleDetail3rdPartyDTO biologyOnSizeSampleDetail3rdPartyDTO,
+                                                          boolean insert,
+                                                          boolean existOnParent) {
         List<String> errorMessage = new ArrayList<>();
+        String id = biologyOnSizeSampleDetail3rdPartyDTO.getId();
+
+        if (!Shared.isStringNullOrEmpty(id)) {
+            BiologyOnSizeSampleDetail checkResult = biologyOnSizeSampleRepository.findOne(id);
+            if (insert) {
+                if (checkResult != null)
+                    errorMessage.add("Data Sampel Biologi Ukuran dengan ID " + id + " tidak dapat diproses karena sudah ada di Sistem e-BRPL");
+            } else {
+                if (checkResult == null) {
+                    errorMessage.add("Data Sampel Biologi Reproduksi dengan ID " + id + " tidak dapat diproses karena tidak ditemukan di Sistem e-BRPL");
+                } else { // is update and not null checkResult
+                    if (!existOnParent)
+                        errorMessage.add("Data Sampel Biologi Reproduksi dengan ID " + id + " tidak dapat diproses karena sudah digunakan di data yang lain");
+                }
+            }
+        }
+
 
         if (Shared.isStringNullOrEmpty(biologyOnSizeSampleDetail3rdPartyDTO.getNamaSpesies())
                 && (biologyOnSizeSampleDetail3rdPartyDTO.getSampleIndividu() > 0 || biologyOnSizeSampleDetail3rdPartyDTO.getSampleVolume() > 0))
@@ -136,8 +162,26 @@ public class BiologyOnSize3rdPartyValidator {
     }
 
 
-    public static List<String> validateSizeDetail3rdParty(BiologyOnSizeDetail3rdPartyDTO sizeDetail3rdPartyDTO) {
+    public static List<String> validateSizeDetail3rdParty(BiologyOnSizeDetail3rdPartyDTO sizeDetail3rdPartyDTO,
+                                                          boolean insert,
+                                                          boolean existOnParent) {
         List<String> errorMessage = new ArrayList<>();
+        String id = sizeDetail3rdPartyDTO.getId();
+
+        if (!Shared.isStringNullOrEmpty(id)) {
+            BiologyOnSizeDetail checkResult = biologyOnSizeDetailRepository.findOne(id);
+            if (insert) {
+                if (checkResult != null)
+                    errorMessage.add("Data Detail Biologi Ukuran dengan ID " + id + " tidak dapat diproses karena sudah ada di Sistem e-BRPL");
+            } else {
+                if (checkResult == null) {
+                    errorMessage.add("Data Detail Biologi Reproduksi dengan ID " + id + " tidak dapat diproses karena tidak ditemukan di Sistem e-BRPL");
+                } else { // is update and not null checkResult
+                    if (!existOnParent)
+                        errorMessage.add("Data Detail Biologi Reproduksi dengan ID " + id + " tidak dapat diproses karena sudah digunakan di data yang lain");
+                }
+            }
+        }
 
         if (Shared.isStringNullOrEmpty(sizeDetail3rdPartyDTO.getNamaSpesies()) && sizeDetail3rdPartyDTO.getPanjang() > 0)
             errorMessage.add("Ada nama spesies ikan yang kosong pada data detail biologi ukuran. ");
@@ -149,18 +193,64 @@ public class BiologyOnSize3rdPartyValidator {
     }
 
 
-    public static List<String> validate(BiologyOnSize3rdPartyDTO biologyOnSize3rdPartyDTO) {
+    public static List<String> validate(BiologyOnSize3rdPartyDTO biologyOnSize3rdPartyDTO, boolean haveRelationWithParent, boolean insert, boolean existOnParent) {
         List<String> errorMessage = new ArrayList<>();
+        String id = biologyOnSize3rdPartyDTO.getId();
 
         errorMessage.addAll(validateSize3rdParty(biologyOnSize3rdPartyDTO));
 
+        /* cek data berdasarkan ID, apakah sudah ada di database atau belum */
+        BiologyOnSize checkResult = null;
+        if (Shared.isStringNullOrEmpty(id)) {
+            errorMessage.add("Data Biologi Ukuran ini tidak memiliki ID");
+        } else {
+            checkResult = biologyOnSizeRepository.findOne(TranslatorUser3rdParty.encodeId(id));
+            if (checkResult == null)
+                checkResult = biologyOnSizeRepository.findOne(id);
+
+            if (insert) {
+                if (checkResult != null)
+                    errorMessage.add("Data Biologi Ukuran dengan ID " + id + " tidak dapat diproses karena sudah ada di Sistem e-BRPL");
+            } else {
+                if (checkResult == null) {
+                    errorMessage.add("Data Biologi Ukuran dengan ID " + id + " tidak dapat diproses karena tidak ditemukan di Sistem e-BRPL");
+                } else { // is update and not null checkResult
+                    if (haveRelationWithParent && !existOnParent)
+                        errorMessage.add("Data Biologi Ukuran dengan ID " + id + " tidak dapat diproses karena sudah digunakan di data trip yang lain");
+                }
+            }
+        }
+
+        if (!insert && checkResult == null)
+            return errorMessage;
+
+        if (!insert) {
+            SysUser user = TranslatorUser3rdParty.getUserInformation();
+            if (!checkResult.getOrganisasi().trim().toUpperCase().equals(user.getOrganisasi().trim().toUpperCase()))
+                errorMessage.add("Maaf tidak dapat diubah, karena organisasi pemilik dari data ini bukan dari " + user.getOrganisasi());
+        }
+
+        final BiologyOnSize existing = checkResult;
+
         List<String> errorsOnSamples = IntStream.range(0, biologyOnSize3rdPartyDTO.getDataSampleDetail().size())
-                .mapToObj(index -> validateSizeSample3rdParty(biologyOnSize3rdPartyDTO.getDataSampleDetail().get(index)))
+                .mapToObj(index -> {
+                    BiologyOnSizeSampleDetail3rdPartyDTO sampleDetail3rdPartyDTO = biologyOnSize3rdPartyDTO.getDataSampleDetail().get(index);
+                    boolean existOnHisParent = existing != null && !Shared.isStringNullOrEmpty(sampleDetail3rdPartyDTO.getId())
+                            && existing.getDataSampleDetail().stream()
+                            .anyMatch(dto -> dto.getUuid().equals(sampleDetail3rdPartyDTO.getId()) || dto.getUuid().equals(TranslatorUser3rdParty.encodeId(sampleDetail3rdPartyDTO.getId())));
+                    return validateSizeSample3rdParty(sampleDetail3rdPartyDTO, insert, existOnHisParent);
+                })
                 .flatMap(strings -> strings.stream()).collect(Collectors.toList());
         errorMessage.addAll(errorsOnSamples);
 
         List<String> errorsOnDetail = IntStream.range(0, biologyOnSize3rdPartyDTO.getDataUkuranDetail().size())
-                .mapToObj(index -> validateSizeDetail3rdParty(biologyOnSize3rdPartyDTO.getDataUkuranDetail().get(index)))
+                .mapToObj(index -> {
+                    BiologyOnSizeDetail3rdPartyDTO sizeDetail3rdPartyDTO = biologyOnSize3rdPartyDTO.getDataUkuranDetail().get(index);
+                    boolean existOnHisParent = existing != null && !Shared.isStringNullOrEmpty(sizeDetail3rdPartyDTO.getId())
+                            && existing.getDataUkuranDetail().stream()
+                            .anyMatch(dto -> dto.getUuid().equals(sizeDetail3rdPartyDTO.getId()) || dto.getUuid().equals(TranslatorUser3rdParty.encodeId(sizeDetail3rdPartyDTO.getId())));
+                    return validateSizeDetail3rdParty(sizeDetail3rdPartyDTO, insert, existOnHisParent);
+                })
                 .flatMap(strings -> strings.stream()).collect(Collectors.toList());
         errorMessage.addAll(errorsOnDetail);
 

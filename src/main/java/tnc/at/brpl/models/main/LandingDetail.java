@@ -2,16 +2,13 @@ package tnc.at.brpl.models.main;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.experimental.SuperBuilder;
 import tnc.at.brpl.utils.Brpl;
-import tnc.at.brpl.utils.UnpredictableBoolean;
 import tnc.at.brpl.utils.entity.EntityModel;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Copyright (c) 2017.
@@ -23,7 +20,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE + Brpl.CONTENT.LANDING_DETAILS)
 public class LandingDetail extends EntityModel<LandingDetail, String> {
 
@@ -75,10 +72,6 @@ public class LandingDetail extends EntityModel<LandingDetail, String> {
     @Column(name = "daerah_penangkapan" + XMARK)
     private String daerahPenangkapan;
 
-    //@ApiModelProperty("Jumlah Hari Efektif")
-    //@Column(name = "jumlah_hari_efektif_memancing" + XMARK)
-    //private int jumlahHariEfektifMemancing;
-
     @ApiModelProperty("Jumlah Hari Per Trip")
     @Column(name = "jumlah_hari_per_trip" + XMARK)
     private int jumlahHariPerTrip;
@@ -101,7 +94,7 @@ public class LandingDetail extends EntityModel<LandingDetail, String> {
     @ApiModelProperty("Data Detail Tangkapan pada Pendaratan - (Dengan referensi kode Rincian Pendaratan)")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "uuid_rincian_pendaratan" + XMARK)
-//    private Set<LandingCatchDetail> dataRincianTangkapanPendaratan = new HashSet<>();
+    @Builder.Default
     private List<LandingCatchDetail> dataRincianTangkapanPendaratan = new ArrayList<>();
 
 

@@ -558,6 +558,9 @@ public interface BiologyOnReproductionRepository extends RepositoryListener<Biol
 
     Page<BiologyOnReproduction> findAllByOrganisasiOrderByDibuatPadaTanggalDesc(Pageable paging, String organisasi);
 
+    Page<BiologyOnReproduction> findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalAsc(Pageable pageable, String organisasi, boolean nonTrip);
+
+    Page<BiologyOnReproduction> findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalDesc(Pageable pageable, String organisasi, boolean nonTrip);
 
 
 }

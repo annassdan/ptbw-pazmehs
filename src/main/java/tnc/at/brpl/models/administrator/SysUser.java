@@ -1,19 +1,18 @@
 package tnc.at.brpl.models.administrator;
 
-import javax.persistence.*;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.entity.EntityModel;
 
+import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Copyright (c) 2017.
@@ -25,9 +24,11 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Table(name = Brpl.UNIQUE  + Brpl.ADMIN + Brpl.CONTENT.SYSUSER)
+@SuperBuilder
 public class SysUser extends EntityModel<SysUser, String> implements Brpl {
+
+
 
     @ApiModelProperty("Kode referensi dari uuid Enumerator atau Peneliti")
     @Column(name = "uuid_referensi" + XMARK)
@@ -85,6 +86,7 @@ public class SysUser extends EntityModel<SysUser, String> implements Brpl {
     @ApiModelProperty("Hak Akses yang dimiliki oleh pengguna")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_sysuser" + XMARK)
+    @Builder.Default
     private List<Roles> dataHakAkses = new ArrayList<>();
 
 
@@ -92,6 +94,71 @@ public class SysUser extends EntityModel<SysUser, String> implements Brpl {
     @ApiModelProperty("Pengaturan Hak Akses yang dimiliki oleh pengguna ke akses Halaman")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "uuid_sysuser" + XMARK)
+    @Builder.Default
     private List<Accesses> dataAksesKeHalaman = new ArrayList<>();
 
+
+    @ColumnDefault("false")
+    private boolean canIntegrate;
+
+
+    @Override
+    public void setUuid(String uuid) {
+        super.setUuid(uuid);
+    }
+
+    @Override
+    public void setDibuatPadaTanggal(Date dibuatPadaTanggal) {
+        super.setDibuatPadaTanggal(dibuatPadaTanggal);
+    }
+
+    @Override
+    public void setTerakhirDiubahPadaTanggal(Date terakhirDiubahPadaTanggal) {
+        super.setTerakhirDiubahPadaTanggal(terakhirDiubahPadaTanggal);
+    }
+
+    @Override
+    public void setDibuatAtauTerakhirDiubahOleh(String dibuatAtauTerakhirDiubahOleh) {
+        super.setDibuatAtauTerakhirDiubahOleh(dibuatAtauTerakhirDiubahOleh);
+    }
+
+    @Override
+    public void setDibuatOleh(String dibuatOleh) {
+        super.setDibuatOleh(dibuatOleh);
+    }
+
+    @Override
+    public void setEntity(SysUser sysUser) {
+        super.setEntity(sysUser);
+    }
+
+    @Override
+    public String getUuid() {
+        return super.getUuid();
+    }
+
+    @Override
+    public Date getDibuatPadaTanggal() {
+        return super.getDibuatPadaTanggal();
+    }
+
+    @Override
+    public Date getTerakhirDiubahPadaTanggal() {
+        return super.getTerakhirDiubahPadaTanggal();
+    }
+
+    @Override
+    public String getDibuatAtauTerakhirDiubahOleh() {
+        return super.getDibuatAtauTerakhirDiubahOleh();
+    }
+
+    @Override
+    public String getDibuatOleh() {
+        return super.getDibuatOleh();
+    }
+
+    @Override
+    public SysUser getEntity() {
+        return super.getEntity();
+    }
 }

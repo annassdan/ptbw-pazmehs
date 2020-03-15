@@ -1,18 +1,18 @@
 package tnc.at.brpl.models.main;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import tnc.at.brpl.utils.Brpl;
-import tnc.at.brpl.utils.LengthType;
-import tnc.at.brpl.utils.Sex;
 import tnc.at.brpl.utils.entity.EntityModel;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Copyright (c) 2017.
@@ -24,7 +24,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE + Brpl.CONTENT.BIOLOGY_ON_REPRODUCTION_DETAIL)
 public class BiologyOnReproductionDetail extends EntityModel<BiologyOnReproductionDetail, String>
     implements Brpl {
@@ -56,21 +56,9 @@ public class BiologyOnReproductionDetail extends EntityModel<BiologyOnReproducti
     @Column(name = "tkg" + XMARK, length = 50)
     private String tkg;
 
-
-//    @ApiModelProperty("Berat Gonad Ikan")
-//    @Column(name = "berat_gonad" + XMARK)
-//    private double beratGonad;
-
     @ApiModelProperty("Berat Isi Perut")
     @Column(name = "berat_isi_perut" + XMARK)
     private double beratIsiPerut;
-
-
-//    @ApiModelProperty("Data Detail Biologi Reproduksi Isi Perut - (Dengan referensi kode Biologi reproduksi Detail)")
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "uuid_biologireproduksidetail" + XMARK)
-////    private Set<BiologyOnReproductionStomachContentsDetail> dataIsiPerutDetail = new HashSet<>();
-//    private List<BiologyOnReproductionStomachContentsDetail> dataIsiPerutDetail = new ArrayList<>();
 
 
 }

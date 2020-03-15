@@ -696,4 +696,8 @@ public interface OperationalRepository extends RepositoryListener<Operational, S
 
     Page<Operational> findAllByOrganisasiOrderByDibuatPadaTanggalDesc(Pageable pageable, String organisasi);
 
+    Page<Operational> findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalAsc(Pageable pageable, String organisasi, boolean nonTrip);
+
+    Page<Operational> findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalDesc(Pageable pageable, String organisasi, boolean nonTrip);
+
 }

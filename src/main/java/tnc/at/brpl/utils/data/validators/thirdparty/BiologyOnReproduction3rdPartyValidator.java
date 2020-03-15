@@ -3,15 +3,19 @@ package tnc.at.brpl.utils.data.validators.thirdparty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import tnc.at.brpl.models.administrator.SysUser;
 import tnc.at.brpl.models.administrator.oauth.CustomUserDetails;
 import tnc.at.brpl.models.main.BiologyOnReproduction;
+import tnc.at.brpl.models.main.BiologyOnReproductionDetail;
 import tnc.at.brpl.models.main.dto.BiologyOnReproduction3rdPartyDTO;
 import tnc.at.brpl.models.main.dto.BiologyOnReproductionDetail3rdPatyDTO;
 import tnc.at.brpl.repositories.administrator.SysUserRepository;
+import tnc.at.brpl.repositories.main.BiologyOnReproductionDetailRepository;
 import tnc.at.brpl.repositories.main.BiologyOnReproductionRepository;
 import tnc.at.brpl.utils.data.ThirdPartyDocumentStatus;
 import tnc.at.brpl.utils.data.validators.ValidatorUtil;
 import tnc.at.brpl.utils.other.Shared;
+import tnc.at.brpl.utils.thirdparty.TranslatorUser3rdParty;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -24,17 +28,22 @@ public class BiologyOnReproduction3rdPartyValidator {
 
     private static BiologyOnReproductionRepository biologyOnReproductionRepository;
 
+    private static BiologyOnReproductionDetailRepository biologyOnReproductionDetailRepository;
+
+    private static SysUserRepository sysUserRepository;
+
     @Autowired
     private BiologyOnReproductionRepository biologyOnReproductionRepositoryInjecter;
 
     @Autowired
-    private static SysUserRepository sysUserRepository;
+    private BiologyOnReproductionDetailRepository biologyOnReproductionDetailRepositoryInjecter;
 
     @Autowired
     private SysUserRepository sysUserRepositoryInjecter;
 
     @PostConstruct
     private void init() {
+        biologyOnReproductionDetailRepository = biologyOnReproductionDetailRepositoryInjecter;
         biologyOnReproductionRepository = biologyOnReproductionRepositoryInjecter;
         sysUserRepository = sysUserRepositoryInjecter;
     }
@@ -46,18 +55,12 @@ public class BiologyOnReproduction3rdPartyValidator {
         return ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
     }
 
+    private SysUser getUserInformation() {
+        return sysUserRepository.findByPengguna(getUsername());
+    }
+
     public static List<String> validateReproduction3rdParty(BiologyOnReproduction3rdPartyDTO biologyOnReproduction3rdPartyDTO) {
         List<String> errorMessage = new ArrayList<>();
-
-        /* cek data berdasarkan ID, apakah sudah ada di database atau belum */
-        if (Shared.isStringNullOrEmpty(biologyOnReproduction3rdPartyDTO.getId())) {
-            errorMessage.add("Data Pendaratan ini tidak memiliki ID");
-        } else {
-            BiologyOnReproduction checkResult = biologyOnReproductionRepository.findOne(biologyOnReproduction3rdPartyDTO.getId());
-            if (checkResult != null)
-                errorMessage.add("Data Biologi Reproduksi dengan ID " + biologyOnReproduction3rdPartyDTO.getId() +
-                        " sudah ada di Sistem e-BRPL, Silahkan lakukan proses update jika ada perubahan pada data ini.");
-        }
 
         /* verify Lokasi Pendaratan */
         if (Shared.isStringNullOrEmpty(biologyOnReproduction3rdPartyDTO.getNamaLokasiSampling()))
@@ -92,7 +95,7 @@ public class BiologyOnReproduction3rdPartyValidator {
         if (Shared.isStringNullOrEmpty(biologyOnReproduction3rdPartyDTO.getNamaKapal()))
             errorMessage.add("Mohon inputkan nama kapal yang benar");
 
-        if (!ValidatorUtil.alatTangkapValid(Shared.verifyString(biologyOnReproduction3rdPartyDTO.getNamaSumberDaya())))
+        if (!ValidatorUtil.alatTangkapValid(Shared.verifyString(biologyOnReproduction3rdPartyDTO.getNamaSumberDaya()), Shared.verifyString(biologyOnReproduction3rdPartyDTO.getNamaAlatTangkap())))
             errorMessage.add("Alat tangkap \'" + Shared.verifyString(biologyOnReproduction3rdPartyDTO.getNamaAlatTangkap(), true) +
                     "', tidak diakomodir untuk Sumber Daya '" + Shared.verifyString(biologyOnReproduction3rdPartyDTO.getNamaSumberDaya(), true) + "'." +
                     "Silahkan lihat kembali daftar alat tangkap yang diakomodir oleh BRPL pada API alat tangkap. ");
@@ -115,8 +118,26 @@ public class BiologyOnReproduction3rdPartyValidator {
         return errorMessage;
     }
 
-    public static List<String> validateReproductionDetail3rdParty(BiologyOnReproductionDetail3rdPatyDTO reproductionDetail3rdPatyDTO) {
+    public static List<String> validateReproductionDetail3rdParty(BiologyOnReproductionDetail3rdPatyDTO reproductionDetail3rdPatyDTO,
+                                                                  boolean insert,
+                                                                  boolean existOnParent) {
         List<String> errorMessage = new ArrayList<>();
+        String id = reproductionDetail3rdPatyDTO.getId();
+
+        if (!Shared.isStringNullOrEmpty(id)) {
+            BiologyOnReproductionDetail checkResult = biologyOnReproductionDetailRepository.findOne(id);
+            if (insert) {
+                if (checkResult != null)
+                    errorMessage.add("Data Detail Biologi Reproduksi dengan ID " + id + " tidak dapat diproses karena sudah ada di Sistem e-BRPL");
+            } else {
+                if (checkResult == null) {
+                    errorMessage.add("Data Detail Biologi Reproduksi dengan ID " + id + " tidak dapat diproses karena tidak ditemukan di Sistem e-BRPL");
+                } else { // is update and not null checkResult
+                    if (!existOnParent)
+                        errorMessage.add("Data Detail Biologi Reproduksi dengan ID " + id + " tidak dapat diproses karena sudah digunakan di data yang lain");
+                }
+            }
+        }
 
         if (reproductionDetail3rdPatyDTO.getBerat() <= 0)
             errorMessage.add("Ada berat ikan yang tidak valid pada data detail biologi reproduksi.");
@@ -142,13 +163,53 @@ public class BiologyOnReproduction3rdPartyValidator {
 
 
 
-    public static List<String> validate(BiologyOnReproduction3rdPartyDTO biologyOnReproduction3rdPartyDTO) {
+    public static List<String> validate(BiologyOnReproduction3rdPartyDTO biologyOnReproduction3rdPartyDTO, boolean haveRelationWithParent, boolean insert, boolean existOnParent) {
         List<String> errorMessage = new ArrayList<>();
+        String id = biologyOnReproduction3rdPartyDTO.getId();
 
         errorMessage.addAll(validateReproduction3rdParty(biologyOnReproduction3rdPartyDTO));
 
+        /* cek data berdasarkan ID, apakah sudah ada di database atau belum */
+        BiologyOnReproduction checkResult = null;
+        if (Shared.isStringNullOrEmpty(id)) {
+            errorMessage.add("Data Biologi Reproduksi ini tidak memiliki ID");
+        } else {
+            checkResult = biologyOnReproductionRepository.findOne(TranslatorUser3rdParty.encodeId(id));
+            if (checkResult == null)
+                checkResult = biologyOnReproductionRepository.findOne(id);
+
+            if (insert) {
+                if (checkResult != null)
+                    errorMessage.add("Data Biologi Reproduksi dengan ID " + id + " tidak dapat diproses karena sudah ada di Sistem e-BRPL");
+            } else {
+                if (checkResult == null) {
+                    errorMessage.add("Data Biologi Reproduksi dengan ID " + id + " tidak dapat diproses karena tidak ditemukan di Sistem e-BRPL");
+                } else { // is update and not null checkResult
+                    if (haveRelationWithParent && !existOnParent)
+                        errorMessage.add("Data Biologi Reproduksi dengan ID " + id + " tidak dapat diproses karena sudah digunakan di data trip yang lain");
+                }
+            }
+        }
+
+        if (!insert && checkResult == null)
+            return errorMessage;
+
+        if (!insert) {
+            SysUser user = TranslatorUser3rdParty.getUserInformation();
+            if (!checkResult.getOrganisasi().trim().toUpperCase().equals(user.getOrganisasi().trim().toUpperCase()))
+                errorMessage.add("Maaf tidak dapat diubah, karena organisasi pemilik dari data ini bukan dari " + user.getOrganisasi());
+        }
+
+        final BiologyOnReproduction existing = checkResult;
+
         List<String> errorsOnDetail = IntStream.range(0, biologyOnReproduction3rdPartyDTO.getDataDetailReproduksi().size())
-                .mapToObj(index -> validateReproductionDetail3rdParty(biologyOnReproduction3rdPartyDTO.getDataDetailReproduksi().get(index)))
+                .mapToObj(index -> {
+                    BiologyOnReproductionDetail3rdPatyDTO biologyOnReproductionDetail3rdPatyDTO = biologyOnReproduction3rdPartyDTO.getDataDetailReproduksi().get(index);
+                    boolean existOnHisParent = existing != null && !Shared.isStringNullOrEmpty(biologyOnReproductionDetail3rdPatyDTO.getId())
+                            && existing.getDataDetailReproduksi().stream()
+                            .anyMatch(dto -> dto.getUuid().equals(biologyOnReproductionDetail3rdPatyDTO.getId()) || dto.getUuid().equals(TranslatorUser3rdParty.encodeId(biologyOnReproductionDetail3rdPatyDTO.getId())));
+                    return validateReproductionDetail3rdParty(biologyOnReproductionDetail3rdPatyDTO, insert, existOnHisParent);
+                })
                 .flatMap(strings -> strings.stream()).collect(Collectors.toList());
         errorMessage.addAll(errorsOnDetail);
 

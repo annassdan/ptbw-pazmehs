@@ -2,8 +2,11 @@ package tnc.at.brpl.models.integration;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import tnc.at.brpl.configurations.CustomDateSerializer;
@@ -19,7 +22,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.OTHER + Brpl.CONTENT.OTHER.DEEPSLOPE)
 public class Deepslope extends EntityModel<Deepslope, String> implements Brpl {
 

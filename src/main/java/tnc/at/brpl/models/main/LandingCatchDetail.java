@@ -1,7 +1,11 @@
 package tnc.at.brpl.models.main;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.entity.EntityModel;
 
@@ -19,7 +23,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE + Brpl.CONTENT.LANDING_CATCH_DETAILS)
 public class LandingCatchDetail extends EntityModel<LandingCatchDetail, String> {
 
@@ -35,10 +39,5 @@ public class LandingCatchDetail extends EntityModel<LandingCatchDetail, String> 
     @Column(name = "tangkapanIndividu" + XMARK)
     private double tangkapanIndividu;
 
-    /*
-    @ApiModelProperty("Tangkapan")
-    @Column(name = "tangkapan" + XMARK)
-    private double tangkapan;
-    */
 
 }

@@ -2,14 +2,16 @@ package tnc.at.brpl.models.integration;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import tnc.at.brpl.configurations.CustomDateSerializer;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.entity.EntityModel;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 import java.util.Date;
 
 @Entity
@@ -17,7 +19,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.OTHER + Brpl.CONTENT.OTHER.BOAT)
 public class Boat extends EntityModel<Boat, String> implements Brpl {
 

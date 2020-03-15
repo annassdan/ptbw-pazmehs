@@ -1,14 +1,18 @@
 
 package tnc.at.brpl.models.master;
 
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import tnc.at.brpl.utils.Brpl;
+import tnc.at.brpl.utils.entity.EntityModel;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import tnc.at.brpl.utils.Brpl;
-import tnc.at.brpl.utils.entity.EntityModel;
 
 
 /**
@@ -21,7 +25,7 @@ import tnc.at.brpl.utils.entity.EntityModel;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE  + Brpl.MASTER + Brpl.CONTENT.RESEARCHER)
 public class Researcher  extends EntityModel<Researcher, String>  {
 

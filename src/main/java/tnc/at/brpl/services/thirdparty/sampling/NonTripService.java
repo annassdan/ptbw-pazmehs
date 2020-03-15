@@ -16,17 +16,23 @@ import tnc.at.brpl.models.main.Operational;
 import tnc.at.brpl.models.main.dto.BiologyOnReproduction3rdPartyDTO;
 import tnc.at.brpl.models.main.dto.BiologyOnSize3rdPartyDTO;
 import tnc.at.brpl.models.main.dto.Operational3rdPartyDTO;
+import tnc.at.brpl.models.main.history.OperationalHistory;
 import tnc.at.brpl.repositories.administrator.SysUserRepository;
 import tnc.at.brpl.repositories.main.BiologyOnReproductionRepository;
 import tnc.at.brpl.repositories.main.BiologyOnSizeRepository;
 import tnc.at.brpl.repositories.main.OperationalRepository;
+import tnc.at.brpl.repositories.main.history.BiologyOnReproductionHistoryRepository;
+import tnc.at.brpl.repositories.main.history.BiologyOnSizeHistoryRepository;
+import tnc.at.brpl.repositories.main.history.OperationalHistoryRepository;
 import tnc.at.brpl.services.thirdparty.Delete3rdPartyResponse;
 import tnc.at.brpl.utils.data.DataOrder;
+import tnc.at.brpl.utils.data.HistoryActionType;
 import tnc.at.brpl.utils.data.validators.ValidatorUtil;
 import tnc.at.brpl.utils.data.validators.thirdparty.BiologyOnReproduction3rdPartyValidator;
 import tnc.at.brpl.utils.data.validators.thirdparty.BiologyOnSize3rdPartyValidator;
 import tnc.at.brpl.utils.data.validators.thirdparty.Operational3rdPartyValidator;
 import tnc.at.brpl.utils.thirdparty.Translator3rdParty;
+import tnc.at.brpl.utils.thirdparty.TranslatorUser3rdParty;
 
 import java.util.Date;
 
@@ -37,10 +43,19 @@ public class NonTripService {
     OperationalRepository operationalRepository;
 
     @Autowired
+    OperationalHistoryRepository operationalHistoryRepository;
+
+    @Autowired
     BiologyOnSizeRepository sizeRepository;
 
     @Autowired
+    BiologyOnSizeHistoryRepository sizeHistoryRepository;
+
+    @Autowired
     BiologyOnReproductionRepository reproductionRepository;
+
+    @Autowired
+    BiologyOnReproductionHistoryRepository reproductionHistoryRepository;
 
     @Autowired
     SysUserRepository sysUserRepository;
@@ -58,36 +73,36 @@ public class NonTripService {
 
     public Operational3rdPartyDTO saveNonTripOperasional(Operational3rdPartyDTO operational3rdPartyDTO) {
         /* validate data */
-        ValidatorUtil.expectNoThrowError(Operational3rdPartyValidator.validate(operational3rdPartyDTO));
+        ValidatorUtil.expectNoThrowError(Operational3rdPartyValidator.validate(operational3rdPartyDTO, false, true, false));
 
-        Translator3rdParty rdParty = new Translator3rdParty(new Date(), getUserInformation());
-        operationalRepository.save(rdParty.transformOperational(operational3rdPartyDTO));
+        Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
+        Operational operational = rdParty.transformOperational(operational3rdPartyDTO);
+        operational.setNonTrip(true);
+        operationalRepository.save(operational);
+        operationalHistoryRepository.save(OperationalHistory.builder()
+                .actionType(HistoryActionType.INSERT)
+                .build());
         return operational3rdPartyDTO;
     }
 
 
     public Operational3rdPartyDTO updateNonTripOperasional(Operational3rdPartyDTO operational3rdPartyDTO) {
         /* validate data */
-        ValidatorUtil.expectNoThrowError(Operational3rdPartyValidator.validate(operational3rdPartyDTO));
+        ValidatorUtil.expectNoThrowError(Operational3rdPartyValidator.validate(operational3rdPartyDTO, false, false, false));
 
-        Operational existing = operationalRepository.findOne(operational3rdPartyDTO.getId());
-        if (existing == null)
-            throw new ResourceInternalServerErrorException("Data Operasional tidak ada di database, silahkan lakukan penginputan terlebih dahulu.");
-
-        SysUser sysUser = getUserInformation();
-        if (!existing.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase()))
-            throw new ResourceInternalServerErrorException("Maaf tidak dapat ubah, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
-
-        Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
+        Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
         operationalRepository.save(rdParty.transformOperational(operational3rdPartyDTO));
         return operational3rdPartyDTO;
     }
 
 
     public Delete3rdPartyResponse deleteNonTripOperasional(String id) {
-        Operational operational = operationalRepository.findOne(id);
-        if (operational == null)
-            throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak ditemukan!!");
+        Operational operational = operationalRepository.findOne(TranslatorUser3rdParty.encodeId(id));
+        if (operational == null) {
+            operational = operationalRepository.findOne(id);
+            if (operational == null) throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak ditemukan!!");
+        }
+
 
         SysUser sysUser = getUserInformation();
         if (!operational.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase()))
@@ -99,9 +114,11 @@ public class NonTripService {
 
 
     public Operational3rdPartyDTO getOneNonTripOperasional(String id) {
-        Operational operational = operationalRepository.findOne(id);
-        if (operational == null)
-            throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak dapat ditemukan");
+        Operational operational = operationalRepository.findOne(TranslatorUser3rdParty.encodeId(id));
+        if (operational == null) {
+            operational = operationalRepository.findOne(id);
+            if (operational == null) throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak dapat ditemukan");
+        }
 
         SysUser sysUser = getUserInformation();
         if (!operational.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase())) {
@@ -118,8 +135,8 @@ public class NonTripService {
         SysUser sysUser = getUserInformation();
 
         Page<Operational> operationalPage = order == DataOrder.asc
-                ? operationalRepository.findAllByOrganisasiOrderByDibuatPadaTanggalAsc(paging, sysUser.getOrganisasi())
-                : operationalRepository.findAllByOrganisasiOrderByDibuatPadaTanggalDesc(paging, sysUser.getOrganisasi());
+                ? operationalRepository.findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalAsc(paging, sysUser.getOrganisasi(), true)
+                : operationalRepository.findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalDesc(paging, sysUser.getOrganisasi(), true);
 
         Translator3rdParty rdParty = new Translator3rdParty();
         return new PageImpl<>(rdParty.deTransformOperationals(operationalPage.getContent()), paging, operationalPage.getTotalElements());
@@ -131,9 +148,9 @@ public class NonTripService {
 
     public BiologyOnSize3rdPartyDTO saveNonTripBiologyOnSize(BiologyOnSize3rdPartyDTO biologyOnSize3rdPartyDTO) {
         /* validate data */
-        ValidatorUtil.expectNoThrowError(BiologyOnSize3rdPartyValidator.validate(biologyOnSize3rdPartyDTO));
+        ValidatorUtil.expectNoThrowError(BiologyOnSize3rdPartyValidator.validate(biologyOnSize3rdPartyDTO, false, true, false));
 
-        Translator3rdParty rdParty = new Translator3rdParty(new Date(), getUserInformation());
+        Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
         sizeRepository.save(rdParty.transformSize(biologyOnSize3rdPartyDTO));
         return biologyOnSize3rdPartyDTO;
     }
@@ -141,26 +158,20 @@ public class NonTripService {
 
     public BiologyOnSize3rdPartyDTO updateNonTripBiologyOnSize(BiologyOnSize3rdPartyDTO biologyOnSize3rdPartyDTO) {
         /* validate data */
-        ValidatorUtil.expectNoThrowError(BiologyOnSize3rdPartyValidator.validate(biologyOnSize3rdPartyDTO));
+        ValidatorUtil.expectNoThrowError(BiologyOnSize3rdPartyValidator.validate(biologyOnSize3rdPartyDTO, false, false, false));
 
-        BiologyOnSize existing = sizeRepository.findOne(biologyOnSize3rdPartyDTO.getId());
-        if (existing == null)
-            throw new ResourceInternalServerErrorException("Data Ukuran tidak ada di database, silahkan lakukan penginputan terlebih dahulu.");
-
-        SysUser sysUser = getUserInformation();
-        if (!existing.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase()))
-            throw new ResourceInternalServerErrorException("Maaf tidak dapat ubah, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
-
-        Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
+        Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
         sizeRepository.save(rdParty.transformSize(biologyOnSize3rdPartyDTO));
         return biologyOnSize3rdPartyDTO;
     }
 
 
     public Delete3rdPartyResponse deleteNonTripBiologyOnSize(String id) {
-        BiologyOnSize size = sizeRepository.findOne(id);
-        if (size == null)
-            throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak ditemukan!!");
+        BiologyOnSize size = sizeRepository.findOne(TranslatorUser3rdParty.encodeId(id));
+        if (size == null) {
+            size = sizeRepository.findOne(id);
+            if (size == null) throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak ditemukan!!");
+        }
 
         SysUser sysUser = getUserInformation();
         if (!size.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase()))
@@ -172,9 +183,11 @@ public class NonTripService {
 
 
     public BiologyOnSize3rdPartyDTO getOneNonTripBiologyOnSize(String id) {
-        BiologyOnSize size = sizeRepository.findOne(id);
-        if (size == null)
-            throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak dapat ditemukan");
+        BiologyOnSize size = sizeRepository.findOne(TranslatorUser3rdParty.encodeId(id));
+        if (size == null) {
+            size = sizeRepository.findOne(id);
+            if (size == null) throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak dapat ditemukan");
+        }
 
         SysUser sysUser = getUserInformation();
         if (!size.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase())) {
@@ -191,8 +204,8 @@ public class NonTripService {
         SysUser sysUser = getUserInformation();
 
         Page<BiologyOnSize> biologyOnSizePage = order == DataOrder.asc
-                ? sizeRepository.findAllByOrganisasiOrderByDibuatPadaTanggalAsc(paging, sysUser.getOrganisasi())
-                : sizeRepository.findAllByOrganisasiOrderByDibuatPadaTanggalDesc(paging, sysUser.getOrganisasi());
+                ? sizeRepository.findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalAsc(paging, sysUser.getOrganisasi(), true)
+                : sizeRepository.findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalDesc(paging, sysUser.getOrganisasi(), true);
 
         Translator3rdParty rdParty = new Translator3rdParty();
         return new PageImpl<>(rdParty.deTransformSizes(biologyOnSizePage.getContent()), paging, biologyOnSizePage.getTotalElements());
@@ -205,9 +218,9 @@ public class NonTripService {
 
     public BiologyOnReproduction3rdPartyDTO saveNonTripBiologyOnReproduction(BiologyOnReproduction3rdPartyDTO biologyOnReproduction3rdPartyDTO) {
         /* validate data */
-        ValidatorUtil.expectNoThrowError(BiologyOnReproduction3rdPartyValidator.validate(biologyOnReproduction3rdPartyDTO));
+        ValidatorUtil.expectNoThrowError(BiologyOnReproduction3rdPartyValidator.validate(biologyOnReproduction3rdPartyDTO, false, true, false));
 
-        Translator3rdParty rdParty = new Translator3rdParty(new Date(), getUserInformation());
+        Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
         reproductionRepository.save(rdParty.transformReproduction(biologyOnReproduction3rdPartyDTO));
         return biologyOnReproduction3rdPartyDTO;
     }
@@ -215,26 +228,20 @@ public class NonTripService {
 
     public BiologyOnReproduction3rdPartyDTO updateNonTripBiologyOnReproduction(BiologyOnReproduction3rdPartyDTO biologyOnReproduction3rdPartyDTO) {
         /* validate data */
-        ValidatorUtil.expectNoThrowError(BiologyOnReproduction3rdPartyValidator.validate(biologyOnReproduction3rdPartyDTO));
+        ValidatorUtil.expectNoThrowError(BiologyOnReproduction3rdPartyValidator.validate(biologyOnReproduction3rdPartyDTO, false, false, false));
 
-        BiologyOnReproduction existing = reproductionRepository.findOne(biologyOnReproduction3rdPartyDTO.getId());
-        if (existing == null)
-            throw new ResourceInternalServerErrorException("Data Reproduksi tidak ada di database, silahkan lakukan penginputan terlebih dahulu.");
-
-        SysUser sysUser = getUserInformation();
-        if (!existing.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase()))
-            throw new ResourceInternalServerErrorException("Maaf tidak dapat ubah, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
-
-        Translator3rdParty rdParty = new Translator3rdParty(new Date(), sysUser);
+        Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
         reproductionRepository.save(rdParty.transformReproduction(biologyOnReproduction3rdPartyDTO));
         return biologyOnReproduction3rdPartyDTO;
     }
 
 
     public Delete3rdPartyResponse deleteNonTripBiologyOnReproduction(String id) {
-        BiologyOnReproduction reproduction = reproductionRepository.findOne(id);
-        if (reproduction == null)
-            throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak ditemukan!!");
+        BiologyOnReproduction reproduction = reproductionRepository.findOne(TranslatorUser3rdParty.encodeId(id));
+        if (reproduction == null) {
+            reproduction = reproductionRepository.findOne(id);
+            if (reproduction == null) throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak ditemukan!!");
+        }
 
         SysUser sysUser = getUserInformation();
         if (!reproduction.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase()))
@@ -247,8 +254,11 @@ public class NonTripService {
 
     public BiologyOnReproduction3rdPartyDTO getOneNonTripBiologyOnReproduction(String id) {
         BiologyOnReproduction reproduction = reproductionRepository.findOne(id);
-        if (reproduction == null)
-            throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak dapat ditemukan");
+        if (reproduction == null) {
+            reproduction = reproductionRepository.findOne(id);
+            if (reproduction == null)
+                throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak dapat ditemukan");
+        }
 
         SysUser sysUser = getUserInformation();
         if (!reproduction.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase())) {
@@ -265,14 +275,13 @@ public class NonTripService {
         SysUser sysUser = getUserInformation();
 
         Page<BiologyOnReproduction> biologyOnReproductionPage = order == DataOrder.asc
-                ? reproductionRepository.findAllByOrganisasiOrderByDibuatPadaTanggalAsc(paging, sysUser.getOrganisasi())
-                : reproductionRepository.findAllByOrganisasiOrderByDibuatPadaTanggalDesc(paging, sysUser.getOrganisasi());
+                ? reproductionRepository.findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalAsc(paging, sysUser.getOrganisasi(), true)
+                : reproductionRepository.findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalDesc(paging, sysUser.getOrganisasi(), true);
 
         Translator3rdParty rdParty = new Translator3rdParty();
         return new PageImpl<>(rdParty.deTransformReproductions(biologyOnReproductionPage.getContent()), paging, biologyOnReproductionPage.getTotalElements());
     }
     /* end of biology on reproduction non trip service */
-
 
 
 }

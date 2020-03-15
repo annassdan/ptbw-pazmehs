@@ -1,12 +1,17 @@
 package tnc.at.brpl.models.main;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import tnc.at.brpl.utils.Brpl;
-import tnc.at.brpl.utils.LengthType;
 import tnc.at.brpl.utils.entity.EntityModel;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Copyright (c) 2017.
@@ -18,7 +23,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @Table(name = Brpl.UNIQUE + Brpl.CONTENT.BIOLOGY_ON_SIZE_DETAIL)
 public class BiologyOnSizeDetail extends EntityModel<BiologyOnSizeDetail, String>
     implements Brpl {
@@ -30,10 +35,5 @@ public class BiologyOnSizeDetail extends EntityModel<BiologyOnSizeDetail, String
     @ApiModelProperty("Ukuran Panjang")
     @Column(name = "panjang" + XMARK)
     private double panjang;
-
-//    @Enumerated(EnumType.STRING)
-//    @ApiModelProperty("Tipe Panjang (FL, SL, TL, CL, ML)")
-//    @Column(name = "tipe_panjang" + XMARK)
-//    private String tipePanjang;
 
 }

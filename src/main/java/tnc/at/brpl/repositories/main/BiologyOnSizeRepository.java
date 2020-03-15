@@ -572,4 +572,8 @@ public interface BiologyOnSizeRepository extends RepositoryListener<BiologyOnSiz
 
     Page<BiologyOnSize> findAllByOrganisasiOrderByDibuatPadaTanggalDesc(Pageable paging, String organisasi);
 
+    Page<BiologyOnSize> findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalAsc(Pageable pageable, String organisasi, boolean nonTrip);
+
+    Page<BiologyOnSize> findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalDesc(Pageable pageable, String organisasi, boolean nonTrip);
+
 }

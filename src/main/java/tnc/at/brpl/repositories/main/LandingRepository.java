@@ -440,5 +440,9 @@ public interface LandingRepository extends RepositoryListener<Landing, String> {
 
     Page<Landing> findAllByOrganisasiOrderByDibuatPadaTanggalDesc(Pageable pageable, String organisasi);
 
+    Page<Landing> findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalAsc(Pageable pageable, String organisasi, boolean nonTrip);
+
+    Page<Landing> findAllByOrganisasiAndNonTripOrderByDibuatPadaTanggalDesc(Pageable pageable, String organisasi, boolean nonTrip);
+
 
 }
