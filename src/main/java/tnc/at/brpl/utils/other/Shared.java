@@ -1,10 +1,15 @@
 package tnc.at.brpl.utils.other;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.text.WordUtils;
+import tnc.at.brpl.exceptions.ResourceInternalServerErrorException;
 import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.data.DocumentStatus;
 
-import javax.print.Doc;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +17,31 @@ import java.util.TimeZone;
 
 @SuppressWarnings("unused")
 public class Shared {
+
+    public static String objectToJsonString(Object object) {
+        try {
+            return new ObjectMapper().writer().withDefaultPrettyPrinter().writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        throw new ResourceInternalServerErrorException("Got Error");
+    }
+
+    public static <R> R jsonStringToObject(String jsonString, Class<R> clazz) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        TypeReference<R> typeReference = new TypeReference<R>(){
+            @Override
+            public Type getType() {
+                return clazz;
+            }
+        };
+        try {
+            return (R) objectMapper.readValue(jsonString, typeReference);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        throw new ResourceInternalServerErrorException("Got Error");
+    }
 
     public static Date toFormatedDate(String source) {
         try {
