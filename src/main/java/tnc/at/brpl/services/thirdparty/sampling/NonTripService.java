@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tnc.at.brpl.exceptions.ResourceInternalServerErrorException;
 import tnc.at.brpl.models.administrator.SysUser;
 import tnc.at.brpl.models.administrator.oauth.CustomUserDetails;
@@ -16,6 +17,8 @@ import tnc.at.brpl.models.main.Operational;
 import tnc.at.brpl.models.main.dto.BiologyOnReproduction3rdPartyDTO;
 import tnc.at.brpl.models.main.dto.BiologyOnSize3rdPartyDTO;
 import tnc.at.brpl.models.main.dto.Operational3rdPartyDTO;
+import tnc.at.brpl.models.main.history.BiologyOnReproductionHistory;
+import tnc.at.brpl.models.main.history.BiologyOnSizeHistory;
 import tnc.at.brpl.models.main.history.OperationalHistory;
 import tnc.at.brpl.repositories.administrator.SysUserRepository;
 import tnc.at.brpl.repositories.main.BiologyOnReproductionRepository;
@@ -31,6 +34,7 @@ import tnc.at.brpl.utils.data.validators.ValidatorUtil;
 import tnc.at.brpl.utils.data.validators.thirdparty.BiologyOnReproduction3rdPartyValidator;
 import tnc.at.brpl.utils.data.validators.thirdparty.BiologyOnSize3rdPartyValidator;
 import tnc.at.brpl.utils.data.validators.thirdparty.Operational3rdPartyValidator;
+import tnc.at.brpl.utils.other.Shared;
 import tnc.at.brpl.utils.thirdparty.Translator3rdParty;
 import tnc.at.brpl.utils.thirdparty.TranslatorUser3rdParty;
 
@@ -96,6 +100,7 @@ public class NonTripService {
     }
 
 
+    @Transactional
     public Delete3rdPartyResponse deleteNonTripOperasional(String id) {
         Operational operational = operationalRepository.findOne(TranslatorUser3rdParty.encodeId(id));
         if (operational == null) {
@@ -103,12 +108,18 @@ public class NonTripService {
             if (operational == null) throw new ResourceInternalServerErrorException("Data dengan ID " + id + ", tidak ditemukan!!");
         }
 
-
         SysUser sysUser = getUserInformation();
         if (!operational.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase()))
             throw new ResourceInternalServerErrorException("Maaf tidak dapat dihapus, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
+        String meta = Shared.objectToJsonString(operational);
         operationalRepository.delete(id);
+        operationalHistoryRepository.save(OperationalHistory.builder()
+                .actionType(HistoryActionType.DELETE)
+                .affectedTo(id)
+                .meta(meta)
+                .build());
+
         return Delete3rdPartyResponse.builder().message("Data dengan ID '" + id + "', berhasil dihapus dari database." ).build();
     }
 
@@ -177,7 +188,14 @@ public class NonTripService {
         if (!size.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase()))
             throw new ResourceInternalServerErrorException("Maaf tidak dapat dihapus, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
+        String meta = Shared.objectToJsonString(size);
         sizeRepository.delete(id);
+        sizeHistoryRepository.save(BiologyOnSizeHistory.builder()
+                .actionType(HistoryActionType.DELETE)
+                .affectedTo(id)
+                .meta(meta)
+                .build());
+
         return Delete3rdPartyResponse.builder().message("Data dengan ID '" + id + "', berhasil dihapus dari database." ).build();
     }
 
@@ -247,7 +265,14 @@ public class NonTripService {
         if (!reproduction.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase()))
             throw new ResourceInternalServerErrorException("Maaf tidak dapat dihapus, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
+        String meta = Shared.objectToJsonString(reproduction);
         reproductionRepository.delete(id);
+        reproductionHistoryRepository.save(BiologyOnReproductionHistory.builder()
+                .actionType(HistoryActionType.DELETE)
+                .affectedTo(id)
+                .meta(meta)
+                .build());
+
         return Delete3rdPartyResponse.builder().message("Data dengan ID '" + id + "', berhasil dihapus dari database." ).build();
     }
 

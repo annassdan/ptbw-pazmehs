@@ -25,6 +25,7 @@ import tnc.at.brpl.utils.data.DataOrder;
 import tnc.at.brpl.utils.data.HistoryActionType;
 import tnc.at.brpl.utils.data.validators.ValidatorUtil;
 import tnc.at.brpl.utils.data.validators.thirdparty.Landing3rdPartyValidator;
+import tnc.at.brpl.utils.other.Shared;
 import tnc.at.brpl.utils.thirdparty.Translator3rdParty;
 import tnc.at.brpl.utils.thirdparty.TranslatorUser3rdParty;
 
@@ -110,11 +111,12 @@ public class TripService {
         if (!landing.getOrganisasi().trim().toUpperCase().equals(sysUser.getOrganisasi().trim().toUpperCase()))
             throw new ResourceInternalServerErrorException("Maaf tidak dapat dihapus, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
+        String meta = Shared.objectToJsonString(landing);
         landingRepository.delete(id);
         landingHistoryRepository.save(LandingHistory.builder()
                 .actionType(HistoryActionType.DELETE)
                 .affectedTo(id)
-                .meta(landing.toString())
+                .meta(meta)
                 .build());
 
         return Delete3rdPartyResponse.builder().message("Data dengan ID '" + id + "', berhasil dihapus dari database." ).build();
