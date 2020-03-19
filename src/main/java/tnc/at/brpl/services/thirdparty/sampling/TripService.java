@@ -77,6 +77,7 @@ public class TripService {
         landingHistoryRepository.save(LandingHistory.builder()
                 .actionType(HistoryActionType.INSERT)
                 .affectedTo(saved.getUuid())
+                .nonTrip(false)
                 .build());
 
         return landing3rdPartyDTO;
@@ -93,7 +94,8 @@ public class TripService {
         landingHistoryRepository.save(LandingHistory.builder()
                 .actionType(HistoryActionType.UPDATE)
                 .affectedTo(saved.getUuid())
-                .changes("")
+                .changes(null)
+                .nonTrip(false)
                 .build());
         return landing3rdPartyDTO;
     }
@@ -117,6 +119,7 @@ public class TripService {
                 .actionType(HistoryActionType.DELETE)
                 .affectedTo(id)
                 .meta(meta)
+                .nonTrip(false)
                 .build());
 
         return Delete3rdPartyResponse.builder().message("Data dengan ID '" + id + "', berhasil dihapus dari database." ).build();

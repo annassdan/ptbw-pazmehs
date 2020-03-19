@@ -36,8 +36,10 @@ import tnc.at.brpl.utils.data.validators.thirdparty.BiologyOnSize3rdPartyValidat
 import tnc.at.brpl.utils.data.validators.thirdparty.Operational3rdPartyValidator;
 import tnc.at.brpl.utils.other.Shared;
 import tnc.at.brpl.utils.thirdparty.Translator3rdParty;
+import tnc.at.brpl.utils.thirdparty.TranslatorDiff3rdParty;
 import tnc.at.brpl.utils.thirdparty.TranslatorUser3rdParty;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 @Service
@@ -82,9 +84,11 @@ public class NonTripService {
         Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
         Operational operational = rdParty.transformOperational(operational3rdPartyDTO);
         operational.setNonTrip(true);
-        operationalRepository.save(operational);
+        Operational saved = operationalRepository.save(operational);
         operationalHistoryRepository.save(OperationalHistory.builder()
                 .actionType(HistoryActionType.INSERT)
+                .affectedTo(saved.getUuid())
+                .nonTrip(true)
                 .build());
         return operational3rdPartyDTO;
     }
@@ -94,8 +98,28 @@ public class NonTripService {
         /* validate data */
         ValidatorUtil.expectNoThrowError(Operational3rdPartyValidator.validate(operational3rdPartyDTO, false, false, false));
 
+//        Operational operational = operationalRepository.findOne(TranslatorUser3rdParty.encodeId(operational3rdPartyDTO.getId()));
+//        if (operational == null)
+//            operational = operationalRepository.findOne(operational3rdPartyDTO.getId());
+
+
         Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
-        operationalRepository.save(rdParty.transformOperational(operational3rdPartyDTO));
+//
+//        if (operational != null) {
+//            Operational3rdPartyDTO dto = rdParty.deTransformOperational(operational);
+//            try {
+//                TranslatorDiff3rdParty.analizingOperationalDiff(dto, operational3rdPartyDTO);
+//            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        Operational saved = operationalRepository.save(rdParty.transformOperational(operational3rdPartyDTO));
+        operationalHistoryRepository.save(OperationalHistory.builder().actionType(HistoryActionType.UPDATE)
+                .affectedTo(saved.getUuid())
+                .changes(null)
+                .nonTrip(false)
+                .build());
         return operational3rdPartyDTO;
     }
 
@@ -118,6 +142,7 @@ public class NonTripService {
                 .actionType(HistoryActionType.DELETE)
                 .affectedTo(id)
                 .meta(meta)
+                .nonTrip(false)
                 .build());
 
         return Delete3rdPartyResponse.builder().message("Data dengan ID '" + id + "', berhasil dihapus dari database." ).build();
@@ -162,7 +187,12 @@ public class NonTripService {
         ValidatorUtil.expectNoThrowError(BiologyOnSize3rdPartyValidator.validate(biologyOnSize3rdPartyDTO, false, true, false));
 
         Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
-        sizeRepository.save(rdParty.transformSize(biologyOnSize3rdPartyDTO));
+        BiologyOnSize saved = sizeRepository.save(rdParty.transformSize(biologyOnSize3rdPartyDTO));
+        sizeHistoryRepository.save(BiologyOnSizeHistory.builder()
+                .actionType(HistoryActionType.INSERT)
+                .affectedTo(saved.getUuid())
+                .nonTrip(true)
+                .build());
         return biologyOnSize3rdPartyDTO;
     }
 
@@ -172,7 +202,12 @@ public class NonTripService {
         ValidatorUtil.expectNoThrowError(BiologyOnSize3rdPartyValidator.validate(biologyOnSize3rdPartyDTO, false, false, false));
 
         Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
-        sizeRepository.save(rdParty.transformSize(biologyOnSize3rdPartyDTO));
+        BiologyOnSize saved = sizeRepository.save(rdParty.transformSize(biologyOnSize3rdPartyDTO));
+        sizeHistoryRepository.save(BiologyOnSizeHistory.builder().actionType(HistoryActionType.UPDATE)
+                .affectedTo(saved.getUuid())
+                .changes(null)
+                .nonTrip(false)
+                .build());
         return biologyOnSize3rdPartyDTO;
     }
 
@@ -194,6 +229,7 @@ public class NonTripService {
                 .actionType(HistoryActionType.DELETE)
                 .affectedTo(id)
                 .meta(meta)
+                .nonTrip(false)
                 .build());
 
         return Delete3rdPartyResponse.builder().message("Data dengan ID '" + id + "', berhasil dihapus dari database." ).build();
@@ -239,7 +275,12 @@ public class NonTripService {
         ValidatorUtil.expectNoThrowError(BiologyOnReproduction3rdPartyValidator.validate(biologyOnReproduction3rdPartyDTO, false, true, false));
 
         Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
-        reproductionRepository.save(rdParty.transformReproduction(biologyOnReproduction3rdPartyDTO));
+        BiologyOnReproduction saved = reproductionRepository.save(rdParty.transformReproduction(biologyOnReproduction3rdPartyDTO));
+        reproductionHistoryRepository.save(BiologyOnReproductionHistory.builder()
+                .actionType(HistoryActionType.INSERT)
+                .affectedTo(saved.getUuid())
+                .nonTrip(true)
+                .build());
         return biologyOnReproduction3rdPartyDTO;
     }
 
@@ -249,7 +290,12 @@ public class NonTripService {
         ValidatorUtil.expectNoThrowError(BiologyOnReproduction3rdPartyValidator.validate(biologyOnReproduction3rdPartyDTO, false, false, false));
 
         Translator3rdParty rdParty = new Translator3rdParty(true, getUserInformation());
-        reproductionRepository.save(rdParty.transformReproduction(biologyOnReproduction3rdPartyDTO));
+        BiologyOnReproduction saved = reproductionRepository.save(rdParty.transformReproduction(biologyOnReproduction3rdPartyDTO));
+        reproductionHistoryRepository.save(BiologyOnReproductionHistory.builder().actionType(HistoryActionType.UPDATE)
+                .affectedTo(saved.getUuid())
+                .changes(null)
+                .nonTrip(false)
+                .build());
         return biologyOnReproduction3rdPartyDTO;
     }
 
@@ -271,6 +317,7 @@ public class NonTripService {
                 .actionType(HistoryActionType.DELETE)
                 .affectedTo(id)
                 .meta(meta)
+                .nonTrip(false)
                 .build());
 
         return Delete3rdPartyResponse.builder().message("Data dengan ID '" + id + "', berhasil dihapus dari database." ).build();
