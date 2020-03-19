@@ -41,8 +41,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        logger.info("GENERATE TOKENOAUTH");
-//        .authorities("ROLE_SUPERUSER", "ROLE_VALIDATOR", "ROLE_CLIENT", "ROLE_GUEST")
         clients.inMemory().withClient("fayaqun" )
                 /*"refresh_token" */
                 .authorizedGrantTypes("client_credentials", "password")

@@ -11,7 +11,7 @@ import tnc.at.brpl.utils.Brpl;
 import tnc.at.brpl.utils.data.DataOrder;
 
 @RestController
-@RequestMapping(value = "/sampling/api/v1/trip", produces = {Brpl.MODE.JSON})
+@RequestMapping(value = "/api/v1/sampling/trip", produces = {Brpl.MODE.JSON})
 public class TripApi {
 
     @Autowired

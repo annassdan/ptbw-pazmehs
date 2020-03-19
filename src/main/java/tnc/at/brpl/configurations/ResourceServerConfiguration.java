@@ -37,7 +37,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/api/administrator/**",
                         "/api/sampling/**",
                         "/api/datamentah/**").permitAll()
-                .antMatchers("/api/integrasi/**", "/api/master/spesies/", "/sampling/api/v1/**"
+                .antMatchers("/api/integrasi/**", "/api/master/spesies/", "/api/v1/sampling/**"
                         ).authenticated();
     }
 
