@@ -10,7 +10,7 @@ import tnc.at.brpl.services.thirdparty.Utility3rdPartyService;
 import tnc.at.brpl.utils.Brpl;
 
 @RestController
-@RequestMapping(value = "/api/client/util",
+@RequestMapping(value = "/sampling/api/util",
         produces = {Brpl.MODE.JSON})
 @SuppressWarnings("unused")
 public class Utility3rdPartyApi {

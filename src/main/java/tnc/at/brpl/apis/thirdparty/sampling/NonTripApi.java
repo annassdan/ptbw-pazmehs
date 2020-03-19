@@ -20,12 +20,12 @@ public class NonTripApi implements Brpl {
     NonTripService nonTripService;
 
     /* non trip operational */
-    @PostMapping("/operasional")
+    @PostMapping("/operasional/save")
     public ResponseEntity<Operational3rdPartyDTO> saveDataNonTripOperasional(@RequestBody Operational3rdPartyDTO operational3rdPartyDTO) {
         return ResponseEntity.ok(nonTripService.saveNonTripOperasional(operational3rdPartyDTO));
     }
 
-    @PostMapping("/operasional/update")
+    @PutMapping("/operasional/update")
     public ResponseEntity<Operational3rdPartyDTO> updateNonTripOperasional(@RequestBody Operational3rdPartyDTO operational3rdPartyDTO) {
         return ResponseEntity.ok(nonTripService.updateNonTripOperasional(operational3rdPartyDTO));
     }
@@ -40,6 +40,12 @@ public class NonTripApi implements Brpl {
         return ResponseEntity.ok(nonTripService.getOneNonTripOperasional(id));
     }
 
+    @GetMapping(value = "/operasional/get-all", params = {"page", "size"})
+    public ResponseEntity<Page<Operational3rdPartyDTO>> getAllNonTripOperasional(@RequestParam("page") int page,
+                                                                                 @RequestParam("size") int size) {
+        return ResponseEntity.ok(nonTripService.getAllNonTripOperasional(page, size, DataOrder.desc));
+    }
+
     @GetMapping(value = "/operasional/get-all", params = {"page", "size", "order"})
     public ResponseEntity<Page<Operational3rdPartyDTO>> getAllNonTripOperasional(@RequestParam("page") int page,
                                                                                  @RequestParam("size") int size,
@@ -50,12 +56,12 @@ public class NonTripApi implements Brpl {
 
 
     /* non trip biology on size */
-    @PostMapping("/biologiukuran")
+    @PostMapping("/biologiukuran/save")
     public ResponseEntity<BiologyOnSize3rdPartyDTO> saveNonTripBiologyOnSize(@RequestBody BiologyOnSize3rdPartyDTO biologyOnSize3rdPartyDTO) {
         return ResponseEntity.ok(nonTripService.saveNonTripBiologyOnSize(biologyOnSize3rdPartyDTO));
     }
 
-    @PostMapping("/biologiukuran/update")
+    @PutMapping("/biologiukuran/update")
     public ResponseEntity<BiologyOnSize3rdPartyDTO> updateNonTripBiologyOnSize(@RequestBody BiologyOnSize3rdPartyDTO biologyOnSize3rdPartyDTO) {
         return ResponseEntity.ok(nonTripService.updateNonTripBiologyOnSize(biologyOnSize3rdPartyDTO));
     }
@@ -70,6 +76,12 @@ public class NonTripApi implements Brpl {
         return ResponseEntity.ok(nonTripService.getOneNonTripBiologyOnSize(id));
     }
 
+    @GetMapping(value = "/biologiukuran/get-all", params = {"page", "size"})
+    public ResponseEntity<Page<BiologyOnSize3rdPartyDTO>> getAllNonTripBiologyOnSize(@RequestParam("page") int page,
+                                                                                     @RequestParam("size") int size) {
+        return ResponseEntity.ok(nonTripService.getAllNonTripBiologyOnSize(page, size, DataOrder.desc));
+    }
+
     @GetMapping(value = "/biologiukuran/get-all", params = {"page", "size", "order"})
     public ResponseEntity<Page<BiologyOnSize3rdPartyDTO>> getAllNonTripBiologyOnSize(@RequestParam("page") int page,
                                                                                      @RequestParam("size") int size,
@@ -80,12 +92,12 @@ public class NonTripApi implements Brpl {
 
 
     /* non trip biology on reproduction  */
-    @PostMapping("/biologireproduksi")
+    @PostMapping("/biologireproduksi/save")
     public ResponseEntity<BiologyOnReproduction3rdPartyDTO> saveNonTripBiologyOnReproduction(@RequestBody BiologyOnReproduction3rdPartyDTO biologyOnReproduction3rdPartyDTO) {
         return ResponseEntity.ok(nonTripService.saveNonTripBiologyOnReproduction(biologyOnReproduction3rdPartyDTO));
     }
 
-    @PostMapping("/biologireproduksi/update")
+    @PutMapping("/biologireproduksi/update")
     public ResponseEntity<BiologyOnReproduction3rdPartyDTO> updateNonTripBiologyOnReproduction(@RequestBody BiologyOnReproduction3rdPartyDTO biologyOnReproduction3rdPartyDTO) {
         return ResponseEntity.ok(nonTripService.updateNonTripBiologyOnReproduction(biologyOnReproduction3rdPartyDTO));
     }
@@ -98,6 +110,12 @@ public class NonTripApi implements Brpl {
     @GetMapping("/biologireproduksi/get-one/{id}")
     public ResponseEntity<BiologyOnReproduction3rdPartyDTO> getOneNonTripBiologyOnReproduction(@PathVariable("id") String id) {
         return ResponseEntity.ok(nonTripService.getOneNonTripBiologyOnReproduction(id));
+    }
+
+    @GetMapping(value = "/biologireproduksi/get-all", params = {"page", "size"})
+    public ResponseEntity<Page<BiologyOnReproduction3rdPartyDTO>> getAllNonTripBiologyOnReproduction(@RequestParam("page") int page,
+                                                                                                     @RequestParam("size") int size) {
+        return ResponseEntity.ok(nonTripService.getAllNonTripBiologyOnReproduction(page, size, DataOrder.desc));
     }
 
     @GetMapping(value = "/biologireproduksi/get-all", params = {"page", "size", "order"})

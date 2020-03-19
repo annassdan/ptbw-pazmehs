@@ -18,12 +18,12 @@ public class TripApi {
     TripService tripService;
 
 
-    @PostMapping()
+    @PostMapping("/save")
     public ResponseEntity<Landing3rdPartyDTO> saveTrip(@RequestBody Landing3rdPartyDTO landing3rdPartyDTO) {
         return ResponseEntity.ok(tripService.save(landing3rdPartyDTO));
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Landing3rdPartyDTO> updateTrip(@RequestBody Landing3rdPartyDTO landing3rdPartyDTO) {
         return ResponseEntity.ok(tripService.update(landing3rdPartyDTO));
     }
@@ -36,6 +36,12 @@ public class TripApi {
     @GetMapping("/get-one/{id}")
     public ResponseEntity<Landing3rdPartyDTO> getOne(@PathVariable("id") String id) {
         return ResponseEntity.ok(tripService.getOne(id));
+    }
+
+    @GetMapping(value = "/get-all", params = {"page", "size"})
+    public ResponseEntity<Page<Landing3rdPartyDTO>> getAll(@RequestParam("page") int page,
+                                                           @RequestParam("size") int size) {
+        return ResponseEntity.ok(tripService.getAll(page, size, DataOrder.desc));
     }
 
     @GetMapping(value = "/get-all", params = {"page", "size", "order"})
