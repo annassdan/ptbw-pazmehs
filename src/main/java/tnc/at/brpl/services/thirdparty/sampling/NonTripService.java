@@ -137,7 +137,7 @@ public class NonTripService {
             throw new ResourceInternalServerErrorException("Maaf tidak dapat dihapus, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
         String meta = Shared.objectToJsonString(operational);
-        operationalRepository.delete(id);
+        operationalRepository.delete(operational.getUuid());
         operationalHistoryRepository.save(OperationalHistory.builder()
                 .actionType(HistoryActionType.DELETE)
                 .affectedTo(id)
@@ -224,7 +224,7 @@ public class NonTripService {
             throw new ResourceInternalServerErrorException("Maaf tidak dapat dihapus, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
         String meta = Shared.objectToJsonString(size);
-        sizeRepository.delete(id);
+        sizeRepository.delete(size.getUuid());
         sizeHistoryRepository.save(BiologyOnSizeHistory.builder()
                 .actionType(HistoryActionType.DELETE)
                 .affectedTo(id)
@@ -312,7 +312,7 @@ public class NonTripService {
             throw new ResourceInternalServerErrorException("Maaf tidak dapat dihapus, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
         String meta = Shared.objectToJsonString(reproduction);
-        reproductionRepository.delete(id);
+        reproductionRepository.delete(reproduction.getUuid());
         reproductionHistoryRepository.save(BiologyOnReproductionHistory.builder()
                 .actionType(HistoryActionType.DELETE)
                 .affectedTo(id)

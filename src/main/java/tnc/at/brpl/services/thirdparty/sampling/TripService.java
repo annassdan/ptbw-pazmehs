@@ -114,7 +114,7 @@ public class TripService {
             throw new ResourceInternalServerErrorException("Maaf tidak dapat dihapus, karena organisasi pemilik dari data ini bukan dari " + sysUser.getOrganisasi());
 
         String meta = Shared.objectToJsonString(landing);
-        landingRepository.delete(id);
+        landingRepository.delete(tempId);
         landingHistoryRepository.save(LandingHistory.builder()
                 .actionType(HistoryActionType.DELETE)
                 .affectedTo(id)
