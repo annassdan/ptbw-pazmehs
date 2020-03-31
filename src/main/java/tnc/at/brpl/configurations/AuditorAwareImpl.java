@@ -11,9 +11,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
     public String getCurrentAuditor() {
         String user = "system";
         if (SecurityContextHolder.getContext().getAuthentication() != null) {
-            OAuth2Authentication authentication = (OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication();
-            Object principal = authentication.getUserAuthentication().getPrincipal();
-            user = ((CustomUserDetails)principal).getUsername();
+            user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         }
 
         return user;
