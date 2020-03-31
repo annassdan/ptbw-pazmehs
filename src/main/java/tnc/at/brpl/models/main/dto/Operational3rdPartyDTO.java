@@ -24,6 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("unused")
 public class Operational3rdPartyDTO extends Main3rdPartyDTO implements Brpl {
 //
@@ -230,5 +231,8 @@ public class Operational3rdPartyDTO extends Main3rdPartyDTO implements Brpl {
     @ApiModelProperty("WPP")
     @Column(name = "wpp" + XMARK)
     private String wpp;
+
+
+
 
 }

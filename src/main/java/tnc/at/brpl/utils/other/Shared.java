@@ -10,6 +10,7 @@ import tnc.at.brpl.utils.data.DocumentStatus;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +19,8 @@ import java.util.TimeZone;
 @SuppressWarnings("unused")
 public class Shared {
 
+
+
     public static String objectToJsonString(Object object) {
         try {
             return new ObjectMapper().writer().withDefaultPrettyPrinter().writeValueAsString(object);
@@ -25,6 +28,11 @@ public class Shared {
             e.printStackTrace();
         }
         throw new ResourceInternalServerErrorException("Got Error");
+    }
+
+    public static String toFormatedStringDate(Date source) {
+        DateFormat format = new SimpleDateFormat(Brpl.DATE_PATTERN);
+        return format.format(source);
     }
 
     public static <R> R jsonStringToObject(String jsonString, Class<R> clazz) {
@@ -58,6 +66,14 @@ public class Shared {
 
     public static boolean isStringEmpty(String obj) {
         return verifyString(obj).length() == 0 || verifyString(obj).toLowerCase().equals("null");
+    }
+
+    public static String changeFirstToTitle(String obj) {
+        if (isStringNullOrEmpty(obj))
+            return "";
+
+        String first = obj.substring(0, 1).toUpperCase();
+        return first + obj.substring(1, obj.length());
     }
 
     public static String verifyString(String obj) {

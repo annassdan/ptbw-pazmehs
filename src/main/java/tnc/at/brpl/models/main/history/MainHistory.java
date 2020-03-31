@@ -1,11 +1,9 @@
 package tnc.at.brpl.models.main.history;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -54,6 +52,10 @@ public class MainHistory implements Serializable {
 
     @Column(name = "meta", columnDefinition = "TEXT", updatable = false)
     private String meta;
+
+    @ColumnDefault("false")
+    @Builder.Default
+    private boolean nonTrip = false;
 
 
 }
