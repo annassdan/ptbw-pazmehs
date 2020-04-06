@@ -25,8 +25,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-//        logger.info("GENERATE TOKEN.....PROCESS 3");
         http.authorizeRequests()
+                .antMatchers("/api/administrator/**").permitAll()
                 .antMatchers(
                         "/api/master/sumberdaya/",
                         "/api/master/sumberdaya/",
@@ -34,11 +34,14 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/api/master/alattangkap/",
                         "/api/master/enumerator/",
                         "/api/master/daerahpenangkapan/",
-                        "/api/administrator/**",
+
                         "/api/sampling/**",
-                        "/api/datamentah/**").permitAll()
-                .antMatchers("/api/integrasi/**", "/api/master/spesies/", "/api/v1/sampling/**"
-                        ).authenticated();
+                        "/api/datamentah/**",
+                        "/api/integrasi/**",
+                        "/api/master/spesies/",
+                        "/api/v1/sampling/**"
+                        )
+                .authenticated();
     }
 
 
