@@ -145,7 +145,7 @@ public class Landing3rdPartyValidator {
         if (Shared.isStringNullOrEmpty(landingDetail3rdPartyDTO.getDaerahPenangkapan()))
             errorMessage.add("Silahkan inputkasn Grid Daerah Penangkapan yang benar. " + extend);
 
-        if (landingDetail3rdPartyDTO.getJumlahHariPerTrip() < 1)
+        if (landingDetail3rdPartyDTO.getJumlahHariPerTrip() < 0)
             errorMessage.add("Terdapat kesalahan pada jumlah hari per trip (harus > 0). " + extend);
 
         if (landingDetail3rdPartyDTO.getJumlahHariMenangkap() < 0)
@@ -186,7 +186,7 @@ public class Landing3rdPartyValidator {
         if (Shared.isStringNullOrEmpty(landingCatchDetail3rdPartyDTO.getNamaSpesies()) && (landingCatchDetail3rdPartyDTO.getTangkapanIndividu() > 0 || landingCatchDetail3rdPartyDTO.getTangkapanVolume() > 0))
             errorMessage.add("Ada nama spesies yang kosong. " + extend);
 
-        if (landingCatchDetail3rdPartyDTO.getTangkapanIndividu() <= 0 || landingCatchDetail3rdPartyDTO.getTangkapanVolume() <= 0)
+        if (landingCatchDetail3rdPartyDTO.getTangkapanIndividu() < 0 || landingCatchDetail3rdPartyDTO.getTangkapanVolume() < 0)
             errorMessage.add("Ada jumlah detail tangkapan ikan yang tidak benar. " + extend);
 
         return errorMessage;

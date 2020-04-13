@@ -186,7 +186,7 @@ public class BiologyOnSize3rdPartyValidator {
         if (Shared.isStringNullOrEmpty(sizeDetail3rdPartyDTO.getNamaSpesies()) && sizeDetail3rdPartyDTO.getPanjang() > 0)
             errorMessage.add("Ada nama spesies ikan yang kosong pada data detail biologi ukuran. ");
 
-        if (sizeDetail3rdPartyDTO.getPanjang() <= 0)
+        if (sizeDetail3rdPartyDTO.getPanjang() < 0)
             errorMessage.add("Ada ukuran ikan yang tidak benar pada data detail biologi ukuran. ");
 
         return errorMessage;

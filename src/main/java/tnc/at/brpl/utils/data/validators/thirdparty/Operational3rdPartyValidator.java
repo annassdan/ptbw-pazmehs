@@ -113,13 +113,13 @@ public class Operational3rdPartyValidator {
         if (operational3rdPartyDTO.getJumlahAbk() < 0)
             errorMessage.add("Jumlah ABK tidak boleh kurang dari 0");
 
-        if (operational3rdPartyDTO.getPanjangKapal() <= 0)
+        if (operational3rdPartyDTO.getPanjangKapal() < 0)
             errorMessage.add("Pastikan anda menginputkan panjang kapal yang benar (panjang > 0 )");
 
-        if (operational3rdPartyDTO.getBobotKapal() <= 0)
+        if (operational3rdPartyDTO.getBobotKapal() < 0)
             errorMessage.add("Bobot kapal yang anda inputkan tidak dapat diproses");
 
-        if (operational3rdPartyDTO.getMesinUtama() <= 0)
+        if (operational3rdPartyDTO.getMesinUtama() < 0)
             errorMessage.add("Daya Mesin utama tidak dapat diproses");
 
         if (operational3rdPartyDTO.getKapasitasPalkaBoks() < 0)
@@ -143,7 +143,7 @@ public class Operational3rdPartyValidator {
         if (operational3rdPartyDTO.getJumlahSetting() < 0)
             errorMessage.add("Pastikan anda menginputkan jumlah setting yang benar");
 
-        if (operational3rdPartyDTO.getJumlahHariPerTrip() <= 0)
+        if (operational3rdPartyDTO.getJumlahHariPerTrip() < 0)
             errorMessage.add("Terdapat kesalahan pada jumlah hari per trip (harus > 0).");
 
         if (operational3rdPartyDTO.getJumlahHariMenangkap() < 0)
@@ -212,7 +212,7 @@ public class Operational3rdPartyValidator {
         if (Shared.isStringNullOrEmpty(operationalCatchDetails3rdPartyDTO.getNamaSpesies()) && (operationalCatchDetails3rdPartyDTO.getTotalBeratEkor() > 0 || operationalCatchDetails3rdPartyDTO.getTotalBeratKg() > 0))
             errorMessage.add("Ada nama spesies ikan yang kosong pada data detail tangkapan Operasional. " + extend);
 
-        if (operationalCatchDetails3rdPartyDTO.getTotalBeratEkor() <= 0 && operationalCatchDetails3rdPartyDTO.getTotalBeratKg() <= 0)
+        if (operationalCatchDetails3rdPartyDTO.getTotalBeratEkor() < 0 && operationalCatchDetails3rdPartyDTO.getTotalBeratKg() < 0)
             errorMessage.add("Ada ukuran ikan yang tidak benar pada data detail tangkapan Operasional. " + extend);
 
         return errorMessage;

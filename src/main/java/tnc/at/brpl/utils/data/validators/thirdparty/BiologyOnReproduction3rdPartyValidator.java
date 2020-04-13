@@ -139,17 +139,17 @@ public class BiologyOnReproduction3rdPartyValidator {
             }
         }
 
-        if (reproductionDetail3rdPatyDTO.getBerat() <= 0)
+        if (reproductionDetail3rdPatyDTO.getBerat() < 0)
             errorMessage.add("Ada berat ikan yang tidak valid pada data detail biologi reproduksi.");
 
-        if (reproductionDetail3rdPatyDTO.getBeratIsiPerut() <= 0)
+        if (reproductionDetail3rdPatyDTO.getBeratIsiPerut() < 0)
             errorMessage.add("Ada berat isi perut  ikan yang tidak valid pada data detail biologi reproduksi. ");
 
         if (!Shared.isStringNullOrEmpty(reproductionDetail3rdPatyDTO.getJenisKelamin())
                 && !(Shared.verifyString(reproductionDetail3rdPatyDTO.getJenisKelamin()).equals("M") || Shared.verifyString(reproductionDetail3rdPatyDTO.getJenisKelamin()).equals("F")))
             errorMessage.add("Ada jenis kelamin ikan yang tidak valid. ");
 
-        if (reproductionDetail3rdPatyDTO.getPanjang() <= 0)
+        if (reproductionDetail3rdPatyDTO.getPanjang() < 0)
             errorMessage.add("Ada ikan yang panjangnya tidak valid. ");
 
         if (!ValidatorUtil.tipePanjangValid(Shared.verifyString(reproductionDetail3rdPatyDTO.getTipePanjang())))
