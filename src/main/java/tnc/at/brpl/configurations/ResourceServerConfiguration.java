@@ -26,7 +26,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/administrator/**").permitAll()
+                .antMatchers("/api/administrator/**", "/api/sampling/**").permitAll()
                 .antMatchers(
                         "/api/master/sumberdaya/",
                         "/api/master/sumberdaya/",
@@ -34,7 +34,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/api/master/alattangkap/",
                         "/api/master/enumerator/",
                         "/api/master/daerahpenangkapan/",
-
                         "/api/sampling/**",
                         "/api/datamentah/**",
                         "/api/integrasi/**",
@@ -48,6 +47,5 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Bean
     public TokenStore tokenStore() {
         return new InMemoryTokenStore();
-
     }
 }
