@@ -142,4 +142,11 @@ public class Landing extends EntityModel<Landing, String> {
     @ColumnDefault("false")
     private boolean nonTrip;
 
+    @ColumnDefault("false")
+    private boolean tidakAdaPendaratan;
+
+    @Column(name = "catatan" + XMARK, columnDefinition = "TEXT")
+    @ColumnDefault("''")
+    private boolean catatan;
+
 }

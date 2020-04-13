@@ -152,7 +152,7 @@ public class BiologyOnSize3rdPartyValidator {
                 && (biologyOnSizeSampleDetail3rdPartyDTO.getSampleIndividu() > 0 || biologyOnSizeSampleDetail3rdPartyDTO.getSampleVolume() > 0))
             errorMessage.add("Ada nama spesies ikan yang kosong pada data sampel biologi ukuran. ");
 
-        if (biologyOnSizeSampleDetail3rdPartyDTO.getSampleIndividu() <= 0 && biologyOnSizeSampleDetail3rdPartyDTO.getSampleVolume() <= 0)
+        if (biologyOnSizeSampleDetail3rdPartyDTO.getSampleIndividu() < 0 && biologyOnSizeSampleDetail3rdPartyDTO.getSampleVolume() < 0)
             errorMessage.add("Ada data jumlah sample yang tidak tepat pada data sampel biologi ukuran. ");
 
         if (!ValidatorUtil.tipePanjangValid(Shared.verifyString(biologyOnSizeSampleDetail3rdPartyDTO.getTipePanjang())))
