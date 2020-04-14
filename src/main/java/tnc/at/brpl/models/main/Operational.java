@@ -358,17 +358,14 @@ public class Operational extends EntityModel<Operational, String> {
     @Column(name = "wpp" + XMARK)
     private String wpp;
 
-
     @ApiModelProperty("Terverikasi Oleh pihak BRPL oleh")
     private String terverifikasiOleh;
 
     @ApiModelProperty("Terverikasi Oleh pihak Luar oleh")
     private String untukEksternalTerverifikasiOleh;
 
-
     @ColumnDefault("false")
     private boolean byMachine;
-
 
     @ColumnDefault("1")
     private int dataVersion;

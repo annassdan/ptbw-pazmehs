@@ -26,7 +26,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/administrator/**", "/api/sampling/**").permitAll()
+                .antMatchers("/api/administrator/**",
+                        "/api/sampling/**/**").permitAll()
                 .antMatchers(
                         "/api/master/sumberdaya/",
                         "/api/master/sumberdaya/",
@@ -38,8 +39,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                         "/api/datamentah/**",
                         "/api/integrasi/**",
                         "/api/master/spesies/",
-                        "/api/v1/sampling/**"
-                        )
+                        "/api/v1/sampling/**")
                 .authenticated();
     }
 
