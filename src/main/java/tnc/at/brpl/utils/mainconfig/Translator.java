@@ -146,6 +146,8 @@ public class Translator {
 
                 empties += String.valueOf(value); // identifier apakah jika terjadi perulangan baris/ kolom ini kosong atau tidak
                 resultJsonAsstring.append("\"").append(fieldModel.getJsonFieldName()).append("\"").append(":");
+                value = analizingCharacter(value, fieldModel.getValueType());
+
                 resultJsonAsstring.append(value);
             } else if (fieldModel.getValueType() == FieldValueType.OBJECT) { // untuk data type object
 
@@ -167,6 +169,18 @@ public class Translator {
 
 
         return empties;
+    }
+
+    private Object analizingCharacter(Object source, FieldValueType type) {
+        if (type == FieldValueType.STRING) {
+            String s = String.valueOf(source);
+            if (s.contains("\\")) {
+                s = s.replace("\\", "\\\\");
+            }
+            return s;
+        } else {
+            return source;
+        }
     }
 
     /**
@@ -214,7 +228,6 @@ public class Translator {
 
                 empties = fieldProcessing(resultJsonAsstring, config, i, hasValue, excelSheet, looping, l, inc, inc2, row, column);
 
-
                 // hapus nilai boolean
                 empties = empties
                         .replace("\"", "")
@@ -239,6 +252,9 @@ public class Translator {
 
         return builder.toString();
     }
+
+
+
 
     /**
      *
