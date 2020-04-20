@@ -67,8 +67,8 @@ public class Utility3rdPartyService {
                                     AlatTangkap.builder().alatTangkap("Rawai Tuna").daftarSpesifikasi(Arrays.asList(
                                             Spesifikasi.builder().spesifikasi("Nomor Mata Pancing").build(),
                                             Spesifikasi.builder().spesifikasi("Jumlah Mata Pancing").satuan("buah").build()
-                                    )).build()
-
+                                    )).build(),
+                                    AlatTangkap.builder().alatTangkap("Lainnya").daftarSpesifikasi(Arrays.asList()).build()
                             ))
                             .build(),
                     SumberDaya.builder().sumberDaya("Pelagis Kecil")
@@ -114,7 +114,8 @@ public class Utility3rdPartyService {
                                             Spesifikasi.builder().spesifikasi("Panjang Sayap").satuan("m").build(),
                                             Spesifikasi.builder().spesifikasi("Panjang Kantong").satuan("m").build(),
                                             Spesifikasi.builder().spesifikasi("Panjang Tali Ris Atas").satuan("m").build()
-                                    )).build()
+                                    )).build(),
+                                    AlatTangkap.builder().alatTangkap("Lainnya").daftarSpesifikasi(Arrays.asList()).build()
                             ))
                             .build(),
                     SumberDaya.builder().sumberDaya("Demersal")
@@ -164,7 +165,8 @@ public class Utility3rdPartyService {
                                             Spesifikasi.builder().spesifikasi("Nomor Mata Pancing").build(),
                                             Spesifikasi.builder().spesifikasi("Nomor Tali Pancing").build(),
                                             Spesifikasi.builder().spesifikasi("Jumlah Pancing").satuan("buah").build()
-                                    )).build()
+                                    )).build(),
+                                    AlatTangkap.builder().alatTangkap("Lainnya").daftarSpesifikasi(Arrays.asList()).build()
                             ))
                             .build(),
                     SumberDaya.builder().sumberDaya("Cucut dan Pari")
@@ -191,7 +193,8 @@ public class Utility3rdPartyService {
                                             Spesifikasi.builder().spesifikasi("Nomor Mata Pancing").build(),
                                             Spesifikasi.builder().spesifikasi("Nomor Tali Pancing").build(),
                                             Spesifikasi.builder().spesifikasi("Jumlah Pancing").satuan("buah").build()
-                                    )).build()
+                                    )).build(),
+                                    AlatTangkap.builder().alatTangkap("Lainnya").daftarSpesifikasi(Arrays.asList()).build()
                             ))
                             .build(),
                     SumberDaya.builder().sumberDaya("Cumi")
@@ -211,7 +214,8 @@ public class Utility3rdPartyService {
                                             Spesifikasi.builder().spesifikasi("Panjang Sayap").satuan("m").build(),
                                             Spesifikasi.builder().spesifikasi("Panjang Kantong").satuan("m").build(),
                                             Spesifikasi.builder().spesifikasi("Panjang Tali Ris Atas").satuan("m").build()
-                                    )).build()
+                                    )).build(),
+                                    AlatTangkap.builder().alatTangkap("Lainnya").daftarSpesifikasi(Arrays.asList()).build()
                             ))
                             .build(),
                     SumberDaya.builder().sumberDaya("Kekerangan")
@@ -225,7 +229,8 @@ public class Utility3rdPartyService {
                                             Spesifikasi.builder().spesifikasi("Ukuran Mata Jaring").satuan("inch").build(),
                                             Spesifikasi.builder().spesifikasi("Lebar Pukat").satuan("m").build(),
                                             Spesifikasi.builder().spesifikasi("Tinggi Pukat").satuan("m").build()
-                                    )).build()
+                                    )).build(),
+                                    AlatTangkap.builder().alatTangkap("Lainnya").daftarSpesifikasi(Arrays.asList()).build()
                             ))
                             .build(),
                     SumberDaya.builder().sumberDaya("Krustase")
@@ -266,7 +271,8 @@ public class Utility3rdPartyService {
                                             Spesifikasi.builder().spesifikasi("Ukuran Mata Jaring").satuan("inch").build(),
                                             Spesifikasi.builder().spesifikasi("Panjang Tongkat").satuan("m").build(),
                                             Spesifikasi.builder().spesifikasi("Diameter").satuan("cm").build()
-                                    )).build()
+                                    )).build(),
+                                    AlatTangkap.builder().alatTangkap("Lainnya").daftarSpesifikasi(Arrays.asList()).build()
                             ))
                             .build(),
                     SumberDaya.builder().sumberDaya("Lainnya")
