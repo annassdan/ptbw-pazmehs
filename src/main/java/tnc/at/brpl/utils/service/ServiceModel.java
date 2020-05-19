@@ -40,7 +40,6 @@ public class ServiceModel<Entity extends EntityListener, Repository extends Repo
      * @param entity Struktur dan Data yang akan diproses ke Tabel yang akan dituju
      * @return Entity
      */
-    @Transactional
     @Override
     public Entity save(Entity entity) {
 
@@ -48,9 +47,6 @@ public class ServiceModel<Entity extends EntityListener, Repository extends Repo
         Date date = new Date();
         entity.setDibuatPadaTanggal(date);
         entity.setTerakhirDiubahPadaTanggal(entity.getDibuatPadaTanggal());
-
-//        logger.info("SAVE " + String.valueOf(entity.getDibuatPadaTanggal()));
-
 
         entity = (Entity) repository.save(entity);
         return entity;
@@ -62,7 +58,6 @@ public class ServiceModel<Entity extends EntityListener, Repository extends Repo
      * @param entities Struktur dan Data yang akan diproses ke Tabel yang akan dituju
      * @return Entity
      */
-    @Transactional
     @Override
     public List<Entity> saves(List<Entity> entities) {
 
@@ -85,7 +80,6 @@ public class ServiceModel<Entity extends EntityListener, Repository extends Repo
      * @param entity Struktur dan Data yang akan diproses ke Tabel yang akan dituju
      * @return Entity
      */
-    @Transactional
     @Override
     public Entity edit(Entity entity) {
 
@@ -118,7 +112,6 @@ public class ServiceModel<Entity extends EntityListener, Repository extends Repo
      *
      * @param uuid Primary Key dari Tabel yang ada dalam Database
      */
-    @Transactional
     @Override
     public void delete(String uuid) {
         repository.delete(uuid);
