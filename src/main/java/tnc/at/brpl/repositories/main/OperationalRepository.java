@@ -78,7 +78,7 @@ public interface OperationalRepository extends RepositoryListener<Operational, S
             "(:wpp is null OR data.wpp = :wpp) "
     )
 
-    long countDuplicateData(
+    Long countDuplicateData(
             @Param("namaLokasiPendaratan") String namaLokasiPendaratan,
             @Param("uuidSumberDaya") String uuidSumberDaya,
             @Param("uuidEnumerator") String uuidEnumerator,

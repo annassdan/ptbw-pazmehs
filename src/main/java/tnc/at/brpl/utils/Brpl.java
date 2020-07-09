@@ -229,8 +229,11 @@ public interface Brpl {
         String ACCESS_CONTROL_ALLOW_METHODS = "Access-Control-Allow-Methods";
         String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers";
         String ACCESS_CONTROL_MAX_AGE = "Access-Control-Max-Age";
-
     }
 
+    String EMPTY_TRIP = "TAP";
+    String EMPTY_GRIP_PENANGKAPAN = "9999";
+    String DELIMITER_1 = ",";
+    String DELIMITER_2 = ";";
 
 }

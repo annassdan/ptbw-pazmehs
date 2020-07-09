@@ -29,7 +29,7 @@ public class OperationalService extends ServiceModel<Operational, OperationalRep
 
     @Override
     public boolean isDuplicated(Operational operational) {
-        long d = repository.countDuplicateData(
+        Long d = repository.countDuplicateData(
                 operational.getNamaLokasiPendaratan(),
                 operational.getUuidSumberDaya(),
                 operational.getUuidEnumerator(),
@@ -83,7 +83,7 @@ public class OperationalService extends ServiceModel<Operational, OperationalRep
                 operational.getWpp()
         );
 
-        return (d > 0);
+        return d != null && (d.longValue() > 0);
     }
 
     @Override

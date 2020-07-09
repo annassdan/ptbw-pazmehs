@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tnc.at.brpl.utils.mainconfig.models.*;
+import tnc.at.brpl.utils.other.Shared;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -97,7 +98,7 @@ public class Translator {
                         if (fieldModel.isUseAsUuid() && fieldModel.isUseAsUuid()) {
 
                             if (fieldModel.getValueType() == FieldValueType.STRING) {
-                                String param = String.valueOf(value);
+                                String param = Shared.trimString(String.valueOf(value));
 
 
 
@@ -139,7 +140,8 @@ public class Translator {
                 if (fieldModel.getValueType() == FieldValueType.STRING ||
                         fieldModel.getValueType() == FieldValueType.DATE ||
                         fieldModel.getValueType() == FieldValueType.TIME) {
-                    String tempValue = String.valueOf(value).replace(" ", "");
+//                    String tempValue = String.valueOf(value).replace(" ", "");
+                    String tempValue = Shared.trimString(String.valueOf(value));
                     if (String.valueOf(value).equals("-"))
                     value = "";
                 }
@@ -173,7 +175,7 @@ public class Translator {
 
     private Object analizingCharacter(Object source, FieldValueType type) {
         if (type == FieldValueType.STRING) {
-            String s = String.valueOf(source);
+            String s = Shared.trimString(String.valueOf(source));
             if (s.contains("\\")) {
                 s = s.replace("\\", "\\\\");
             }
@@ -236,7 +238,7 @@ public class Translator {
                         .replace("0.0", "")
                         .replace("0", "");
 
-                if (!empties.isEmpty()) {
+                if (!Shared.trimString(empties).isEmpty()) {
                     resultJsonAsstring.append("}");
                     builder.append(resultJsonAsstring.toString());
                     beforeValue = empties;

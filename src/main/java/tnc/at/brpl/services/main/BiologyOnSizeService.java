@@ -24,7 +24,7 @@ public class BiologyOnSizeService extends ServiceModel<BiologyOnSize, BiologyOnS
 
     @Override
     public boolean isDuplicated(BiologyOnSize biologyOnSize) {
-        long d = repository.countDuplicateData(
+        Long d = repository.countDuplicateData(
                 biologyOnSize.getUuidEnumerator(),
                 biologyOnSize.getUuidSumberDaya(),
                 biologyOnSize.getNamaLokasiSampling(),
@@ -41,7 +41,8 @@ public class BiologyOnSizeService extends ServiceModel<BiologyOnSize, BiologyOnS
                 biologyOnSize.getOrganisasi(),
                 biologyOnSize.getWpp()
         );
-        return d > 0;
+
+        return d != null && (d.longValue() > 0);
     }
 
     @Override

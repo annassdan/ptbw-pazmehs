@@ -129,8 +129,8 @@ public class ServiceModel<Entity extends EntityListener, Repository extends Repo
     public Page<Entity> findAll(int page, int size) {
         page = (page > 0) ? page - 1 : page;
         Pageable paging = new PageRequest(page, size);
-        return repository.findAllByOrderByDibuatPadaTanggalAsc(paging);
-//        return repository.findAll(paging);
+//        return repository.findAllByOrderByDibuatPadaTanggalAsc(paging);
+        return repository.findAll(paging);
     }
 
     @Override

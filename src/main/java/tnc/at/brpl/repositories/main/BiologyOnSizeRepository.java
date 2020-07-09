@@ -44,7 +44,7 @@ public interface BiologyOnSizeRepository extends RepositoryListener<BiologyOnSiz
             "(:organisasi is null OR UPPER(data.organisasi) = UPPER(:organisasi)) AND " +
             "(:wpp is null OR data.wpp = :wpp) "
     )
-    long countDuplicateData(
+    Long countDuplicateData(
             @Param("uuidEnumerator") String uuidEnumerator,
             @Param("uuidSumberDaya") String uuidSumberDaya,
             @Param("namaLokasiSampling") String namaLokasiSampling,

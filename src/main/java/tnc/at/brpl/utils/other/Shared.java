@@ -131,4 +131,14 @@ public class Shared {
         }
     }
 
+
+    public static String trimString(String v) {
+        return trimString(v, "");
+    }
+
+    public static String trimString(String v, String defValue) {
+        String result = v.trim().replaceAll("\\s{2,}", " ");
+        return result == null || result.isEmpty() ? defValue : result;
+    }
+
 }

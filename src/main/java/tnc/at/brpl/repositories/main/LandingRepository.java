@@ -21,33 +21,24 @@ import java.util.List;
  *
  * @author annasldan   ~| annasmn34333@gmail.com | TNC Indonesia |~
  */
-@Transactional
-//@SuppressWarnings("unused")
 public interface LandingRepository extends RepositoryListener<Landing, String> {
 
-    @Query("SELECT data FROM Landing data JOIN data.dataRincianPendaratan data2 WHERE " +
-            " data.uuid = :uuid AND  " +
-            " data2.namaKapal = :namaKapal ")
-    Page<Landing> coba2(Pageable pageable,
-                        @Param("uuid") String uuid,
-                        @Param("namaKapal") String namaKapal);
-
-// @Param("organisasi") String organisasi,
-
-    @Query("SELECT COUNT(data) FROM Landing data  WHERE " +
+    @Query("SELECT COUNT(data) FROM Landing data " +
+            "INNER JOIN data.dataRincianPendaratan detail " +
+            "INNER JOIN detail.dataRincianTangkapanPendaratan catch WHERE " +
             "(:organisasi is null OR UPPER(data.organisasi) = UPPER(:organisasi)) AND " +
             "(:wpp is null OR data.wpp = :wpp) AND " +
             "(:uuidSumberDaya is null OR data.uuidSumberDaya = :uuidSumberDaya) AND " +
             "(:uuidEnumerator is null OR data.uuidEnumerator = :uuidEnumerator) AND " +
-            "(:namaLokasiPendaratan is null OR data.namaLokasiPendaratan = :namaLokasiPendaratan) AND " +
-            "(cast(:tanggalPendaratan as date) is null OR data.tanggalPendaratan = :tanggalPendaratan) ")
-    long countDuplicateData(
-            @Param("tanggalPendaratan") Date tanggalPendaratan,
-            @Param("namaLokasiPendaratan") String namaLokasiPendaratan,
-            @Param("uuidSumberDaya") String uuidSumberDaya,
-            @Param("uuidEnumerator") String uuidEnumerator,
-            @Param("organisasi") String organisasi,
-            @Param("wpp") String wpp
+            "(:namaLokasiPendaratan is null OR UPPER(data.namaLokasiPendaratan) = UPPER(:namaLokasiPendaratan)) AND " +
+            "(cast(:tanggalPendaratan as date) is null OR data.tanggalPendaratan = :tanggalPendaratan) " +
+            "GROUP BY data.uuid ")
+    Long countDuplicateData(@Param("tanggalPendaratan") Date tanggalPendaratan,
+                            @Param("namaLokasiPendaratan") String namaLokasiPendaratan,
+                            @Param("uuidSumberDaya") String uuidSumberDaya,
+                            @Param("uuidEnumerator") String uuidEnumerator,
+                            @Param("organisasi") String organisasi,
+                            @Param("wpp") String wpp
     );
 
     /**
@@ -85,9 +76,6 @@ public interface LandingRepository extends RepositoryListener<Landing, String> {
                                                                                                        String uuidSumberDaya,
                                                                                                        String uuidPengupload,
                                                                                                        DocumentStatus statusDokumenNot);
-
-
-
 
 
     @Query("SELECT COUNT(data) FROM Landing data WHERE " +

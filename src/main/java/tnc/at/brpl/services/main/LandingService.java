@@ -29,14 +29,15 @@ public class LandingService extends ServiceModel<Landing, LandingRepository> imp
 
     @Override
     public boolean isDuplicated(Landing landing) {
-        long d = repository.countDuplicateData(
+        Long d = repository.countDuplicateData(
                 landing.getTanggalPendaratan(),
                 landing.getNamaLokasiPendaratan(),
                 landing.getUuidSumberDaya(),
                 landing.getUuidEnumerator(),
                 landing.getOrganisasi(),
                 landing.getWpp());
-        return (d > 0);
+
+        return d != null && (d.longValue() > 0);
     }
 
     @Override

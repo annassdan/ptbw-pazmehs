@@ -25,6 +25,7 @@ import tnc.at.brpl.utils.mainconfig.Translator;
 import tnc.at.brpl.utils.mainconfig.TranslatorResult;
 import tnc.at.brpl.utils.mainconfig.models.FieldModel;
 import tnc.at.brpl.utils.mainconfig.regulations.FormRegulations;
+import tnc.at.brpl.utils.other.Shared;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ import java.util.stream.IntStream;
  * @author annasldan ~| annasmn34333@gmail.com | TNC Indonesia |~
  */
 @Configuration
-public class LandingConfig extends BasicFormUploadConfig implements FormRegulations<Landing> {
+public class LandingConfig extends BasicFormUploadConfig implements FormRegulations<Landing>, Brpl {
 
     private final String formIdentifier = "Form Pendaratan";
     private int formIdentifierRow = 0;
@@ -282,29 +283,51 @@ public class LandingConfig extends BasicFormUploadConfig implements FormRegulati
     private List<String> compabilityRecheck(List<String> errors, Landing data) {
 
         /*cek organisasi*/
-        if (data.getOrganisasi() == null || data.getOrganisasi().isEmpty())
+        if (data.getOrganisasi() == null || Shared.trimString(data.getOrganisasi()).isEmpty())
             errors.add("Pastikan anda menentukan nama organisasi data yang akan diupload");
 
-        if (data.getUuidEnumerator() == null || data.getUuidEnumerator().isEmpty())
+        if (data.getUuidEnumerator() == null || Shared.trimString(data.getUuidEnumerator()).isEmpty())
             errors.add("Nama Pencatat masih Kosong");
 
 
-        if (data.getUuidEnumerator() == null || data.getWpp().isEmpty())
+        if (data.getUuidEnumerator() == null || Shared.trimString(data.getWpp()).isEmpty())
             errors.add("Wilayah WPP belum dipilih");
 
-        if (data.getNamaLokasiPendaratan() == null || data.getNamaLokasiPendaratan().isEmpty())
+        if (data.getNamaLokasiPendaratan() == null || Shared.trimString(data.getNamaLokasiPendaratan()).isEmpty())
             errors.add("Nama Lokasi Pendaratan masih kosong");
 
         if (data.getTanggalPendaratan() == null)
             errors.add("Pastikan tanggal pendaratan anda inputkan dengan benar");
 
-        if (data.getUuidSumberDaya() == null || data.getUuidSumberDaya().isEmpty())
+        if (data.getUuidSumberDaya() == null || Shared.trimString(data.getUuidSumberDaya()).isEmpty())
             errors.add("Pilihlah salah satu jenis sumberdaya");
+
+        if (data.getDataRincianPendaratan() == null || data.getDataRincianPendaratan().isEmpty()) {
+            errors.add("Tidak ada data rincian kapal");
+            return errors;
+        } else {
+            LandingDetail detail1 = data.getDataRincianPendaratan().get(0);
+            if (Shared.trimString(detail1.getNamaKapal()).isEmpty()) {
+                errors.add("Nama kapal pertama kosong!");
+                return errors;
+            } else {
+                if (Shared.trimString(detail1.getNamaKapal()).toLowerCase().equals(EMPTY_TRIP.toLowerCase())) {
+                    int lengthDetail = data.getDataRincianPendaratan().size();
+                    if (lengthDetail > 1) {
+                        for (int i = lengthDetail; i >= 1; i--) {
+                            try {
+                                data.getDataRincianPendaratan().remove(i);
+                            } catch (Exception e){}
+                        }
+                    }
+                    return errors;
+                }
+            }
+        }
 
 
         int i = 1;
         for (LandingDetail detail : data.getDataRincianPendaratan()) {
-
 
             if (detail.getNamaKapal() == null || detail.getNamaKapal().isEmpty())
                 errors.add("Mohon inputkan nama kapal yang benar.\n (Pendaratan No. " + i +
@@ -340,6 +363,12 @@ public class LandingConfig extends BasicFormUploadConfig implements FormRegulati
 //            int j = 1;
 //            double volume = 0;
 //            double ekor = 0;
+
+            if (detail.getDataRincianTangkapanPendaratan() == null || detail.getDataRincianTangkapanPendaratan().isEmpty()) {
+                errors.add("Tidak ada informasi detail tangkapan.\n (Pendaratan No. " + i +
+                        " Kapal " + detail.getNamaKapal().toUpperCase() + ").");
+            }
+
 
             for (LandingCatchDetail catchDetail : detail.getDataRincianTangkapanPendaratan()) {
 
@@ -404,10 +433,10 @@ public class LandingConfig extends BasicFormUploadConfig implements FormRegulati
             for (LandingCatchDetail catchDetail : detail.getDataRincianTangkapanPendaratan()) {
                 j++;
 //                logger.info(i + "," + j + " : " + catchDetail.getUuidSpesies() + " || " + catchDetail.getTangkapanVolume());
-                if (catchDetail.getUuidSpesies().trim().isEmpty() &&
+                if (Shared.trimString(catchDetail.getUuidSpesies()).isEmpty() &&
                         (catchDetail.getTangkapanVolume() > 0 || catchDetail.getTangkapanIndividu() > 0)) {
                     errors.add("Ada Spesies yang Kosong, tetapi mempunyai jumlah tangkapan \n (Pendaratan No. " + i +
-                            " Kapal " + detail.getNamaKapal().toUpperCase() + ").");
+                            " Kapal " + detail.getNamaKapal().trim().toUpperCase() + ").");
                 }
 
             }

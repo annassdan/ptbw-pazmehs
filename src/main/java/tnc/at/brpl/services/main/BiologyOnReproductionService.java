@@ -24,7 +24,7 @@ public class BiologyOnReproductionService extends ServiceModel<BiologyOnReproduc
 
     @Override
     public boolean isDuplicated(BiologyOnReproduction biologyOnReproduction) {
-        long d = repository.countDuplicateData(
+        Long d = repository.countDuplicateData(
                 biologyOnReproduction.getUuidSumberDaya(),
                 biologyOnReproduction.getNamaLokasiSampling(),
                 biologyOnReproduction.getNamaKapal(),
@@ -39,7 +39,7 @@ public class BiologyOnReproductionService extends ServiceModel<BiologyOnReproduc
                 biologyOnReproduction.getWpp()
         );
 
-        return d > 0;
+        return d != null && (d.longValue() > 0);
     }
 
     @Override

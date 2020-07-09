@@ -38,7 +38,7 @@ public interface BiologyOnReproductionRepository extends RepositoryListener<Biol
             "(:organisasi is null OR UPPER(data.organisasi) = UPPER(:organisasi)) AND " +
             "(:wpp is null OR data.wpp = :wpp) "
     )
-    long countDuplicateData(
+    Long countDuplicateData(
             @Param("uuidSumberDaya") String uuidSumberDaya,
             @Param("namaLokasiSampling") String namaLokasiSampling,
             @Param("namaKapal") String namaKapal,
